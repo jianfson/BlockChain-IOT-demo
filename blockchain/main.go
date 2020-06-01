@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fab-sdk-go-sample/service"
 	"os"
 	"fmt"
@@ -61,24 +62,49 @@ func main() {
 		Owner:   "龙井",
 		Weight:  "500g",
 	}
-	tea2 := service.Tea{
-		Id:      "02",
-		Maker:    "龙井",
-		Owner:   "龙井",
-		Weight:  "500g",
-	}
 
 	txID, err := serviceSetup.SaveTea(tea)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Printf("信息保存成功，交易Id：%s\n", txID)
+		fmt.Printf("信息保存成功\n交易Id：%v\n", txID)
 	}
 
-	txID, err = serviceSetup.SaveTea(tea2)
+	id := "01"
+	b, err := serviceSetup.FindTeaInfoByID(id)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Printf("信息保存成功，交易Id：%s\n", txID)
+		var tea service.Tea
+		json.Unmarshal(b, &tea)
+		fmt.Println("根据 teaID 查询信息成功：")
+		fmt.Println(tea)
+	}
+
+	modifiedTea := service.Tea{
+		Id:      "01",
+		Maker:    "龙井",
+		Owner:   "wk",
+		Weight:  "500g",
+	}
+
+	txID, err = serviceSetup.ModifyTea(modifiedTea)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Printf("修改成功\ntxid：%v\n", txID)
+	}
+
+	b, err = serviceSetup.FindTeaInfoByID(id)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		var tea service.Tea
+		json.Unmarshal(b, &tea)
+		fmt.Println("根据 teaID 查询信息成功：")
+		fmt.Println(tea)
+		for _, v := range tea.Histories {
+			fmt.Println(v)
+		}
 	}
 }
