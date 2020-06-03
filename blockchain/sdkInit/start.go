@@ -146,3 +146,20 @@ func InstallAndInstantiateCC(sdk *fabsdk.FabricSDK, info *InitInfo) (*channel.Cl
 
 	return channelClient, nil
 }
+
+// query installed CC
+func QueryInstalledCC(sdk *fabsdk.FabricSDK, info *InitInfo) {
+	// 以 admin role 建立客户端
+	userContext := sdk.Context(fabsdk.WithUser(info.OrgAdmin))
+
+	resClient, err := resmgmt.New(userContext)
+	if err != nil {
+		fmt.Println("Failed to create resmgmt: ", err)
+	}
+
+	resp2, err := resClient.QueryInstalledChaincodes(resmgmt.WithTargetEndpoints("peer1.org1.kevin.kongyixueyuan.com"))
+	if err != nil {
+		fmt.Println("Failed to query installed cc: ", err)
+	}
+	fmt.Println("Installed cc: ", resp2.GetChaincodes())
+}

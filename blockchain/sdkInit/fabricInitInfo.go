@@ -14,6 +14,7 @@ type InitInfo struct {
 	OrgAdmin       string  //已组织管理员身份创建
 	OrdererOrgName    string  // order
 	OrgResMgmt *resmgmt.Client
+	Peer string
 
 	ChaincodeID    string
 	ChaincodeGoPath    string

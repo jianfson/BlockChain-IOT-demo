@@ -25,6 +25,8 @@ func main() {
 		OrgName:"Org1",
 		OrdererOrgName: "orderer.kevin.kongyixueyuan.com",
 
+		Peer:"peer0.org1.kevin.kongyixueyuan.com",
+
 		ChaincodeID: TeaCC,
 		ChaincodeGoPath: os.Getenv("GOPATH"),
 		ChaincodePath: "github.com/hyperledger/fabric-sdk-go-sample/chaincode/",
@@ -50,6 +52,9 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
+
+	fmt.Println("查询已安装链码")
+	sdkInit.QueryInstalledCC(sdk, initInfo)
 
 	serviceSetup := service.ServiceSetup{
 		ChaincodeId:TeaCC,
