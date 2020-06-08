@@ -50,6 +50,18 @@ a fabric-sdk-go-sample to build solutions that interact with [hyperledger fabric
 		make docker
 
 ## Getting started
+**Supported features**
+- ListChannel
+- channel create
+- channel join
+- queryChannelConfig
+- queryChannelInfo
+- chaincode install
+- chaincode instantiate
+- chaincode upgrade
+- chaincode invoke
+- chaincode query
+- GetUserInfo
 
 **Running integration tests manually**
 		
