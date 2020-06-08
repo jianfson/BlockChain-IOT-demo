@@ -152,4 +152,14 @@ func main() {
 			fmt.Println(v)
 		}
 	}
+
+	//fmt.Println("----------------登记、注册用户---------------")
+	//enrollSecret, err:=sdkInit.Register(sdk, initInfo, "User2")
+	//if err != nil {
+	//	fmt.Println(err)
+	//} else {
+	//	err = sdkInit.Enroll(sdk, initInfo, enrollSecret)
+	//}
+	//
+	//sdkInit.GetUserInfo(sdk, "User2", "Org1")
 }
