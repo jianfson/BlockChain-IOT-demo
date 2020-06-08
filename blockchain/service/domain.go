@@ -20,6 +20,7 @@ type HistoryItem struct {
 	TxId string
 	tea Tea
 }
+
 type ServiceSetup struct {
 	ChaincodeId string
 	Client *channel.Client

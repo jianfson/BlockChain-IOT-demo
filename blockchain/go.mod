@@ -4,21 +4,23 @@ go 1.14
 
 require (
 	github.com/Microsoft/hcsshim v0.8.9 // indirect
+	github.com/Shopify/sarama v1.26.4 // indirect
 	github.com/containerd/containerd v1.3.4 // indirect
 	github.com/containerd/continuity v0.0.0-20200413184840-d3ef23f19fbb // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/fsouza/go-dockerclient v1.6.5 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
-	github.com/hyperledger/fabric v1.2.1 // indirect
+	github.com/hashicorp/go-version v1.2.0 // indirect
+	github.com/hyperledger/fabric v1.2.1
 	github.com/hyperledger/fabric-amcl v0.0.0-20200424173818-327c9e2cf77a // indirect
-	github.com/hyperledger/fabric-protos-go v0.0.0-20190821180310-6b6ac9042dfd
+	github.com/hyperledger/fabric-protos-go v0.0.0-20190821180310-6b6ac9042dfd // indirect
 	github.com/hyperledger/fabric-sdk-go v1.0.0-beta1
 	github.com/miekg/pkcs11 v1.0.3 // indirect
 	github.com/mitchellh/mapstructure v1.3.1 // indirect
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.6.0 // indirect
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect

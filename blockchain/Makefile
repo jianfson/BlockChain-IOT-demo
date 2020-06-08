@@ -29,7 +29,7 @@ run:
 ##### CLEAN
 clean: env-down
 	@echo "Clean up ..."
-	@rm -rf /tmp/kongyixueyuan-* kongyixueyuan
-	@docker rm -f -v `docker ps -a --no-trunc | grep "kongyixueyuan" | cut -d ' ' -f 1` 2>/dev/null || true
-	@docker rmi `docker images --no-trunc | grep "kongyixueyuan" | cut -d ' ' -f 1` 2>/dev/null || true
+	@rm -rf /tmp/dragonwell-* dragonwell
+	@docker rm -f -v `docker ps -a --no-trunc | grep "dragonwell" | cut -d ' ' -f 1` 2>/dev/null || true
+	@docker rmi `docker images --no-trunc | grep "dragonwell" | cut -d ' ' -f 1` 2>/dev/null || true
 	@echo "Clean up done"

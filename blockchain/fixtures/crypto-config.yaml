@@ -1,0 +1,19 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: dragonwell.com
+
+    Specs:
+      - Hostname: orderer
+
+
+PeerOrgs:
+
+  - Name: Org1
+    Domain: org1.dragonwell.com
+    EnableNodeOUs: true
+
+    Template:
+      Count: 2
+
+    Users:
+      Count: 1

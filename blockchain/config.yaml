@@ -1,76 +1,27 @@
-name: "kongyixueyuan-network"
+#----------beatutidul article
+#
+# https://lessisbetter.site/2019/09/02/fabric-sdk-go-chaincode/
+# template: https://github.com/hyperledger/fabric-sdk-go/blob/master/test/fixtures/config/config_e2e.yaml
 #
 # Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
 #
 version: 1.0.0
 
-#
-# The client section used by GO SDK.
-#
 client:
 
-  # Which organization does this application instance belong to? The value must be the name of an org
-  # defined under "organizations"
   organization: Org1
 
   logging:
     level: info
 
-  # Global configuration for peer, event service and orderer timeouts
-  # if this this section is omitted, then default values will be used (same values as below)
-#  peer:
-#    timeout:
-#      connection: 10s
-#      response: 180s
-#      discovery:
-#        # Expiry period for discovery service greylist filter
-#        # The channel client will greylist peers that are found to be offline
-#        # to prevent re-selecting them in subsequent retries.
-#        # This interval will define how long a peer is greylisted
-#        greylistExpiry: 10s
-#  eventService:
-#    # Event service type (optional). If not specified then the type is automatically
-#    # determined from channel capabilities.
-#    type: (deliver|eventhub)
-    # the below timeouts are commented out to use the default values that are found in
-    # "pkg/fab/endpointconfig.go"
-    # the client is free to override the default values by uncommenting and resetting
-    # the values as they see fit in their config file
-#    timeout:
-#      connection: 15s
-#      registrationResponse: 15s
-#  orderer:
-#    timeout:
-#      connection: 15s
-#      response: 15s
-#  global:
-#    timeout:
-#      query: 180s
-#      execute: 180s
-#      resmgmt: 180s
-#    cache:
-#      connectionIdle: 30s
-#      eventServiceIdle: 2m
-#      channelConfig: 30m
-#      channelMembership: 30s
-#      discovery: 10s
-#      selection: 10m
-
-  # Root of the MSP directories with keys and certs.
   cryptoconfig:
-    path: ${GOPATH}/src/github.com/hyperledger/fabric-sdk-go-sample/fixtures/crypto-config
+    path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config
 
-  # Some SDKs support pluggable KV stores, the properties under "credentialStore"
-  # are implementation specific
   credentialStore:
-    path: /tmp/kongyixueyuan-store
-
-    # [Optional]. Specific to the CryptoSuite implementation used by GO SDK. Software-based implementations
-    # requiring a key store. PKCS#11 based implementations does not.
+    path: /tmp/dragonwell-store
     cryptoStore:
-      path: /tmp/kongyixueyuan-msp
+      path: /tmp/dragonwell-msp
 
-   # BCCSP config for the client. Used by GO SDK.
   BCCSP:
     security:
      enabled: true
@@ -81,15 +32,16 @@ client:
      level: 256
 
   tlsCerts:
-    # [Optional]. Use system certificate pool when connecting to peers, orderers (for negotiating TLS) Default: false
+
+    # ke 使用User1@org1的证书
     systemCertPool: false
 
-    # [Optional]. Client key and cert for TLS handshake with peers and orderers
     client:
       key:
-        path:
+        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/users/User1@org1.dragonwell.com/tls/client.key
       cert:
-        path:
+        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/users/User1@org1.dragonwell.com/tls/client.crt
+
 
 #
 # [Optional]. But most apps would have this section so that channel objects can be constructed
@@ -97,19 +49,12 @@ client:
 # section.
 #
 channels:
-  # name of the channel
-  kevinkongyixueyuan:
-    # Required. list of orderers designated by the application to use for transactions on this
-    # channel. This list can be a result of access control ("org1" can only access "ordererA"), or
-    # operational decisions to share loads from applications among the orderers.  The values must
-    # be "names" of orgs defined under "organizations/peers"
-    # deprecated: not recommended, to override any orderer configuration items, entity matchers should be used.
-    # orderers:
-    #  - orderer.kevin.kongyixueyuan.com
+  # 通道名称
+  teatraceability:
 
     # Required. list of peers from participating orgs
     peers:
-      peer0.org1.kevin.kongyixueyuan.com:
+      peer0.org1.dragonwell.com:
         # [Optional]. will this peer be sent transaction proposals for endorsement? The peer must
         # have the chaincode installed. The app can also use this property to decide which peers
         # to send the chaincode install request. Default: true
@@ -129,7 +74,7 @@ channels:
         # Default: true
         eventSource: true
 
-      peer1.org1.kevin.kongyixueyuan.com:
+      peer1.org1.dragonwell.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -210,12 +155,21 @@ channels:
 # list of participating organizations in this network
 #
 organizations:
+  # Orderer Org name
+#  OrdererOrg:
+#    # Membership Service Provider ID for this organization
+#    mspID: OrdererMSP
+#
+#    # Needed to load users crypto keys and certs for this org (absolute path or relative to global crypto path, DEV mode)
+#    cryptoPath: ordererOrganizations/dragonwell.com/users/{username}@dragonwell.com/msp
+
   Org1:
-    mspid: org1.kevin.kongyixueyuan.com
-    cryptoPath: peerOrganizations/org1.kevin.kongyixueyuan.com/users/{userName}@org1.kevin.kongyixueyuan.com/msp
+    # 加星
+    mspid: Org1MSP
+    cryptoPath: peerOrganizations/org1.dragonwell.com/users/{userName}@org1.dragonwell.com/msp
     peers:
-      - peer0.org1.kevin.kongyixueyuan.com
-      - peer1.org1.kevin.kongyixueyuan.com
+      - peer0.org1.dragonwell.com
+      - peer1.org1.dragonwell.com
 
     # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
     # network. Typically certificates provisioning is done in a separate process outside of the
@@ -223,7 +177,7 @@ organizations:
     # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
     # Fabric-CA servers.
     certificateAuthorities:
-      - ca.org1.kevin.kongyixueyuan.com
+      - ca.org1.dragonwell.com
 
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
@@ -231,13 +185,13 @@ organizations:
 # SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
 #
 orderers:
-  orderer.kevin.kongyixueyuan.com:
-    url: localhost:7050
+  orderer.dragonwell.com:
+    url: grpcs://localhost:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
     grpcOptions:
-      ssl-target-name-override: orderer.kevin.kongyixueyuan.com
+      ssl-target-name-override: orderer.dragonwell.com
       # These parameters should be set in coordination with the keepalive policy on the server,
       # as incompatible settings can result in closing of connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
@@ -250,21 +204,21 @@ orderers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-sdk-go-sample/fixtures/crypto-config/ordererOrganizations/kevin.kongyixueyuan.com/tlsca/tlsca.kevin.kongyixueyuan.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/ordererOrganizations/dragonwell.com/tlsca/tlsca.dragonwell.com-cert.pem
 
 #
 # List of peers to send various requests to, including endorsement, query
 # and event listener registration.
 #
 peers:
-  peer0.org1.kevin.kongyixueyuan.com:
+  peer0.org1.dragonwell.com:
     # this URL is used to send endorsement and query requests
-    url: localhost:7051
+    url: grpcs://localhost:7051
     # eventUrl is only needed when using eventhub (default is delivery service)
-    eventUrl: localhost:7053
+    eventUrl: grpcs://localhost:7053
 
     grpcOptions:
-      ssl-target-name-override: peer0.org1.kevin.kongyixueyuan.com
+      ssl-target-name-override: peer0.org1.dragonwell.com
       # These parameters should be set in coordination with the keepalive policy on the server,
       # as incompatible settings can result in closing of connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
@@ -277,16 +231,16 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-sdk-go-sample/fixtures/crypto-config/peerOrganizations/org1.kevin.kongyixueyuan.com/tlsca/tlsca.org1.kevin.kongyixueyuan.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/tlsca/tlsca.org1.dragonwell.com-cert.pem
 
-  peer1.org1.kevin.kongyixueyuan.com:
+  peer1.org1.dragonwell.com:
     # this URL is used to send endorsement and query requests
-    url: localhost:7151
+    url: grpcs://localhost:8051
     # eventUrl is only needed when using eventhub (default is delivery service)
-    eventUrl: localhost:7153
+    eventUrl: grpcs://localhost:8053
 
     grpcOptions:
-      ssl-target-name-override: peer1.org1.kevin.kongyixueyuan.com
+      ssl-target-name-override: peer1.org1.dragonwell.com
       # These parameters should be set in coordination with the keepalive policy on the server,
       # as incompatible settings can result in closing of connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
@@ -299,7 +253,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-sdk-go-sample/fixtures/crypto-config/peerOrganizations/org1.kevin.kongyixueyuan.com/tlsca/tlsca.org1.kevin.kongyixueyuan.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/tlsca/tlsca.org1.dragonwell.com-cert.pem
 
 #
 # Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
@@ -307,11 +261,11 @@ peers:
 # Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
 #
 certificateAuthorities:
-  ca.org1.kevin.kongyixueyuan.com:
+  ca.org1.dragonwell.com:
     url: http://localhost:7054
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/hyperledger/fabric-sdk-go-sample/fixtures/crypto-config/peerOrganizations/org1.kevin.kongyixueyuan.com/ca/ca.org1.kevin.kongyixueyuan.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/tlsca/tlsca.org1.dragonwell.com-cert.pem
 
     # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
     # needed to enroll and invoke new users.
@@ -319,29 +273,30 @@ certificateAuthorities:
       enrollId: admin
       enrollSecret: adminpw
     # [Optional] The optional name of the CA.
-    caName: ca.org1.kevin.kongyixueyuan.com
+    caName: ca.org1.dragonwell.com
 
 entityMatchers:
   peer:
-    - pattern: (\w*)peer0.org1.kevin.kongyixueyuan.com(\w*)
+    - pattern: (\w*)peer0.org1.dragonwell.com(\w*)
       urlSubstitutionExp: localhost:7051
       eventUrlSubstitutionExp: localhost:7053
-      sslTargetOverrideUrlSubstitutionExp: peer0.org1.kevin.kongyixueyuan.com
-      mappedHost: peer0.org1.kevin.kongyixueyuan.com
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.dragonwell.com
+      mappedHost: peer0.org1.dragonwell.com
 
-    - pattern: (\w*)peer1.org1.kevin.kongyixueyuan.com(\w*)
-      urlSubstitutionExp: localhost:7151
-      eventUrlSubstitutionExp: localhost:7153
-      sslTargetOverrideUrlSubstitutionExp: peer1.org1.kevin.kongyixueyuan.com
-      mappedHost: peer1.org1.kevin.kongyixueyuan.com
+    - pattern: (\w*)peer1.org1.dragonwell.com(\w*)
+      urlSubstitutionExp: localhost:8051
+      eventUrlSubstitutionExp: localhost:8053
+      sslTargetOverrideUrlSubstitutionExp: peer1.org1.dragonwell.com
+      mappedHost: peer1.org1.dragonwell.com
 
   orderer:
-    - pattern: (\w*)orderer.kevin.kongyixueyuan.com(\w*)
+    - pattern: (\w*)orderer.dragonwell.com(\w*)
       urlSubstitutionExp: localhost:7050
-      sslTargetOverrideUrlSubstitutionExp: orderer.kevin.kongyixueyuan.com
-      mappedHost: orderer.kevin.kongyixueyuan.com
+      sslTargetOverrideUrlSubstitutionExp: orderer.dragonwell.com
+      mappedHost: orderer.dragonwell.com
 
-  certificateAuthorities:
-    - pattern: (\w*)ca.org1.kevin.kongyixueyuan.com(\w*)
-      urlSubstitutionExp: http://localhost:7054
-      mappedHost: ca.org1.kevin.kongyixueyuan.com
+  certificateAuthority:
+    - pattern: (\w*)ca.org1.dragonwell.com(\w*)
+      urlSubstitutionExp: https://localhost:7054
+#      sslTargetOverrideUrlSubstitutionExp: ca.org1.dragonwell.com
+      mappedHost: ca.org1.dragonwell.com

@@ -12,13 +12,12 @@ func (t *ServiceSetup) SaveTea(tea Tea) (string, error) {
 	eventId := "event_addTea"
 	reg, notifier := registerEvent(t.Client, t.ChaincodeId, eventId)
 	defer t.Client.UnregisterChaincodeEvent(reg)
-
 	b, err := json.Marshal(tea)
 	if err != nil {
 		return "", fmt.Errorf("序列化 tea 失败, eventId：%v\n", eventId)
 	}
 
-	req := channel.Request{ChaincodeID:t.ChaincodeId, Fcn:"addTea",Args:[][]byte{b, []byte(eventId)}}
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "addTea", Args: [][]byte{b, []byte(eventId)}}
 	// the proposal responses from peer(s)
 
 	response, err := t.Client.Execute(req)
@@ -27,13 +26,13 @@ func (t *ServiceSetup) SaveTea(tea Tea) (string, error) {
 	}
 
 	err = eventResult(notifier, eventId)
-	if  err != nil {
+	if err != nil {
 		return "", err
 	}
 	return string(response.TransactionID), nil
 }
-
-func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error){
+// 通过 teaID 查询
+func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error) {
 
 	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaById", Args: [][]byte{[]byte(teaID)}}
 	respone, err := t.Client.Query(req)
@@ -44,13 +43,13 @@ func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error){
 	return respone.Payload, nil
 }
 
+// 修改 tea 信息
 func (t *ServiceSetup) ModifyTea(tea Tea) (string, error) {
 
 	eventID := "eventModifyTea"
 	reg, notifier := registerEvent(t.Client, t.ChaincodeId, eventID)
 	defer t.Client.UnregisterChaincodeEvent(reg)
 
-	// 将edu对象序列化成为字节数组
 	b, err := json.Marshal(tea)
 	if err != nil {
 		return "", fmt.Errorf("指定的edu对象序列化时发生错误")
