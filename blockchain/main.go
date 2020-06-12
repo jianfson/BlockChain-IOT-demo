@@ -6,7 +6,6 @@ import (
 	"fab-sdk-go-sample/service"
 	"fmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 	"os"
 )
@@ -59,21 +58,24 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
-
-	fmt.Println("----------------查询通道信息---------------")
+	//
+	//fmt.Println("----------------查询通道信息---------------")
 	clientChannelContext := sdk.ChannelContext(
 		initInfo.ChannelID,
 		fabsdk.WithUser(initInfo.OrgAdmin),
 		fabsdk.WithOrg(initInfo.OrgName),
 	)
-	ledgerClient, err := ledger.New(clientChannelContext)
-	if err != nil {
-		fmt.Printf("Failed to create channel [%s] client: %#v", initInfo.ChannelID, err)
-	}
-	sdkInit.QueryChannelInfo(ledgerClient)
-	sdkInit.QueryChannelConfig(ledgerClient)
+	//
+	//ledgerClient, err := ledger.New(clientChannelContext)
+	//
+	//if err != nil {
+	//	fmt.Printf("Failed to create channel [%s] client: %#v", initInfo.ChannelID, err)
+	//}
+	//
+	//sdkInit.QueryChannelInfo(ledgerClient)
+	//sdkInit.QueryChannelConfig(ledgerClient)
 
-	fmt.Println("----------------安装链码---------------")
+	fmt.Println("------------------安装链码-----------------")
 	err = sdkInit.InstallCC(sdk, initInfo)
 	if err != nil {
 		fmt.Printf("InstallCC %v failed", initInfo.ChaincodeID)
@@ -99,67 +101,76 @@ func main() {
 		Client:      channelClient,
 	}
 
-	tea := service.Tea{
+	teas := []service.Tea{
+		{
 		Id:     "01",
-		Maker:  "龙井",
-		Owner:  "龙井",
-		Weight: "500g",
+		Maker:  "dragonwell",
+		Owner:  "dragonwell",
+		Weight: "500",
+		},
+		{Id: "02",
+			Maker:  "dragonwell",
+			Owner:  "dragonwell",
+			Weight: "500",
+		},
+		{Id: "03",
+			Maker:  "dragonwell",
+			Owner:  "dragonwell",
+			Weight: "500",
+		},
 	}
 
 	fmt.Println("----------------写入茶叶信息---------------")
-	txID, err := serviceSetup.SaveTea(tea)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Printf("信息保存成功\n交易Id：%v\n", txID)
-	}
-	fmt.Println("----------------查询茶叶信息---------------")
-	id := "01"
-	b, err := serviceSetup.FindTeaInfoByID(id)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		var tea service.Tea
-		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Println(tea)
-	}
-
-	modifiedTea := service.Tea{
-		Id:     "01",
-		Maker:  "龙井",
-		Owner:  "wk",
-		Weight: "500g",
-	}
-
-	fmt.Println("---------------- 修改茶叶信息 ---------------")
-	txID, err = serviceSetup.ModifyTea(modifiedTea)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Printf("修改成功\ntxid：%v\n", txID)
-	}
-	fmt.Println("---------------- 查询茶叶信息 ---------------")
-	b, err = serviceSetup.FindTeaInfoByID(id)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		var tea service.Tea
-		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Println(tea)
-		for _, v := range tea.Histories {
-			fmt.Println(v)
+	for k , tea := range teas {
+		txID, err := serviceSetup.SaveTea(tea)
+		if err != nil {
+			fmt.Println(err.Error())
+		} else {
+			fmt.Printf("%d信息保存成功\n交易Id：%v\n", k, txID)
 		}
 	}
-
-	//fmt.Println("----------------登记、注册用户---------------")
-	//enrollSecret, err:=sdkInit.Register(sdk, initInfo, "User2")
-	//if err != nil {
-	//	fmt.Println(err)
-	//} else {
-	//	err = sdkInit.Enroll(sdk, initInfo, enrollSecret)
+	//
+	fmt.Println("----------------查询茶叶信息---------------")
+	b, err := serviceSetup.FindTeaInfoByID("01")
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		var tea service.Tea
+		json.Unmarshal(b, &tea)
+		fmt.Println("根据 teaID 查询信息成功：")
+		fmt.Println(tea)
+	}
+	//
+	//modifiedTea := service.Tea{
+	//	Id:     "01",
+	//	Maker:  "dragonwell",
+	//	Owner:  "wk",
+	//	Weight: "500",
 	//}
 	//
-	//sdkInit.GetUserInfo(sdk, "User2", "Org1")
+	//fmt.Println("---------------- 修改茶叶信息 ---------------")
+	//txID, err := serviceSetup.ModifyTea(modifiedTea)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//} else {
+	//	fmt.Printf("修改成功\ntxid：%v\n", txID)
+	//}
+
+	fmt.Println("---------------- 查询茶叶信息 ---------------")
+	b, err = serviceSetup.QueryTeaByWeightAndMaker("500")
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println(string(b))
+	}
+
+	fmt.Println("----------------登记、注册用户---------------")
+	enrollSecret, err:=sdkInit.Register(sdk, initInfo, "User2")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		err = sdkInit.Enroll(sdk, initInfo, enrollSecret)
+	}
+
+	sdkInit.GetUserInfo(sdk, "User2", "Org1")
 }

@@ -31,17 +31,6 @@ func (t *ServiceSetup) SaveTea(tea Tea) (string, error) {
 	}
 	return string(response.TransactionID), nil
 }
-// 通过 teaID 查询
-func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error) {
-
-	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaById", Args: [][]byte{[]byte(teaID)}}
-	respone, err := t.Client.Query(req)
-	if err != nil {
-		return []byte{0x00}, err
-	}
-
-	return respone.Payload, nil
-}
 
 // 修改 tea 信息
 func (t *ServiceSetup) ModifyTea(tea Tea) (string, error) {
@@ -67,4 +56,28 @@ func (t *ServiceSetup) ModifyTea(tea Tea) (string, error) {
 	}
 
 	return string(respone.TransactionID), nil
+}
+
+// 通过 teaID 查询
+func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error) {
+
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaById", Args: [][]byte{[]byte(teaID)}}
+	respone, err := t.Client.Query(req)
+	if err != nil {
+		return []byte{0x00}, err
+	}
+
+	return respone.Payload, nil
+}
+
+// 通过 weight, maker 查询
+func (t *ServiceSetup) QueryTeaByWeightAndMaker(weight string) ([]byte, error) {
+
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaByWeightAndMaker", Args: [][]byte{[]byte(weight)}}
+	respone, err := t.Client.Query(req)
+	if err != nil {
+		return []byte{0x00}, err
+	}
+
+	return respone.Payload, nil
 }

@@ -38,7 +38,7 @@ func (s *TeaChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 
 	// 获取函数名称、参数
 	fn, args := stub.GetFunctionAndParameters()
-	// addTea, updateTea, queryTeaById
+
 	if fn == "addTea" {
 		return s.addTea(stub, args)
 	} else if fn == "updateTea" {
@@ -46,7 +46,7 @@ func (s *TeaChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	} else if fn == "queryTeaById" {
 		return s.queryTeaById(stub, args)
 	} else if fn == "queryTeaByWeightAndMaker" {
-		return s.queryTeaById(stub, args)
+		return s.queryTeaByWeightAndMaker(stub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")

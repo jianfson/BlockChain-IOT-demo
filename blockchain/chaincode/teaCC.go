@@ -47,7 +47,7 @@ func GetTeaInfo(stub shim.ChaincodeStubInterface, entityId string) (Tea, bool) {
 	return tea, true
 }
 
-// getTeaByQueryString()根据指定的字符串进行富查询
+// getTeaByQueryString() 根据指定的字符串进行富查询
 func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
 
 	resultIterator, err := stub.GetQueryResult(queryString)
@@ -58,7 +58,7 @@ func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) (
 
 	var buffer bytes.Buffer
 
-	// 将查询结果从 resultIterator 提取，并组装成为 JSON 串
+	// 将查询结果从 resultIterator 提取
 	hasComma := false
 	for resultIterator.HasNext() {
 		queryResponse, err := resultIterator.Next()
@@ -140,30 +140,9 @@ func (s *TeaChaincode) updateTea(stub shim.ChaincodeStubInterface, args []string
 	return shim.Success([]byte("updata succeed"))
 }
 
-func (s *TeaChaincode) queryTeaByWeightAndMaker(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-
-	if len(args) != 2 {
-		return shim.Error("args not enough")
-	}
-
-	weight := args[0]
-	maker := args[1]
-
-	// 拼接富查询用到的 queryString
-	queryString := fmt.Sprintf("{\"selector\":{\"docType\":\"%s\",\"Weight\":\"%s\",\"Maker\":\"%s\"}}",DOC_TYPE, weight, maker)
-	result, err := getTeaByQueryString(stub, queryString)
-	if err != nil {
-		return shim.Error("query failed according to weight and maker")
-	}
-	if result == nil {
-		return shim.Error("get nothing according to weight and maker")
-	}
-	return shim.Success(result)
-}
-
 func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if len(args) != 1 {
-		return shim.Error("the num of args not right" )
+		return shim.Error("incorrect nums of  args, expect 1" )
 	}
 
 	result, err := stub.GetState(args[0])
@@ -214,3 +193,23 @@ func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []str
 	return shim.Success(b)
 }
 
+func (s *TeaChaincode) queryTeaByWeightAndMaker(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 1 {
+		return shim.Error("args not enough")
+	}
+
+	weight := args[0]
+	fmt.Println(weight)
+
+	// 拼接富查询用到的
+	queryString := fmt.Sprintf("{\"selector\":{\"docType\":\"%v\"}",DOC_TYPE)
+	result, err := getTeaByQueryString(stub, queryString)
+	if err != nil {
+		return shim.Error("query failed according to weight and maker")
+	}
+	if result == nil {
+		return shim.Error("get nothing according to weight and maker")
+	}
+	return shim.Success(result)
+}

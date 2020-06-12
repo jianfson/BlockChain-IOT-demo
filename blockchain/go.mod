@@ -11,7 +11,7 @@ require (
 	github.com/fsouza/go-dockerclient v1.6.5 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/hashicorp/go-version v1.2.0 // indirect
-	github.com/hyperledger/fabric v1.2.1
+	github.com/hyperledger/fabric v1.2.0
 	github.com/hyperledger/fabric-amcl v0.0.0-20200424173818-327c9e2cf77a // indirect
 	github.com/hyperledger/fabric-protos-go v0.0.0-20190821180310-6b6ac9042dfd // indirect
 	github.com/hyperledger/fabric-sdk-go v1.0.0-beta1

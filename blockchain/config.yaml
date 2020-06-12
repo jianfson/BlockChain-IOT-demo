@@ -298,5 +298,5 @@ entityMatchers:
   certificateAuthority:
     - pattern: (\w*)ca.org1.dragonwell.com(\w*)
       urlSubstitutionExp: https://localhost:7054
-#      sslTargetOverrideUrlSubstitutionExp: ca.org1.dragonwell.com
+      sslTargetOverrideUrlSubstitutionExp: ca.org1.dragonwell.com
       mappedHost: ca.org1.dragonwell.com
