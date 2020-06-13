@@ -71,9 +71,9 @@ func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error) {
 }
 
 // 通过 weight, maker 查询
-func (t *ServiceSetup) QueryTeaByWeightAndMaker(weight string) ([]byte, error) {
+func (t *ServiceSetup) QueryTeaByString(owner string) ([]byte, error) {
 
-	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaByWeightAndMaker", Args: [][]byte{[]byte(weight)}}
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaByString", Args: [][]byte{[]byte(owner)}}
 	respone, err := t.Client.Query(req)
 	if err != nil {
 		return []byte{0x00}, err

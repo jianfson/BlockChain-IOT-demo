@@ -45,8 +45,8 @@ func (s *TeaChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 		return s.updateTea(stub, args)
 	} else if fn == "queryTeaById" {
 		return s.queryTeaById(stub, args)
-	} else if fn == "queryTeaByWeightAndMaker" {
-		return s.queryTeaByWeightAndMaker(stub, args)
+	} else if fn == "queryTeaByString" {
+		return s.queryTeaByString(stub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
+	"strings"
 )
 
 const DOC_TYPE = "teaObj"
@@ -50,31 +51,62 @@ func GetTeaInfo(stub shim.ChaincodeStubInterface, entityId string) (Tea, bool) {
 // getTeaByQueryString() 根据指定的字符串进行富查询
 func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
 
-	resultIterator, err := stub.GetQueryResult(queryString)
+	fmt.Printf("- getTeaByQueryString queryString:\n%s\n", queryString)
+
+	resultsIterator, err := stub.GetQueryResult(queryString)
 	if err != nil {
 		return nil, err
 	}
-	defer resultIterator.Close()
+	defer resultsIterator.Close()
 
 	var buffer bytes.Buffer
+	buffer.WriteString("[")
 
-	// 将查询结果从 resultIterator 提取
-	hasComma := false
-	for resultIterator.HasNext() {
-		queryResponse, err := resultIterator.Next()
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
 		if err != nil {
 			return nil, err
 		}
-
-		if hasComma {
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
 		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
 
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
 		buffer.WriteString(string(queryResponse.Value))
-		hasComma = true
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
 	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- getTeaByQueryString queryResult:\n%s\n", buffer.String())
 
 	return buffer.Bytes(), nil
+
+
+	// 将查询结果从 resultIterator 提取
+	//hasComma := false
+	//for resultIterator.HasNext() {
+	//	queryResponse, err := resultIterator.Next()
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//
+	//	if hasComma {
+	//		buffer.WriteString(",")
+	//	}
+	//
+	//	buffer.WriteString(string(queryResponse.Value))
+	//	hasComma = true
+	//}
+	//
+	//return buffer.Bytes(), nil
 }
 
 // args[0]: teaObj, args[1]: eventName; eventName 用于区分事件
@@ -193,23 +225,22 @@ func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []str
 	return shim.Success(b)
 }
 
-func (s *TeaChaincode) queryTeaByWeightAndMaker(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) queryTeaByString(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 1 {
-		return shim.Error("args not enough")
+		return shim.Error("Incorrect number of args, expecting 1")
 	}
 
-	weight := args[0]
-	fmt.Println(weight)
+	owner := strings.ToLower(args[0])
 
 	// 拼接富查询用到的
-	queryString := fmt.Sprintf("{\"selector\":{\"docType\":\"%v\"}",DOC_TYPE)
-	result, err := getTeaByQueryString(stub, queryString)
+	queryString := fmt.Sprintf("{\"selector\":{\"docType\":\"%v\",\"owner\":\"%s\"}}", DOC_TYPE,owner)
+	results, err := getTeaByQueryString(stub, queryString)
 	if err != nil {
-		return shim.Error("query failed according to weight and maker")
+		return shim.Error(err.Error())
 	}
-	if result == nil {
+	if results == nil {
 		return shim.Error("get nothing according to weight and maker")
 	}
-	return shim.Success(result)
+	return shim.Success(results)
 }

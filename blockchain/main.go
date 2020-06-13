@@ -103,19 +103,21 @@ func main() {
 
 	teas := []service.Tea{
 		{
-		Id:     "01",
-		Maker:  "dragonwell",
-		Owner:  "dragonwell",
-		Weight: "500",
-		},
-		{Id: "02",
+			Id:     "01",
 			Maker:  "dragonwell",
 			Owner:  "dragonwell",
 			Weight: "500",
 		},
-		{Id: "03",
+		{
+			Id: "02",
 			Maker:  "dragonwell",
-			Owner:  "dragonwell",
+			Owner:  "wk",
+			Weight: "500",
+		},
+		{
+			Id: "03",
+			Maker:  "dragonwell",
+			Owner:  "wk",
 			Weight: "500",
 		},
 	}
@@ -140,24 +142,24 @@ func main() {
 		fmt.Println("根据 teaID 查询信息成功：")
 		fmt.Println(tea)
 	}
-	//
-	//modifiedTea := service.Tea{
-	//	Id:     "01",
-	//	Maker:  "dragonwell",
-	//	Owner:  "wk",
-	//	Weight: "500",
-	//}
-	//
-	//fmt.Println("---------------- 修改茶叶信息 ---------------")
-	//txID, err := serviceSetup.ModifyTea(modifiedTea)
-	//if err != nil {
-	//	fmt.Println(err.Error())
-	//} else {
-	//	fmt.Printf("修改成功\ntxid：%v\n", txID)
-	//}
 
-	fmt.Println("---------------- 查询茶叶信息 ---------------")
-	b, err = serviceSetup.QueryTeaByWeightAndMaker("500")
+	modifiedTea := service.Tea{
+		Id:     "01",
+		Maker:  "dragonwell",
+		Owner:  "wk",
+		Weight: "500",
+	}
+
+	fmt.Println("---------------- 修改茶叶信息 ---------------")
+	txID, err := serviceSetup.ModifyTea(modifiedTea)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Printf("修改成功\ntxid：%v\n", txID)
+	}
+
+	fmt.Println("---------------- 富查询茶叶信息 ---------------")
+	b, err = serviceSetup.QueryTeaByString("wk")
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {

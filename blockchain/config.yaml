@@ -265,7 +265,7 @@ certificateAuthorities:
     url: http://localhost:7054
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/tlsca/tlsca.org1.dragonwell.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/ca/ca.org1.dragonwell.com-cert.pem
 
     # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
     # needed to enroll and invoke new users.
