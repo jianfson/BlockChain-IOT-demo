@@ -47,11 +47,16 @@ a fabric-sdk-go-sample to build solutions that interact with [hyperledger fabric
 		git checkout -b 1.2 origin/release-1.2
 
 		make release
-		make docker
+		执行 fixtures 目录下的 `pull_images.sh` 拉取镜像
+
 
 ## Getting started
 **Directory Structure**
+
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200608174324548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RCQmV0dGVy,size_16,color_FFFFFF,t_70)
+
+
 **Supported features**
 - ListChannel
 - channel create
