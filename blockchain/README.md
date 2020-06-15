@@ -83,3 +83,5 @@ a fabric-sdk-go-sample to build solutions that interact with [hyperledger fabric
 [Fabric-SDK-Go](https://github.com/hyperledger/fabric-sdk-go)
 
 [Kongyixueyuan](https://github.com/kevin-hf/kongyixueyuan)
+
+[Marbles_Chaincode](https://github.com/hyperledger/fabric-samples/blob/release-1.2/chaincode/marbles02/go/marbles_chaincode.go)
