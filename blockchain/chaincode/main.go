@@ -28,7 +28,15 @@ import (
 type TeaChaincode struct {
 }
 
-// 实现 Init 方法，什么也不做，直接返回。
+func main() {
+	// Create a new Smart Contract
+	err := shim.Start(new(TeaChaincode))
+	if err != nil {
+		fmt.Printf("Error starting Tea chaincode: %s", err)
+	}
+}
+
+// 实现 Init 方法。
 func (s *TeaChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	return shim.Success(nil)
 }
@@ -39,6 +47,7 @@ func (s *TeaChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	// 获取函数名称、参数
 	fn, args := stub.GetFunctionAndParameters()
 
+	//调用对应函数
 	if fn == "addTea" {
 		return s.addTea(stub, args)
 	} else if fn == "updateTea" {
@@ -47,15 +56,11 @@ func (s *TeaChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 		return s.queryTeaById(stub, args)
 	} else if fn == "queryTeaByString" {
 		return s.queryTeaByString(stub, args)
+	} else if fn == "getHistoryForTea" {
+		return s.getHistoryForTea(stub, args)
+	} else if fn == "delete" {
+		return s.delete(stub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
-}
-
-func main() {
-	// Create a new Smart Contract
-	err := shim.Start(new(TeaChaincode))
-	if err != nil {
-		fmt.Printf("Error starting Tea chaincode: %s", err)
-	}
 }

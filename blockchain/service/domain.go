@@ -8,18 +8,18 @@ import (
 )
 
 type Tea struct {
-	ObjectType string `json:"docType"`
-	Id      string    `json:"id"`
-	Maker    string `json:"make"`
-	Owner   string `json:"owner"`
-	Weight  string `json:"weight"`
-	Histories []HistoryItem `json:"history"`
+	//ObjectType string `json:"docType"`
+	Id      string    `json:"Id"`
+	Maker    string `json:"Maker"`
+	Owner   string `json:"Owner"`
+	Weight  string `json:"Weight"`
+	//Histories []HistoryItem `json:"history"`
 }
 
-type HistoryItem struct {
-	TxId string
-	tea Tea
-}
+//type HistoryItem struct {
+//	TxId string
+//	tea Tea
+//}
 
 type ServiceSetup struct {
 	ChaincodeId string

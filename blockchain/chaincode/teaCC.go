@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
-	"strings"
+	"strconv"
+	"time"
 )
 
 const DOC_TYPE = "teaObj"
@@ -14,20 +15,20 @@ const DOC_TYPE = "teaObj"
 // 该文件实现使用链码相关API对账本状态进行具体操作的函数们
 
 // PutTea() 将对象序列化后保存至账本中
-func PutTea(stub shim.ChaincodeStubInterface, tea Tea) ([]byte, bool) {
+func PutTea(stub shim.ChaincodeStubInterface, tea Tea) bool {
 
-	tea.ObjectType = "teaObj"
+	//tea.ObjectType = DOC_TYPE
 	b, err := json.Marshal(tea)
 	if err != nil {
-		return nil, false
+		return false
 	}
 
 	err = stub.PutState(tea.Id, b)
 	if err != nil {
-		return nil, false
+		return false
 	}
 
-	return b, true
+	return true
 }
 
 // GetTeaInfo() 根据指定的茶叶 Id 查询对应的状态，反序列化后并返回对象
@@ -38,7 +39,7 @@ func GetTeaInfo(stub shim.ChaincodeStubInterface, entityId string) (Tea, bool) {
 	b, err := stub.GetState(entityId)
 	if err != nil || b == nil {
 		return tea, false
-	} 	// 有错误 或者 Id不存在[id不存在GetState()返回 nil, nil]
+	} // 有错误 或者 Id不存在[id不存在GetState()返回 nil, nil]
 
 	err = json.Unmarshal(b, &tea)
 	if err != nil {
@@ -88,38 +89,33 @@ func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) (
 	fmt.Printf("- getTeaByQueryString queryResult:\n%s\n", buffer.String())
 
 	return buffer.Bytes(), nil
-
-
-	// 将查询结果从 resultIterator 提取
-	//hasComma := false
-	//for resultIterator.HasNext() {
-	//	queryResponse, err := resultIterator.Next()
-	//	if err != nil {
-	//		return nil, err
-	//	}
-	//
-	//	if hasComma {
-	//		buffer.WriteString(",")
-	//	}
-	//
-	//	buffer.WriteString(string(queryResponse.Value))
-	//	hasComma = true
-	//}
-	//
-	//return buffer.Bytes(), nil
 }
 
 // args[0]: teaObj, args[1]: eventName; eventName 用于区分事件
 func (s *TeaChaincode) addTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 2 {
-		return shim.Error("args not enough")
+		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 
 	var tea Tea
 	err := json.Unmarshal([]byte(args[0]), &tea)
 	if err != nil {
 		return shim.Error("Unmarshal tea failed")
+	}
+
+	// ==== Input sanitation ====
+	if len(tea.Id) <= 0 {
+		return shim.Error("Id must be a non-empty string")
+	}
+	if len(tea.Maker) <= 0 {
+		return shim.Error("Maker must be a non-empty string")
+	}
+	if len(tea.Owner) <= 0 {
+		return shim.Error("Owner must be a non-empty string")
+	}
+	if len(tea.Weight) <= 0 {
+		return shim.Error("Weight must be a non-empty string")
 	}
 
 	_, exist := GetTeaInfo(stub, tea.Id)
@@ -127,9 +123,10 @@ func (s *TeaChaincode) addTea(stub shim.ChaincodeStubInterface, args []string) p
 		return shim.Error("Id specified already exists")
 	}
 
-	_, flag := PutTea(stub, tea)
+	tea.ObjectType = DOC_TYPE
+	flag := PutTea(stub, tea)
 	if !flag {
-		return shim.Error("Save data failed")
+		return shim.Error("Add data failed")
 	}
 
 	err = stub.SetEvent(args[1], []byte{})
@@ -137,14 +134,14 @@ func (s *TeaChaincode) addTea(stub shim.ChaincodeStubInterface, args []string) p
 		return shim.Error(err.Error())
 	}
 
-	return shim.Success([]byte("add Tea succeed"))
+	return shim.Success([]byte("Add Tea succeed"))
 }
 
 // args[0]: teaObj, args[1]: eventName;
 func (s *TeaChaincode) updateTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 2 {
-		return shim.Error("args not enough")
+		return shim.Error("Incorrect numbers of args, expecting 2")
 	}
 
 	var tea Tea
@@ -153,13 +150,21 @@ func (s *TeaChaincode) updateTea(stub shim.ChaincodeStubInterface, args []string
 		return shim.Error("Unmarshal tea failed")
 	}
 
-	result, flag := GetTeaInfo(stub, tea.Id)
-	if !flag {
-		return shim.Error("query falied according to Id specified ")
+	if len(tea.Id) <= 0 {
+		return shim.Error("Id must be a non-empty string")
+	}
+	if len(tea.Maker) <= 0 {
+		return shim.Error("Maker must be a non-empty string")
+	}
+	if len(tea.Owner) <= 0 {
+		return shim.Error("Owner must be a non-empty string")
+	}
+	if len(tea.Weight) <= 0 {
+		return shim.Error("Weight must be a non-empty string")
 	}
 
-	result.Owner = tea.Owner
-	_, flag =PutTea(stub, result)
+	tea.ObjectType = DOC_TYPE
+	flag := PutTea(stub, tea)
 	if !flag {
 		return shim.Error("Save data failed")
 	}
@@ -174,7 +179,7 @@ func (s *TeaChaincode) updateTea(stub shim.ChaincodeStubInterface, args []string
 
 func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if len(args) != 1 {
-		return shim.Error("incorrect nums of  args, expect 1" )
+		return shim.Error("incorrect nums of  args, expecting 1")
 	}
 
 	result, err := stub.GetState(args[0])
@@ -184,45 +189,7 @@ func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []str
 	if result == nil {
 		return shim.Error("get nothing according to id")
 	}
-
-	var tea Tea
-	err = json.Unmarshal(result, &tea)
-	if err != nil {
-		return shim.Error("unmarshal tea failed ")
-	}
-	// 获取历史数据
-	iterator, err := stub.GetHistoryForKey(tea.Id)
-	if err != nil{
-		return shim.Error("get history data failed")
-	}
-	defer iterator.Close()
-
-	var hisTea Tea
-	var histories []HistoryItem
-	for iterator.HasNext() {
-		hisData, err := iterator.Next()
-		if err != nil {
-			return shim.Error("err when get history data ")
-		}
-
-		var historyItem HistoryItem
-		historyItem.TxId = hisData.TxId
-		json.Unmarshal(hisData.Value, &hisTea)
-		if hisData.Value == nil {
-			var empty Tea
-			historyItem.tea = empty
-		} else {
-			historyItem.tea = hisTea
-		}
-
-		histories = append(histories, historyItem)
-	}
-	tea.Histories = histories
-	b, err := json.Marshal(tea)
-	if err != nil {
-		return shim.Error("err when marshal Tea")
-	}
-	return shim.Success(b)
+	return shim.Success(result)
 }
 
 func (s *TeaChaincode) queryTeaByString(stub shim.ChaincodeStubInterface, args []string) pb.Response {
@@ -231,10 +198,8 @@ func (s *TeaChaincode) queryTeaByString(stub shim.ChaincodeStubInterface, args [
 		return shim.Error("Incorrect number of args, expecting 1")
 	}
 
-	owner := strings.ToLower(args[0])
-
-	// 拼接富查询用到的
-	queryString := fmt.Sprintf("{\"selector\":{\"docType\":\"%v\",\"owner\":\"%s\"}}", DOC_TYPE,owner)
+	// 拼接富查询用到的 string
+	queryString := fmt.Sprintf("{\"selector\":{\"docType\":\"%s\",\"Owner\":\"%s\"}}", DOC_TYPE, args[0])
 	results, err := getTeaByQueryString(stub, queryString)
 	if err != nil {
 		return shim.Error(err.Error())
@@ -243,4 +208,96 @@ func (s *TeaChaincode) queryTeaByString(stub shim.ChaincodeStubInterface, args [
 		return shim.Error("get nothing according to weight and maker")
 	}
 	return shim.Success(results)
+}
+
+func (s *TeaChaincode) getHistoryForTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	teaId := args[0]
+
+	fmt.Printf("- start getHistoryForMarble: %s\n", teaId)
+
+	resultsIterator, err := stub.GetHistoryForKey(teaId)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing historic values for the marble
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		response, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"TxId\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(response.TxId)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Value\":")
+		// if it was a delete operation on given key, then we need to set the
+		//corresponding value null. Else, we will write the response.Value
+		//as-is (as the Value itself a JSON marble)
+		if response.IsDelete {
+			buffer.WriteString("null")
+		} else {
+			buffer.WriteString(string(response.Value))
+		}
+
+		buffer.WriteString(", \"Timestamp\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String())
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"IsDelete\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(strconv.FormatBool(response.IsDelete))
+		buffer.WriteString("\"")
+
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- getHistoryForMarble returning:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
+}
+
+// ==================================================
+// delete - remove a tea key/value pair from state
+// ==================================================
+func (s *TeaChaincode) delete(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	teaId := args[0]
+
+	valAsbytes, err := stub.GetState(teaId) //get the tea from chaincode state
+	if err != nil {
+		jsonResp := "{\"Error\":\"Failed to get state for " + teaId + "\"}"
+		return shim.Error(jsonResp)
+	} else if valAsbytes == nil {
+		jsonResp := "{\"Error\":\"Tea does not exist: " + teaId + "\"}"
+		return shim.Error(jsonResp)
+	}
+
+	err = stub.DelState(teaId) //remove the tea from chaincode state
+	if err != nil {
+		return shim.Error("Failed to delete state:" + err.Error())
+	}
+
+	return shim.Success(nil)
 }

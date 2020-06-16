@@ -70,10 +70,34 @@ func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error) {
 	return respone.Payload, nil
 }
 
-// 通过 weight, maker 查询
-func (t *ServiceSetup) QueryTeaByString(owner string) ([]byte, error) {
+// 通过 s 查询
+func (t *ServiceSetup) QueryTeaByString(s string) ([]byte, error) {
 
-	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaByString", Args: [][]byte{[]byte(owner)}}
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaByString", Args: [][]byte{[]byte(s)}}
+	respone, err := t.Client.Query(req)
+	if err != nil {
+		return []byte{0x00}, err
+	}
+
+	return respone.Payload, nil
+}
+
+// 通过 id 删除
+func (t *ServiceSetup) Delete(teaId string) ([]byte, error) {
+
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "delete", Args: [][]byte{[]byte(teaId)}}
+	respone, err := t.Client.Execute(req)
+	if err != nil {
+		return []byte{0x00}, err
+	}
+
+	return respone.Payload, nil
+}
+
+// 通过 id 查询历史
+func (t *ServiceSetup) GetHistoryForTea(teaId string) ([]byte, error) {
+
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "getHistoryForTea", Args: [][]byte{[]byte(teaId)}}
 	respone, err := t.Client.Query(req)
 	if err != nil {
 		return []byte{0x00}, err
