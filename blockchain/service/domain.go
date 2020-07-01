@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"time"
 )
@@ -23,7 +24,8 @@ type Tea struct {
 
 type ServiceSetup struct {
 	ChaincodeId string
-	Client *channel.Client
+	ChannelClient *channel.Client
+	LedgerClient *ledger.Client
 }
 
 //注册链码事件

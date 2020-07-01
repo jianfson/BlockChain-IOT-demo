@@ -111,8 +111,9 @@ func main() {
 	fmt.Println("通道客户端创建成功，可以利用此客户端调用链码进行查询或执行事务.")
 
 	serviceSetup := service.ServiceSetup{
-		ChaincodeId: TeaCC,
-		Client:      channelClient,
+		ChaincodeId:   TeaCC,
+		ChannelClient: channelClient,
+		LedgerClient:  ledgerClient,
 	}
 
 	teas := []service.Tea{
@@ -142,7 +143,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err.Error())
 		} else {
-			fmt.Printf("%d信息保存成功\n交易Id：%v\n", k, txID)
+			fmt.Printf("%d 信息保存成功\n交易Id：%v\n", k, txID)
 		}
 	}
 	//
@@ -172,6 +173,24 @@ func main() {
 		fmt.Printf("修改成功\ntxid：%v\n", txID)
 	}
 
+	fmt.Println("---------------- 根据 txID 查询茶叶信息 ---------------")
+	reqsTx, err := serviceSetup.QueryTransactionByTxID(txID)
+	if err != nil {
+		fmt.Printf("failed to query transaction: %s\n", err)
+	}
+	if reqsTx != nil {
+		fmt.Printf("Retrieved transaction : %+v\n", string(reqsTx))
+	}
+
+	fmt.Println("---------------- 根据 txID 查询区块信息 ---------------")
+	reqsBlock, err := serviceSetup.QueryBlockByTxID(txID)
+	if err != nil {
+		fmt.Printf("failed to query transaction: %s\n", err)
+	}
+	if reqsTx != nil {
+		fmt.Printf("Retrieved transaction : %+v\n", reqsBlock)
+	}
+
 	fmt.Println("----------------查询茶叶 \"01\" 信息---------------")
 	teaId := "01"
 	b, err = serviceSetup.FindTeaInfoByID(teaId)
@@ -181,7 +200,7 @@ func main() {
 		var tea service.Tea
 		json.Unmarshal(b, &tea)
 		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Printf("%v tea : %+v",teaId, tea)
+		fmt.Printf("%v tea : %+v", teaId, tea)
 	}
 
 	fmt.Println("---------------- 查询茶叶 \"01\" 历史 ---------------")
@@ -200,12 +219,20 @@ func main() {
 		fmt.Println(string(b))
 	}
 
+	fmt.Println("---------------- queryByRange ---------------")
+	b, err = serviceSetup.GetTeasByRange("01","9999")
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println(string(b))
+	}
+
 	fmt.Println("---------------- 删除茶叶信息 ---------------")
 	b, err = serviceSetup.Delete("01")
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println("删除成功", string(b))
+		fmt.Println("删除成功", []rune(string(b)))
 	}
 
 	fmt.Println("----------------查询茶叶信息---------------")

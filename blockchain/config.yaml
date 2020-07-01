@@ -164,8 +164,9 @@ organizations:
 #    cryptoPath: ordererOrganizations/dragonwell.com/users/{username}@dragonwell.com/msp
 
   Org1:
-    # 加星
+    # 加星 配置应用程序所在组织即可
     mspid: Org1MSP
+    # 相对路径，前面最初配置的cryptoconfig
     cryptoPath: peerOrganizations/org1.dragonwell.com/users/{userName}@org1.dragonwell.com/msp
     peers:
       - peer0.org1.dragonwell.com

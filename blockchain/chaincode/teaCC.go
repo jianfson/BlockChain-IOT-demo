@@ -92,7 +92,7 @@ func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) (
 }
 
 // args[0]: teaObj, args[1]: eventName; eventName 用于区分事件
-func (s *TeaChaincode) addTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) saveTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 2 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
@@ -138,42 +138,50 @@ func (s *TeaChaincode) addTea(stub shim.ChaincodeStubInterface, args []string) p
 }
 
 // args[0]: teaObj, args[1]: eventName;
-func (s *TeaChaincode) updateTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) teaExchange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
+	//if len(args) != 2 {
+	//	return shim.Error("Incorrect numbers of args, expecting 2")
+	//}
+	//
+	//var tea Tea
+	//err := json.Unmarshal([]byte(args[0]), &tea)
+	//if err != nil {
+	//	return shim.Error("Unmarshal tea failed")
+	//}
+	//
+	//if len(tea.Id) <= 0 {
+	//	return shim.Error("Id must be a non-empty string")
+	//}
+	//if len(tea.Maker) <= 0 {
+	//	return shim.Error("Maker must be a non-empty string")
+	//}
+	//if len(tea.Owner) <= 0 {
+	//	return shim.Error("Owner must be a non-empty string")
+	//}
+	//if len(tea.Weight) <= 0 {
+	//	return shim.Error("Weight must be a non-empty string")
+	//}
+	//
+	//tea.ObjectType = DOC_TYPE
 	if len(args) != 2 {
 		return shim.Error("Incorrect numbers of args, expecting 2")
 	}
 
-	var tea Tea
-	err := json.Unmarshal([]byte(args[0]), &tea)
-	if err != nil {
-		return shim.Error("Unmarshal tea failed")
-	}
+	teaID := args[0]
+	nextOwner := args[1]
+	tea,_ := GetTeaInfo(stub, teaID)
+	tea.Owner = nextOwner
 
-	if len(tea.Id) <= 0 {
-		return shim.Error("Id must be a non-empty string")
-	}
-	if len(tea.Maker) <= 0 {
-		return shim.Error("Maker must be a non-empty string")
-	}
-	if len(tea.Owner) <= 0 {
-		return shim.Error("Owner must be a non-empty string")
-	}
-	if len(tea.Weight) <= 0 {
-		return shim.Error("Weight must be a non-empty string")
-	}
-
-	tea.ObjectType = DOC_TYPE
 	flag := PutTea(stub, tea)
 	if !flag {
 		return shim.Error("Save data failed")
 	}
 
-	err = stub.SetEvent(args[1], []byte{})
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
+	//err = stub.SetEvent(args[1], []byte{})
+	//if err != nil {
+	//	return shim.Error(err.Error())
+	//}
 	return shim.Success([]byte("updata succeed"))
 }
 
@@ -208,6 +216,53 @@ func (s *TeaChaincode) queryTeaByString(stub shim.ChaincodeStubInterface, args [
 		return shim.Error("get nothing according to weight and maker")
 	}
 	return shim.Success(results)
+}
+
+func (s *TeaChaincode) getTeasByRange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) < 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	startKey := args[0]
+	endKey := args[1]
+
+	resultsIterator, err := stub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- getTeasByRange queryResult:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
 }
 
 func (s *TeaChaincode) getHistoryForTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
@@ -278,7 +333,7 @@ func (s *TeaChaincode) getHistoryForTea(stub shim.ChaincodeStubInterface, args [
 // ==================================================
 // delete - remove a tea key/value pair from state
 // ==================================================
-func (s *TeaChaincode) delete(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) deleteTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
