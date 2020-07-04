@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<div>
+        <form action="b.html">
+            <input id="teaID" name="new_id" placeholder="ID">
+            <input name="new_maker" placeholder="MAKER">
+            <input name="new_owner" placeholder="OWNER">
+            <input name="new_weight" placeholder="WEIGHT">
+            <a href="b.html">
+            <button>Submit</button>
+            </a>
+        </form>
+</div>
+
+
+
+
+<script type="module">
+    import Cookies from 'js-cookie'
+
+    Cookies.set('money', '200', {expires: 7});
+</script>
+</body>
+</html>

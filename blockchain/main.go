@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fab-sdk-go-sample/sdkInit"
 	"fab-sdk-go-sample/service"
+	"fab-sdk-go-sample/web"
+	"fab-sdk-go-sample/web/controller"
 	"fmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 	"os"
 )
@@ -64,24 +64,13 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
-	//-----------------------------------------
-	//-----------------查询通道信息--------------
-	//-----------------------------------------
-	fmt.Println("---------------查询通道信息---------------")
+
 	clientChannelContext := sdk.ChannelContext(
 		initInfo.ChannelID,
 		fabsdk.WithUser(initInfo.OrgAdmin),
 		fabsdk.WithOrg(initInfo.OrgName),
 	)
 
-	ledgerClient, err := ledger.New(clientChannelContext)
-
-	if err != nil {
-		fmt.Printf("Failed to create channel [%s] client: %#v", initInfo.ChannelID, err)
-	}
-
-	sdkInit.QueryChannelInfo(ledgerClient)
-	sdkInit.QueryChannelConfig(ledgerClient)
 	//----------------------------------------- -------------------------
 	//-------------------------------安装链码------------------------------
 	//-------------------------------------------------------------------
@@ -113,7 +102,6 @@ func main() {
 	serviceSetup := service.ServiceSetup{
 		ChaincodeId:   TeaCC,
 		ChannelClient: channelClient,
-		LedgerClient:  ledgerClient,
 	}
 
 	teas := []service.Tea{
@@ -146,113 +134,8 @@ func main() {
 			fmt.Printf("%d 信息保存成功\n交易Id：%v\n", k, txID)
 		}
 	}
-	//
-	fmt.Println("----------------查询茶叶信息---------------")
-	b, err := serviceSetup.FindTeaInfoByID("01")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		var tea service.Tea
-		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Println(tea)
+	app := controller.Application{
+		Setup: &serviceSetup,
 	}
-
-	modifiedTea := service.Tea{
-		Id:     "01",
-		Maker:  "dragonwell",
-		Owner:  "wk",
-		Weight: "300",
-	}
-
-	fmt.Println("---------------- 修改茶叶信息 ---------------")
-	txID, err := serviceSetup.ModifyTea(modifiedTea)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Printf("修改成功\ntxid：%v\n", txID)
-	}
-
-	fmt.Println("---------------- 根据 txID 查询茶叶信息 ---------------")
-	reqsTx, err := serviceSetup.QueryTransactionByTxID(txID)
-	if err != nil {
-		fmt.Printf("failed to query transaction: %s\n", err)
-	}
-	if reqsTx != nil {
-		fmt.Printf("Retrieved transaction : %+v\n", string(reqsTx))
-	}
-
-	fmt.Println("---------------- 根据 txID 查询区块信息 ---------------")
-	reqsBlock, err := serviceSetup.QueryBlockByTxID(txID)
-	if err != nil {
-		fmt.Printf("failed to query transaction: %s\n", err)
-	}
-	if reqsTx != nil {
-		fmt.Printf("Retrieved transaction : %+v\n", reqsBlock)
-	}
-
-	fmt.Println("----------------查询茶叶 \"01\" 信息---------------")
-	teaId := "01"
-	b, err = serviceSetup.FindTeaInfoByID(teaId)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		var tea service.Tea
-		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Printf("%v tea : %+v", teaId, tea)
-	}
-
-	fmt.Println("---------------- 查询茶叶 \"01\" 历史 ---------------")
-	b, err = serviceSetup.GetHistoryForTea("01")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println(string(b))
-	}
-
-	fmt.Println("---------------- 富查询茶叶信息 ---------------")
-	b, err = serviceSetup.QueryTeaByString("wk")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println(string(b))
-	}
-
-	fmt.Println("---------------- queryByRange ---------------")
-	b, err = serviceSetup.GetTeasByRange("01","9999")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println(string(b))
-	}
-
-	fmt.Println("---------------- 删除茶叶信息 ---------------")
-	b, err = serviceSetup.Delete("01")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("删除成功", []rune(string(b)))
-	}
-
-	fmt.Println("----------------查询茶叶信息---------------")
-	b, err = serviceSetup.FindTeaInfoByID("01")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		var tea service.Tea
-		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Println(tea)
-	}
-
-	fmt.Println("----------------登记、注册用户---------------")
-	enrollSecret, err := sdkInit.Register(sdk, initInfo, "User2")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		err = sdkInit.Enroll(sdk, initInfo, enrollSecret)
-	}
-
-	sdkInit.GetUserInfo(sdk, "User2", "Org1")
+	web.WebStart(&app)
 }

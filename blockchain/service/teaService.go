@@ -19,7 +19,7 @@ func (t *ServiceSetup) SaveTea(tea Tea) (string, error) {
 		return "", fmt.Errorf("序列化 tea 失败, eventId：%v\n", eventId)
 	}
 
-	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "addTea", Args: [][]byte{b, []byte(eventId)}}
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "saveTea", Args: [][]byte{b, []byte(eventId)}}
 	// the proposal responses from peer(s)
 
 	response, err := t.ChannelClient.Execute(req)
@@ -35,18 +35,14 @@ func (t *ServiceSetup) SaveTea(tea Tea) (string, error) {
 }
 
 // 修改 tea 信息
-func (t *ServiceSetup) ModifyTea(tea Tea) (string, error) {
+func (t *ServiceSetup) ModifyTea(teaID, nextOwner string) (string, error) {
 
 	eventID := "eventModifyTea"
 	reg, notifier := registerEvent(t.ChannelClient, t.ChaincodeId, eventID)
 	defer t.ChannelClient.UnregisterChaincodeEvent(reg)
 
-	b, err := json.Marshal(tea)
-	if err != nil {
-		return "", fmt.Errorf("指定的edu对象序列化时发生错误")
-	}
 
-	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "updateTea", Args: [][]byte{b, []byte(eventID)}}
+	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "teaExchange", Args: [][]byte{[]byte(teaID),[]byte(nextOwner), []byte(eventID)}}
 	respone, err := t.ChannelClient.Execute(req)
 	if err != nil {
 		return "", err

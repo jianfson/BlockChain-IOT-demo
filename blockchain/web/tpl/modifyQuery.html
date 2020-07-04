@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tea Safe</title>
+</head>
+<body>
+
+        <div><text>请先查询要修改的信息</text></div>
+        <div id="query">
+            <div class="left">
+                <form action="/modifyQuery" method="post" name="queryForm">
+                    <p>
+                        茶叶编号：
+                        <input type="text" class="input_text" name="id" onfocus="if(this.placeholder=='茶叶编号'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='茶叶编号';this.className ='input_text'}" value="" placeholder="茶叶编号">
+                    </p>
+                    <p>
+                        <button name="button" class="btn">免费查询</button>
+                    </p>
+
+                </form>
+            </div>
+
+        </div>
+
+
+</body>
+</html>

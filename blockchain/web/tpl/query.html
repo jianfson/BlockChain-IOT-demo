@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+{{/*
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+*/}}
+    <title>Tea Safe</title>
+</head>
+<body>
+<div class="container">
+    <h2>川茶区块链查询</h2>
+
+        <div class="left">
+{{/*            <form action="/query" method="post" name="queryForm">*/}}
+            <form action="/query" name="queryForm">
+                <p>
+                    茶叶编号：
+                    <input class="input_text" name="id" onfocus="if(this.placeholder=='茶叶编号'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='茶叶编号';this.className ='input_text'}" placeholder="茶叶编号">
+                </p>
+                <p>
+                    <button>免费查询</button>
+                </p>
+
+            </form>
+        </div>
+
+
+
+</div>
+</body>
+
+{{/*<script type="text/javascript">
+    $(function() {
+        var inputs = $('input[type="text"]');
+        // 提交按钮
+        $('.btn').click(function() {
+            // 如果为空 报错提示
+            for (var i = 0; i < inputs.length; i++) {
+                if (!($(inputs[i]).val())) {
+                    $(inputs[i]).addClass('redColor');
+                    $('#myModal').modal('show');
+                    setTimeout(function(){
+                        $("#myModal").modal("hide");
+                    },2000);
+                    return;
+                }
+            }
+
+            // 成功后提交数据
+            $("form[name='queryForm']").submit()
+        })
+    })
+</script>*/}}
+</html>

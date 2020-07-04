@@ -162,10 +162,12 @@ func (s *TeaChaincode) teaExchange(stub shim.ChaincodeStubInterface, args []stri
 	//if len(tea.Weight) <= 0 {
 	//	return shim.Error("Weight must be a non-empty string")
 	//}
-	//
+
 	//tea.ObjectType = DOC_TYPE
-	if len(args) != 2 {
-		return shim.Error("Incorrect numbers of args, expecting 2")
+
+	// exchange
+	if len(args) != 3 {
+		return shim.Error("Incorrect numbers of args, expecting 3")
 	}
 
 	teaID := args[0]
