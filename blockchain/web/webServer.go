@@ -14,28 +14,26 @@ func WebStart(app *controller.Application)  {
 	fs := http.FileServer(http.Dir("web/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	// 指定路由信息(匹配请求)
+	// 指定第一次打开系统进入的页面
 	http.HandleFunc("/", app.LoginView)
+
+	http.HandleFunc("/backToHome", app.BackToHome)			// 返回首页
+
+	// 登陆
 	http.HandleFunc("/login", app.Login)
-	http.HandleFunc("/loginout", app.LoginOut)
 
-	http.HandleFunc("/index", app.Index)
-	http.HandleFunc("/help", app.Help)
+	// 添加
+	http.HandleFunc("/addTeaPage", app.AddTeaPage) // 显示添加信息页面
+	http.HandleFunc("/addTea", app.AddTea)         // 提交修改请求并跳转添加成功提示页面
 
-	http.HandleFunc("/qrcodesearch", app.QueryPage)
+	// 修改
+	http.HandleFunc("/modifyQueryPage", app.ModifyQueryPage) // 进入修改查询页面
+	http.HandleFunc("/modifyQuery", app.ModifyQuery)         // 显示查询结果并修改
+	http.HandleFunc("/modifyResult", app.ModifyResult)       // 显示修改结果
 
-
-	http.HandleFunc("/addTeaInfo", app.AddTeaShow)	// 显示添加信息页面
-	http.HandleFunc("/addTea", app.SaveTea)	// 提交信息请求
-
-	//http.HandleFunc("/modifyTea", app.ModifyTea)	// Modify Tea Page
-	http.HandleFunc("/modifyQuery", app.ModifyQuery)	// Modify Tea Page
-	http.HandleFunc("/modifyQueryPage", app.ModifyQueryPage)	// Modify Tea Page
-	http.HandleFunc("/modifyResult", app.ModifyTea)	// Modify Tea Page
-	//http.HandleFunc("/modifyTea", app.ModifyTea)	// submit modify request
-
-	http.HandleFunc("/queryPage", app.QueryPage)	// 转至根据 id 查询信息页面
-	http.HandleFunc("/query", app.FindTeaByID)	// 根据 id 查询信息
+	// 查询
+	http.HandleFunc("/queryPage", app.QueryPage)		// 转至查询信息页面
+	http.HandleFunc("/findTeaByID", app.FindTeaByID)	// 根据id查询并转至查询结果页面
 
 	fmt.Println("启动Web服务, 监听端口号: 9000")
 

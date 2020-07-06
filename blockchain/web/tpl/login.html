@@ -1,122 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="zh" dir="ltr">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>login</title>
-    <link href="../static/css/login.css" rel="stylesheet">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maxium-scale=1.0, user-scalable=no">
+        <meta name="apple-touch-fullsreen" content="YES">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Tea Safe · 川茶</title>
+        <link href="../static/css/login.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css" >
+        <link rel="stylesheet" href="../static/css/font-awesome.min.css" >
+        <link rel="Shortcut Icon" href="../static/image/TeaSafeLogo.ico" type="image/x-icon" />
+    </head>
 
-<body>
-{{if .Flag}}
-    <div id="popout">
-        <div class="popout">
-            <div class="button">用户名或密码输入错误!请重新输入</div>
-            <p><button id="popout_button" type="button" name="button">好的</button></p>
-        </div>
-    </div>
-{{end}}
-<div class="container">
-    <div class="logon_centerBg logon_centerBg_my">
-        <div class="width1200">
-
-            <div class="login-box-my">
-                <h2>登录</h2>
-                <p>请使用
-                    <a href="#" target="_blank"><b>TeaSafe账号</b> </a>进行登录</p>
-                <div class="cr_top_my">
-                    <form id="fm1" action="/login" method="post" autocomplete="off">
-                        <div class="ct_input">
-                            <span class="ct_img_yhm">&nbsp;</span>
-                            <input id="username" name="loginName" class="input_text" tabindex="1" onfocus="if(this.value=='username'){this.value='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.value='username';this.className ='input_text'}" accesskey="n" type="text" value="username" size="25" autocomplete="off">
-                        </div>
-                        <div class="ct_input">
-                            <span class="ct_img_mm">&nbsp;</span>
-                            <input id="password" name="password" class="input_text" tabindex="2" onfocus="if(this.value=='password'){this.value='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.value='password';this.className ='input_text'}" accesskey="n" type="text" value="password" size="25" autocomplete="off">
-                        </div>
-                        <input class="btn_login btn_login_my" name="submit" accesskey="l" value="Login" tabindex="3" type="submit" title="Login">
-                    </form>
+    <body class="text-center">
+        {{if .Flag}}
+            <div id="popout">
+                <div class="popout">
+                    <div class="button">用户名或密码输入错误!请重新输入</div>
+                    <p><button id="popout_button" type="button" name="button">好的</button></p>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-</body>
+        {{end}}
+
+            <div class="login_form_container">
+                <form action="/login" class="form-signin">
+                    <img class="mb-4" src="../static/image/login-logo.png" alt="" width="72" height="72">
+                    <h1 class="h3 mb-3 font-weight-normal">Tea Safe · 川茶</h1>
+                        <input class="form-control" name="loginName" type="text" placeholder="请输入用户名" required autofocus>
+                    <div class="gap"></div>
+                        <input class="form-control" name="password" type="text" placeholder="请输入密码" autocomplete="off" required>
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                    <div class="gap1"></div>
+                    <p class="mt-5 mb-3 text-muted">All Copyright &copy; Tea Safe</p>
+                </form>
+            </div>
 
 
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript">
-    // $(document).ready(function() {
-    //     $('.popout button').on('click',function() {
-    //         $('#popout').css('display','none');
-    //     })
-    // })
-
-    var oInput=document.getElementById('popout_button');
-    var box=document.getElementById('popout');
-    var a=true;
-    oInput.onclick=function(){
-        a=!a;
-        a?box.style.display="block":box.style.display="none";
-    }
-
-</script>
-<style type="text/css">
-    #popout{
-        width: 100%;
-        height: 100%;
-        font-family: '微软雅黑';
-        background-color: rgba(0,0,0,.5);
-        position: absolute;
-        z-index: 1;
-        display: block;
-    }
-    .popout{
-        width: 500px;
-        height: auto;
-        line-height: 30px;
-        color: #000;
-        font-size: 20px;
-        background: #fff;
-        padding: 30px;
-        text-align: left;
-        position: relative;
-        left:50%;
-        top: 200px;
-        margin-left:-250px;
-        z-index:1;
-        border-radius: 2px;
-    }
-    .popout>div,.popout>div p{
-        width: 100%;
-        font-family: '微软雅黑';
-        word-break: break-all;
-        word-wrap: break-word;
-    }
-    .popout>div p:nth-of-type(1){
-        color: #333;
-        font-size: 20px;
-        font-weight: bolder;
-    }
-    .popout>div p:nth-of-type(2){
-        color: #58666e;
-        font-size: 16px;
-    }
-    .popout>p{
-        text-align: right;
-    }
-    .popout>p button{
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        border: none;
-        border-radius: 6px;
-        outline: none;
-        color: #fff;
-        font-size: 18px;
-        background-color: #3288e6;
-        font-family: '微软雅黑';
-        cursor: pointer;
-    }
-</style>
+    </body>
+    <script src="../static/js/jquery-3.2.1.min.js" ></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="../static/js/login.js"></script>
 </html>

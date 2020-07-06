@@ -15,10 +15,10 @@ type User struct {
 var users []User
 
 func init() {
-	admin := User{LoginName: "Hanxiaodong", Password: "123456", IsAdmin: "T"}
-	alice := User{LoginName: "ChainDesk", Password: "123456", IsAdmin: "T"}
-	bob := User{LoginName: "alice", Password: "123456", IsAdmin: "F"}
+	admin := User{LoginName: "0", Password: "0", IsAdmin: "T"}
 	jack := User{LoginName: "1", Password: "1", IsAdmin: "F"}
+	alice := User{LoginName: "2", Password: "2", IsAdmin: "T"}
+	bob := User{LoginName: "3", Password: "3", IsAdmin: "F"}
 
 	users = append(users, admin)
 	users = append(users, alice)

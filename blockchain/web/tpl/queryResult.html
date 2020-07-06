@@ -1,29 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Tea Safe</title>
-</head>
-<body>
-    <div class="container">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maxium-scale=1.0, user-scalable=no">
+        <meta name="apple-touch-fullsreen" content="YES">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Tea Safe · 川茶</title>
+        <link href="../static/css/queryResult.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/css/carousel.css">
+        <link rel="stylesheet" href="../static/css/general.css">
+        <link rel="Shortcut Icon" href="../static/image/TeaSafeLogo.ico" type="image/x-icon" />
+    </head>
+
+    <body class="bg-light-green">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+
+            <a class="navbar-brand" href="/backToHome">Tea Safe · 川茶</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/queryPage"> 搜寻ID</a>
+                    </li>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addTeaPage"> 添加记录</a>
+                    </li>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <li class="nav-item">
+                        <a class="nav-link" href="/modifyQueryPage"> 修改记录</a>
+                    </li>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                </ul>
+
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="金骏眉" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    &nbsp;
+    <main role="main">
+
+
+        <div class="gap3"></div>
+
+        <div class="container">
             <h2>Tea Safe - 搜索结果</h2>
-            <table border="1">
-            <tr>
-                <td>ID</td>
-                <td>MAKER</td>
-                <td>OWNER</td>
-                <td>WEIGHT</td>
 
-            </tr>
-            <tr>
-                <td>{{.Tea.Id}}</td>
-                <td>{{.Tea.Maker}}</td>
-                <td>{{.Tea.Owner}}</td>
-                <td>{{.Tea.Weight}}</td>
-
-            </tr>
+            <table class="table" border="1">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">编号</th>
+                    <th scope="col">制造商</th>
+                    <th scope="col">拥有者</th>
+                    <th scope="col">重量</th>
+                </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <th scope="col">{{.Tea.Id}}</th>
+                    <td>{{.Tea.Maker}}</td>
+                    <td>{{.Tea.Owner}}</td>
+                    <td>{{.Tea.Weight}}</td>
+                </tr>
+            </tbody>
             </table>
-    </div>
-</body>
+            <div class="gap3"></div>
+        </div>
+
+
+        <footer class="container">
+            <p class="float-right">
+                <a href="/backToHome">返回首页</a>
+            </p>
+            <p>
+                All Copyright &copy; Tea Safe &middot; <a href="#">隐私条款</a>
+            </p>
+        </footer>
+
+    </main>
+
+
+    </body>
+
+    <script type="text/javascript" src="../static/js/queryResult.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 </html>
