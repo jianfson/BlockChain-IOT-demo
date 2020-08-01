@@ -14,18 +14,17 @@ Version: release-v-1.0
   3.1 Login and Sign up  
   To open the website, input "localhost:9000" in address filed.   
   To login, you  to choose one account down blow(We prepared five accounts for test):  
-  |Role|Username|Password|
+  |||
   |:---|:---:|---:|
-  |SuperAdmin|sa|1|
-  |Admin|a1|1|
-  |User|u1|1|
-  |User|u2|1|  
-  |Staff|s1|1|
+
   
-  |作者|果冻虾仁|
+  |Role|Username|Password|
 |---|---
-|知乎|[![zhihu-shield]][zhihu]
-|公众号|编程往事
+  |SuperAdmin|sa|1
+  |Admin|1|1
+  |User|u1|1
+  |User|u2|1
+  |Staff|s1|1
   
   
 '''
