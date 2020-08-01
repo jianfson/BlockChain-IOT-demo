@@ -14,7 +14,7 @@ Version: release-v-1.0
   3.1 Login and Sign up  
   To open the website, input "localhost:9000" in address filed.   
   To login, you  to choose one account down blow(We prepared five accounts for test):  
-  | Role|Username|Password|
+  |Role|Username|Password|
   |:---|:---:|---:|
   |SuperAdmin|sa|1|
   |Admin|a1|1|
