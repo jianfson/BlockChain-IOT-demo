@@ -13,19 +13,7 @@ Version: release-v-1.0
 3. How to test:  
   3.1 Login and Sign up  
   To open the website, input "localhost:9000" in address filed.   
-  To login, you  to choose one account down blow(We prepared five accounts for test):  
-  |||
-  |:---|:---:|---:|
-
-  
-  ||||
-|---|---
-  |||1
-  |Admin|1|1
-  ||u1|1
-  ||u2|1
-  |Staff|s1|1
-  
+  To login, you  to choose one account down blow(We prepared five accounts for test):   
 |Role|Username|Password|
 |---|---|---
 |SuperAdmin|sa|1
@@ -33,11 +21,9 @@ Version: release-v-1.0
 |User|u1|1
 |User|u2|1
 |Staff|s1|1
-  
-  
-'''
+
   P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
-'''
+
   3.2 Roles  
   Each character has their own role to play:  
   SuperAdmin: Admin management(appoint/dismiss), Data Management(Modify), User Management(delete), profile, Trace the tea source  
