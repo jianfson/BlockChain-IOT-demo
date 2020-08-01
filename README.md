@@ -26,6 +26,11 @@ Version: release-v-1.0
   |User|u2|1
   |Staff|s1|1
   
+|作者|果冻虾仁|
+|---|---
+|知乎|[![zhihu-shield]][zhihu]
+|公众号|编程往事
+  
   
 '''
   P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
