@@ -1,6 +1,6 @@
 # BlockChain-IOT-demo
 
-The demo code for BlockChain-IOT project based on GoWeb, this project is as a website
+The demo code for BlockChain-IOT project based on GoWeb
 
 Version: release-v-1.0
 1. How to build  
