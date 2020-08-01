@@ -21,12 +21,9 @@ Version: release-v-1.0
   |User|u1|1|
   |User|u2|1|  
   |Staff|s1|1|
-  | First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+'''
   P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
-  
+'''
   3.2 Roles  
   Each character has their own role to play:  
   SuperAdmin: Admin management(appoint/dismiss), Data Management(Modify), User Management(delete), profile, Trace the tea source  
