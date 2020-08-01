@@ -29,10 +29,12 @@ Version: release-v-1.0
 
   3.2 Roles  
   Each character has their own role to play:  
-  SuperAdmin: Admin management(appoint/dismiss), Data Management(Modify), User Management(delete), profile, Trace the tea source  
-  Admin:      Data Check(do nothing), User Management(delete), Staff Management(appoint/dismiss), profile, Trace the tea source  
-  User:       Trace the tea source, look up search history, profile  
-  Staff:      Trace the tea source, Upload new record, Modify records  
+  
+  
+  - SuperAdmin: Admin management(appoint/dismiss), Data Management(Modify), User Management(delete), profile, Trace the tea source  
+  - Admin:      Data Check(do nothing), User Management(delete), Staff Management(appoint/dismiss), profile, Trace the tea source  
+  - User:       Trace the tea source, look up search history, profile  
+  - Staff:      Trace the tea source, Upload new record, Modify records  
   
   3.3 Account Status  
   User Management is provided for SuperAdmin and Admin to check if there was any user with abnormal behavior, like unreasonable number of queries, to take action.  
