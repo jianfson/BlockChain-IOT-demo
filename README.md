@@ -7,18 +7,20 @@ Version: release-v-1.0
   
 2. How to setup
   2.1 Database  
-    Please make sure you installed MySQL 8.0(recommended), then you need to cover userName & password setting in "web/dao/mysql.go", and the const port if you ever changed your original database setting.  
+    Please make sure you installed **MySQL 8.0**(recommended), then you need to ***cover userName & password*** setting in "web/dao/mysql.go", and the ***const port*** if you ever changed your original database setting.  
     
   
 3. How to test:  
   3.1 Login and Sign up  
   To open the website, input "localhost:9000" in address filed.   
   To login, you  to choose one account down blow(We prepared five accounts for test):  
-  SuperAdmin: sa 1  
-  Admin:      a1 1  
-  User:       u1 1  
-              u2 1  
-  Staff:      s1 1  
+  |Role|Username|Password|
+  |:---|:---:|---:|
+  |SuperAdmin|sa|1|
+  |Admin|a1|1|
+  |User|u1|1|
+  |User|u2|1|  
+  |Staff|s1|1|
   P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
   
   3.2 Roles  
