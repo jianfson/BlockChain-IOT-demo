@@ -18,19 +18,21 @@ Version: release-v-1.0
   |:---|:---:|---:|
 
   
-  |Role|Username|Password|
+  ||||
 |---|---
-  |SuperAdmin|sa|1
+  |||1
   |Admin|1|1
-  |User|u1|1
-  |User|u2|1
+  ||u1|1
+  ||u2|1
   |Staff|s1|1
   
-|1|1|1|
+|Role|Username|Password|
 |---|---|---
-|1|1|1
-|1|1|1
-|1|1|1
+|SuperAdmin|sa|1
+|Admin|a1|1
+|User|u1|1
+|User|u2|1
+|Staff|s1|1
   
   
 '''
