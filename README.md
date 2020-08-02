@@ -27,7 +27,7 @@ The demo code for BlockChain-IOT project based on GoWeb
 |Staff|s1|1
 
 
-  P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
+  > P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
 
   ###### 3.2 Roles  
   Each character has their own role to play:  
