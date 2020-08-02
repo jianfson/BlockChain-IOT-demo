@@ -9,8 +9,8 @@ The demo code for BlockChain-IOT project based on GoWeb
   
 ## 2. How to setup  
   ###### 2.1 Database  
-    Please make sure you installed **MySQL 8.0**(recommended), then you need to cover ***const userName & password*** setting in ***"web/dao/mysql.go"***, and the ***const port*** if you ever changed your original database setting.  
-    
+  Please make sure you installed **MySQL 8.0**(recommended), then you need to cover ***const userName & password*** setting in ***"web/dao/mysql.go"***, and the ***const port*** if you ever changed your original database setting.  
+
   
 ## 3. How to test:  
   ###### 3.1 Login and Sign up  
