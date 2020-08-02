@@ -32,9 +32,8 @@ The demo code for BlockChain-IOT project based on GoWeb
   > P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
 
   ###### 3.2 Roles  
-  Each character has their own role to play:  
-  
-  
+  We designed 4 roles for this demo:  
+    
   - SuperAdmin: Admin management(appoint/dismiss), Data Management(Modify), User Management(delete), profile, Trace the tea source  
   - Admin:      Data Check(do nothing), User Management(delete), Staff Management(appoint/dismiss), profile, Trace the tea source  
   - User:       Trace the tea source, look up search history, profile  
