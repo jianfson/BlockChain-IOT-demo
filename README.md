@@ -1,9 +1,10 @@
 # BlockChain-IOT-demo
 
+<!-- Badges -->
+![TensorFlow](https://img.shields.io/badge/TeaSafe-v1.0-brightgreen)
 
 The demo code for BlockChain-IOT project based on GoWeb
 
-Version: release-v-1.0
 1. How to build  
   
 2. How to setup  
