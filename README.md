@@ -5,15 +5,15 @@
 
 The demo code for BlockChain-IOT project based on GoWeb
 
-1. How to build  
+## 1. How to build  
   
-2. How to setup  
-  2.1 Database  
+## 2. How to setup  
+  ###### 2.1 Database  
     Please make sure you installed **MySQL 8.0**(recommended), then you need to cover ***const userName & password*** setting in ***"web/dao/mysql.go"***, and the ***const port*** if you ever changed your original database setting.  
     
   
-3. How to test:  
-  3.1 Login and Sign up  
+## 3. How to test:  
+  ###### 3.1 Login and Sign up  
   To open the website, input "localhost:9000" in address filed.   
   To login, you  to choose one account down blow(We prepared five accounts for test):   
   
@@ -29,7 +29,7 @@ The demo code for BlockChain-IOT project based on GoWeb
 
   P.S. login is unnecessary for User, anyone could query tea source anonymously anytime  
 
-  3.2 Roles  
+  ###### 3.2 Roles  
   Each character has their own role to play:  
   
   
@@ -38,7 +38,7 @@ The demo code for BlockChain-IOT project based on GoWeb
   - User:       Trace the tea source, look up search history, profile  
   - Staff:      Trace the tea source, Upload new record, Modify records  
   
-  3.3 Account Status  
+  ###### 3.3 Account Status  
   User Management is provided for SuperAdmin and Admin to check if there was any user with abnormal behavior, like unreasonable number of queries, to take action.  
    
   
