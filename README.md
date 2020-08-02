@@ -14,7 +14,7 @@ The demo code for BlockChain-IOT project based on GoWeb
   
 ## 3. How to test:  
   ###### 3.1 Login and Sign up  
-  To open the website, input "localhost:9000" in address filed.   
+  To open the website, input **"localhost:9000"** in address filed.   
   To login, you  to choose one account down blow(We prepared five accounts for test):   
   
   
