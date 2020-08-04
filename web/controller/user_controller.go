@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"blc-iot-demo/blockchain/service"
+	"blc-iot-demo/web/service"
 	"blc-iot-demo/web/dao"
 	"blc-iot-demo/web/model"
 	"blc-iot-demo/web/utils"

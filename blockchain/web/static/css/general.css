@@ -1,0 +1,51 @@
+@charset "utf-8";
+.bg-light-green{
+    background-color: #dfffea;
+}
+.tea-input{
+    border-radius: 5px;
+    background-color: rgb(238, 255, 239);
+    border-color: #d5ffdf;
+}
+.gap1{
+    height: 60px;
+    width: 100%;
+}
+.gap2{
+    height: 30px;
+    width: 100%;
+}
+.gap3{
+    height: 20px;
+    width: 100%;
+}
+.gap4{
+    height: 30px;
+    width: 100%;
+}
+.gap5{
+    height: 600px;
+    width: 100%;
+}
+
+.qrcode-center_container{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin: -150px 0 0 -200px;
+    width: 330px;
+    height: 400px;
+    border: transparent;
+    background-color: rgba(108, 156, 130, 0.23);
+    border-radius: 10px;
+    color: #00210d;
+}
+
+.qrcode_container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -120px 0 0 -150px;
+    width:300px;
+    height:300px;
+}

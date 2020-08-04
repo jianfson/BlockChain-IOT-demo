@@ -1,7 +1,7 @@
 package cliInit
 
 import (
-	"blc-iot-demo/blockchain/service"
+	"blc-iot-demo/web/service"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
@@ -12,12 +12,14 @@ import (
 const (
 	ConfigFile = "./blockchain/config.yaml"
 
-	ChannelID   = "teatraceability"
+	ChannelID = "teatraceability"
 
 	Org  = "Org1"
 	User = "Admin"
 )
+
 var SDK *fabsdk.FabricSDK
+
 func CliInit() *service.ServiceSetup {
 	// sdk 实例化
 	SDK, err := fabsdk.New(config.FromFile(ConfigFile))
@@ -55,7 +57,7 @@ func CliInit() *service.ServiceSetup {
 	}
 
 	return &service.ServiceSetup{
-		ChaincodeId: "teacc",
+		ChaincodeId:   "teacc",
 		ChannelClient: channelClient,
 		LedgerClient:  ledgerClient,
 	}

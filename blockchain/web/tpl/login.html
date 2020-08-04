@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maxium-scale=1.0, user-scalable=no">
+        <meta name="apple-touch-fullsreen" content="YES">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Tea Safe · 川茶</title>
+        <link href="../static/css/login.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/bootstrap.min.css" >
+        <link rel="stylesheet" href="../static/css/font-awesome.min.css" >
+        <link rel="Shortcut Icon" href="../static/image/TeaSafeLogo.ico" type="image/x-icon" />
+    </head>
+
+    <body class="text-center">
+        {{if .Flag}}
+            <div id="popout">
+                <div class="popout">
+                    <div class="button">用户名或密码输入错误!请重新输入</div>
+                    <p><button id="popout_button" type="button" name="button">好的</button></p>
+                </div>
+            </div>
+        {{end}}
+
+            <div class="login_form_container">
+                <form action="/login" class="form-signin">
+                    <img class="mb-4" src="../static/image/login-logo.png" alt="" width="72" height="72">
+                    <h1 class="h3 mb-3 font-weight-normal">Tea Safe · 川茶</h1>
+                        <input class="form-control" name="loginName" type="text" placeholder="请输入用户名" required autofocus>
+                    <div class="gap"></div>
+                        <input class="form-control" name="password" type="text" placeholder="请输入密码" autocomplete="off" required>
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                    <div class="gap1"></div>
+                    <p class="mt-5 mb-3 text-muted">All Copyright &copy; Tea Safe</p>
+                </form>
+            </div>
+
+
+    </body>
+    <script src="../static/js/jquery-3.2.1.min.js" ></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="../static/js/login.js"></script>
+</html>

@@ -1,10 +1,12 @@
 package main
 
 import (
-	"blc-iot-demo/blockchain/sdkInit"
-	"blc-iot-demo/blockchain/service"
-	"blc-iot-demo/web/utils"
 	"encoding/json"
+
+	"fab-sdk-go-sample/sdkInit"
+	"fab-sdk-go-sample/service"
+	"fab-sdk-go-sample/web"
+	"fab-sdk-go-sample/web/controller"
 	"fmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
@@ -110,7 +112,9 @@ func main() {
 
 	fmt.Println("----------------初始化茶叶信息---------------")
 	shelf_life := "18个月"
-	createtime := utils.SwitchTimeStampToData(time.Now().Unix())
+	t := time.Unix(time.Now().Unix(), 0)
+	createtime := t.Format("2006-01-02 15:04:05")
+
 	teas := []service.Tea{
 		{
 			Id:     "01",
@@ -243,6 +247,7 @@ func main() {
 			Shelf_life: shelf_life,
 		},
 	}
+
 	for _, tea := range teas {
 		serviceSetup.SaveTea(tea)
 	}
@@ -271,4 +276,19 @@ func main() {
 	}
 
 	sdkInit.GetUserInfo(sdk, "user2", "Org1")
+
+
+	fmt.Println("----------------写入茶叶信息---------------")
+	for k, tea := range teas {
+		txID, err := serviceSetup.SaveTea(tea)
+		if err != nil {
+			fmt.Println(err.Error())
+		} else {
+			fmt.Printf("%d 信息保存成功\n交易Id：%v\n", k, txID)
+		}
+	}
+	app := controller.Application{
+		Setup: &serviceSetup,
+	}
+	web.WebStart(&app)
 }

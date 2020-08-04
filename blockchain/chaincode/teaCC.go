@@ -267,9 +267,9 @@ func (s *TeaChaincode) saveTea(stub shim.ChaincodeStubInterface, args []string) 
 	return shim.Success([]byte("Add Tea succeed"))
 }
 
+
 func (s *TeaChaincode) teaExchange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
-	// exchange
 	if len(args) != 2 {
 		return shim.Error("Incorrect numbers of args, expecting 2")
 	}
