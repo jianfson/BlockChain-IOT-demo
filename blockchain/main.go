@@ -5,8 +5,6 @@ import (
 
 	"fab-sdk-go-sample/sdkInit"
 	"fab-sdk-go-sample/service"
-	"fab-sdk-go-sample/web"
-	"fab-sdk-go-sample/web/controller"
 	"fmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
@@ -93,7 +91,7 @@ func main() {
 	fmt.Println("----------------实例化链码---------------")
 	err = sdkInit.InstantiateCC(sdk, initInfo)
 	if err != nil {
-		fmt.Printf("实例化 %v failed", initInfo.ChaincodeID)
+		fmt.Printf("实例化 %v failed, err:%v", initInfo.ChaincodeID, err)
 	}
 
 	//-------------------------------------------------------------------
@@ -267,28 +265,11 @@ func main() {
 	log.Println("enrollmentSecret:", enrollmentSecret)
 	if err != nil {
 		log.Println(err)
-
 	} else {
 		err = sdkInit.Enroll(sdk,initInfo,enrollmentSecret)
 		if err != nil {
 			log.Println(err)
 		}
 	}
-
 	sdkInit.GetUserInfo(sdk, "user2", "Org1")
-
-
-	fmt.Println("----------------写入茶叶信息---------------")
-	for k, tea := range teas {
-		txID, err := serviceSetup.SaveTea(tea)
-		if err != nil {
-			fmt.Println(err.Error())
-		} else {
-			fmt.Printf("%d 信息保存成功\n交易Id：%v\n", k, txID)
-		}
-	}
-	app := controller.Application{
-		Setup: &serviceSetup,
-	}
-	web.WebStart(&app)
 }
