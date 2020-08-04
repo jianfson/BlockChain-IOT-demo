@@ -1,18 +1,21 @@
 package main
 
 import (
+	"blc-iot-demo/blockchain/sdkInit"
+	"blc-iot-demo/blockchain/service"
+	"blc-iot-demo/web/utils"
 	"encoding/json"
-	"fab-sdk-go-sample/sdkInit"
-	"fab-sdk-go-sample/service"
 	"fmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
+	"log"
 	"os"
+	"strconv"
+	"time"
 )
 
 const (
-	configFile  = "config.yaml"
+	configFile  = "./config.yaml"
 	initialized = false
 	TeaCC       = "teacc"
 )
@@ -64,24 +67,13 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
-	//-----------------------------------------
-	//-----------------查询通道信息--------------
-	//-----------------------------------------
-	fmt.Println("---------------查询通道信息---------------")
+
 	clientChannelContext := sdk.ChannelContext(
 		initInfo.ChannelID,
 		fabsdk.WithUser(initInfo.OrgAdmin),
 		fabsdk.WithOrg(initInfo.OrgName),
 	)
 
-	ledgerClient, err := ledger.New(clientChannelContext)
-
-	if err != nil {
-		fmt.Printf("Failed to create channel [%s] client: %#v", initInfo.ChannelID, err)
-	}
-
-	sdkInit.QueryChannelInfo(ledgerClient)
-	sdkInit.QueryChannelConfig(ledgerClient)
 	//----------------------------------------- -------------------------
 	//-------------------------------安装链码------------------------------
 	//-------------------------------------------------------------------
@@ -90,8 +82,9 @@ func main() {
 	if err != nil {
 		fmt.Printf("InstallCC %v failed", initInfo.ChaincodeID)
 	}
-
+	fmt.Println("------------------查询已安装链码-----------------")
 	sdkInit.QueryInstalledCC(sdk, initInfo)
+
 	//----------------------------------------------------------------
 	//-------------------------------实例化链码------------------------
 	//-----------------------------------------------------------------
@@ -111,121 +104,171 @@ func main() {
 	fmt.Println("通道客户端创建成功，可以利用此客户端调用链码进行查询或执行事务.")
 
 	serviceSetup := service.ServiceSetup{
-		ChaincodeId: TeaCC,
-		Client:      channelClient,
+		ChaincodeId:   TeaCC,
+		ChannelClient: channelClient,
 	}
 
+	fmt.Println("----------------初始化茶叶信息---------------")
+	shelf_life := "18个月"
+	createtime := utils.SwitchTimeStampToData(time.Now().Unix())
 	teas := []service.Tea{
 		{
 			Id:     "01",
-			Maker:  "dragonwell",
-			Owner:  "dragonwell",
-			Weight: "500",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
 		},
 		{
 			Id:     "02",
-			Maker:  "dragonwell",
-			Owner:  "wk",
-			Weight: "500",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
 		},
 		{
 			Id:     "03",
-			Maker:  "dragonwell",
-			Owner:  "wk",
-			Weight: "500",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "04",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "05",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "06",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "07",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "08",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "09",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "10",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "11",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "12",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id: strconv.FormatInt(time.Now().Unix(),10),
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
 		},
 	}
-
-	fmt.Println("----------------写入茶叶信息---------------")
-	for k, tea := range teas {
-		txID, err := serviceSetup.SaveTea(tea)
-		if err != nil {
-			fmt.Println(err.Error())
-		} else {
-			fmt.Printf("%d信息保存成功\n交易Id：%v\n", k, txID)
-		}
+	for _, tea := range teas {
+		serviceSetup.SaveTea(tea)
 	}
 	//
 	fmt.Println("----------------查询茶叶信息---------------")
-	b, err := serviceSetup.FindTeaInfoByID("01")
+	b, err := serviceSetup.QueryTeaByMaker("杭州龙井茶业集团有限公司")
+	log.Println(string(b))
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		var tea service.Tea
+		var tea []service.Tea
 		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Println(tea)
+		fmt.Printf("%+v", tea)
+		fmt.Println(len(tea))
 	}
-
-	modifiedTea := service.Tea{
-		Id:     "01",
-		Maker:  "dragonwell",
-		Owner:  "wk",
-		Weight: "300",
-	}
-
-	fmt.Println("---------------- 修改茶叶信息 ---------------")
-	txID, err := serviceSetup.ModifyTea(modifiedTea)
+	enrollmentSecret, err := sdkInit.Register(sdk,initInfo,"user2")
+	log.Println("enrollmentSecret:", enrollmentSecret)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println(err)
+
 	} else {
-		fmt.Printf("修改成功\ntxid：%v\n", txID)
+		err = sdkInit.Enroll(sdk,initInfo,enrollmentSecret)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 
-	fmt.Println("----------------查询茶叶 \"01\" 信息---------------")
-	teaId := "01"
-	b, err = serviceSetup.FindTeaInfoByID(teaId)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		var tea service.Tea
-		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Printf("%v tea : %+v",teaId, tea)
-	}
-
-	fmt.Println("---------------- 查询茶叶 \"01\" 历史 ---------------")
-	b, err = serviceSetup.GetHistoryForTea("01")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println(string(b))
-	}
-
-	fmt.Println("---------------- 富查询茶叶信息 ---------------")
-	b, err = serviceSetup.QueryTeaByString("wk")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println(string(b))
-	}
-
-	fmt.Println("---------------- 删除茶叶信息 ---------------")
-	b, err = serviceSetup.Delete("01")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("删除成功", string(b))
-	}
-
-	fmt.Println("----------------查询茶叶信息---------------")
-	b, err = serviceSetup.FindTeaInfoByID("01")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		var tea service.Tea
-		json.Unmarshal(b, &tea)
-		fmt.Println("根据 teaID 查询信息成功：")
-		fmt.Println(tea)
-	}
-
-	fmt.Println("----------------登记、注册用户---------------")
-	enrollSecret, err := sdkInit.Register(sdk, initInfo, "User2")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		err = sdkInit.Enroll(sdk, initInfo, enrollSecret)
-	}
-
-	sdkInit.GetUserInfo(sdk, "User2", "Org1")
+	sdkInit.GetUserInfo(sdk, "user2", "Org1")
 }

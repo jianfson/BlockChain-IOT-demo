@@ -94,7 +94,7 @@ func CreateChannel(sdk *fabsdk.FabricSDK, info *InitInfo) error {
 	if err != nil {
 		return errors.Errorf("创建应用通道失败: %v", err)
 	}
-	fmt.Printf("成功加入通道")
+	fmt.Printf("成功创建通道\n")
 	return nil
 }
 
@@ -287,9 +287,6 @@ func Register(sdk *fabsdk.FabricSDK, info *InitInfo, newIndentity string) (strin
 	if err != nil {
 		return "", errors.Errorf("登记 %v 失败, %s", newIndentity, err)
 	}
-
-	fmt.Printf("登记 %v 成功", newIndentity)
-
 	return enrollmentSecret, nil
 }
 
@@ -300,17 +297,18 @@ func Enroll(sdk *fabsdk.FabricSDK, info *InitInfo, enrollmentSecret string) erro
 
 	mspClient, err := mspclient.New(
 		sdk.Context(fabsdk.WithUser(info.OrgAdmin), fabsdk.WithOrg(info.OrgName)),
+		mspclient.WithOrg(info.OrgName),
+		mspclient.WithCAInstance("ca.org1.dragonwell.com"),
 		)
 	if err != nil {
 		fmt.Printf("创建 mspClient 失败: %v\n", err)
 	}
 
-	err = mspClient.Enroll("User2", mspclient.WithSecret(enrollmentSecret))
+	err = mspClient.Enroll("user2", mspclient.WithSecret(enrollmentSecret))
 	if err != nil {
-		return errors.Errorf("注册 %v 失败: %v", "User2", err)
+		return errors.Errorf("注册 %v 失败: %v", "user2", err)
 	}
 
-	fmt.Printf("注册 %v 成功\n", "User2")
 	return nil
 }
 
@@ -350,6 +348,7 @@ func ListChannel(sdk *fabsdk.FabricSDK, info InitInfo) ([]string, error) {
 	allChannels := response.GetChannels()
 	for _, channelId := range allChannels {
 		resultChannels = append(resultChannels, channelId.GetChannelId())
+		fmt.Println(channelId.GetChannelId())
 	}
 	return resultChannels, nil
 }

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-touch-fullsreen" content="YES">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>Tea Safe · 川茶</title>
+    <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/mana.css">
+</head>
+
+
+<body>
+{{if .IsLogin}}
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+            <a href="/backToHome" class="header item">
+                <img class="logo" src="../../static/image/login-logo.png">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Tea Safe •　川茶
+            </a>
+            <div class="ui simple dropdown item">
+                后台管理 <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/superBackStage">
+                        后台首页
+                    </a>
+                    <div class="divider"></div>
+                    <div class="header">管理</div>
+                    <a class="item" href="/sbsDataMana">
+                        数据管理
+                    </a>
+                    <a class="active item" href="/sbsAdminMana">
+                        管理员任命
+                    </a>
+                    <a class="item" href="/sbsUserMana">
+                        用户管理
+                    </a>
+                </div>
+            </div>
+            <div class="ui simple dropdown right item">
+                Welcome, {{.Sess.UserName}}
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/profilePage">
+                        我的信息
+                    </a>
+                    <a class="item" href="/logout">
+                        注销登陆
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pusher">
+        <div class="headgap"></div>
+        <div class="teabody">
+            <div class="ui middle aligned center aligned grid">
+                <div class="column">
+                    <h5 class="ui teal image header">
+                        <h1>管理员任命</h1>
+                    </h5>
+                    <br/><br/><br/>
+                </div>
+            </div>
+            <div class="ui grid">
+                <div class="one wide column"></div>
+                <div class="fourteen wide column">
+                    <table id="example" class="ui table" style="width:100%">
+                        <thead>
+                        <tr class="center aligned">
+                            <th class="two wide">编号</th>
+                            <th class="two wide">登录名</th>
+                            <th class="two wide">密码</th>
+                            <th class="two wide">邮箱</th>
+                            <th class="two wide">手机号码</th>
+                            <th class="two wide">账户状态</th>
+                            <th class="two wide">任命时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{range .Admin}}
+                            <tr class="center aligned">
+                                <td>{{.Id}}</td>
+                                <td>{{.Username}}</td>
+                                <td>{{.Password}}</td>
+                                <td>{{.Email}}</td>
+                                <td>{{.Phone}}</td>
+                                <td>{{.Status}}</td>
+                                <td>{{.Createtime}}</td>
+                            </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                    <br/><br/><br/>
+                    <button class="ui right labeled icon right floated button" onclick="$('.ui.modal') .modal('show');">
+                        <i class="plus icon"></i>
+                        任命新人
+                    </button>
+
+                    <div class="ui modal">
+                        <div class="header">
+                            任命新人
+                        </div>
+                        <div class="image content">
+                            <div class="description">
+                                <form id="addForm" action="/sbsAddNewAdmin" class="ui large form">
+                                    <div>
+                                        <div class="field">
+                                            <div class="ui left icon input">
+                                                <i class="user icon"></i>
+                                                <input class="form-control" name="loginName" type="text"
+                                                       placeholder="请输入用户名" required autofocus>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="field">
+                                            <div class="ui left icon input">
+                                                <i class="lock icon"></i>
+                                                <input id="psd0" class="form-control" name="password" type="password"
+                                                       placeholder="请输入密码" autocomplete="off" required>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="field psd1">
+                                            <div class="ui left icon input">
+                                                <i class="check icon"></i>
+                                                <input id="psd1" class="form-control" name="password1" type="password"
+                                                       placeholder="请确认密码" autocomplete="off" onblur="checkPSD()"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="field email">
+                                            <div class="ui left icon input">
+                                                <i class="mail icon"></i>
+                                                <input id="fEmail" class="form-control" name="email" type="email"
+                                                       placeholder="请输入可用邮箱"
+                                                       autocomplete="off" onblur="checkEmail()" required>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="field tel">
+                                            <div class="ui left icon input">
+                                                <i class="phone icon"></i>
+                                                <input id="fPhone" class="form-control" name="tel" type="tel"
+                                                       placeholder="请输入可用手机号"
+                                                       autocomplete="off" onblur="checkPhone()" required>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <div class="ui black deny button">
+                                不可以
+                            </div>
+                            <button id="save" type="submit" onclick="submitAdd();"
+                                    class="ui positive right labeled icon button" disabled="disabled">
+                                确认
+                                <i class="checkmark icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="one wide column"></div>
+            </div>
+        </div>
+
+        <br/><br/>
+
+
+        <div class="ui inverted vertical footer segment">
+            <div class="ui container">
+                <div class="ui stackable inverted divided equal height stackable grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">关于</h4>
+                        <div class="ui inverted link list">
+                            <a href="#" class="item">网站地图</a>
+                            <a href="#" class="item">联系我们</a>
+                            <a href="#" class="item">隐私条款</a>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">服务</h4>
+                        <div class="ui inverted link list">
+                            <a href="http://127.0.0.1:8080/#/" class="item">
+                                区块链浏览器
+                            </a>
+                        </div>
+                    </div>
+                    <div class="seven wide column">
+                        <h4 class="ui inverted header">Tea Safe · 川茶</h4>
+                        <p>
+                            All Copyright &copy; Tea Safe
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}
+<script src="../../static/js/jquery.min.js"></script>
+<script src="../../static/js/iframe-content.js"></script>
+<script src="../../static/js/semantic.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.semanticui.min.js"></script>
+
+<script>
+    $(document)
+        .ready(
+            function () {
+                // fix menu when passed
+                $('.masthead')
+                    .visibility({
+                        once: false,
+                        onBottomPassed: function () {
+                            $('.fixed.menu').transition('fade in');
+                        },
+                        onBottomPassedReverse: function () {
+                            $('.fixed.menu').transition('fade out');
+                        }
+                    })
+                ;
+                // create sidebar and attach to menu open
+                $('.ui.sidebar')
+                    .sidebar('attach events', '.toc.item')
+                ;
+            })
+    ;
+
+    $(document)
+        .ready(function () {
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+            $('.ui.menu a.item')
+                .on('click', function () {
+                    $(this)
+                        .addClass('active')
+                        .siblings()
+                        .removeClass('active')
+                    ;
+                })
+            ;
+        })
+    ;
+
+    PsdFlag = false;
+    EmailFlag = false;
+    TelFlag = false;
+
+    function checkPSD() {
+        var PSD0 = document.getElementById("psd0").value
+        var PSD1 = document.getElementById("psd1").value
+        if (PSD0 === PSD1) {
+            //填写正确后，恢复原来的样式
+            $(".psd1").css('border', '1px solid white');
+            $("#password1").css('color', 'white');
+            PsdFlag = true;
+        } else {
+            if (!(PSD0 == PSD1)) {
+                $(".psd1").css('border', '1px solid red');
+                $("#password1").css('color', 'red');
+                PsdFlag = false;
+            }
+        }
+        if (PsdFlag && EmailFlag && TelFlag) {
+            document.getElementById("save").removeAttribute('disabled');
+        } else {
+            document.getElementById("save").setAttribute("disabled", "disabled");
+        }
+    }
+
+    function checkEmail() {
+        var userEmail = document.getElementById("fEmail").value
+        var emailPatt = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (emailPatt.test(userEmail)) {
+            //填写正确后，恢复原来的样式
+            $(".email").css('border', '1px solid white');
+            $("#email").css('color', 'white');
+            EmailFlag = true;
+
+        } else {
+            if (!(emailPatt.test(userEmail))) {
+                $(".email").css('border', '1px solid red');
+                $("#email").css('color', 'red');
+                EmailFlag = false;
+            }
+        }
+        if (PsdFlag && EmailFlag && TelFlag) {
+            document.getElementById("save").removeAttribute('disabled');
+        } else {
+            document.getElementById("save").setAttribute("disabled", "disabled");
+        }
+    }
+
+    function checkPhone() {
+        var fPhone = document.getElementById("fPhone").value
+        var phonePatt = /^1[3456789]\d{9}$/;
+        if (phonePatt.test(fPhone)) {
+            //填写正确后，恢复原来的样式
+            $(".tel").css('border', '1px solid white');
+            $("#tel").css('color', 'white');
+            TelFlag = true;
+        } else {
+            if (!(phonePatt.test(fPhone))) {
+                $(".tel").css('border', '1px solid red');
+                $("#tel").css('color', 'red');
+                TelFlag = false;
+            }
+        }
+        if (PsdFlag && EmailFlag && TelFlag) {
+            document.getElementById("save").removeAttribute('disabled');
+        } else {
+            document.getElementById("save").setAttribute("disabled", "disabled");
+        }
+    }
+
+
+    function submitAdd() {
+        document.getElementById("addForm").submit();//js原生方式表单提交
+    }
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+
+</script>
+</body>
+
+</html>

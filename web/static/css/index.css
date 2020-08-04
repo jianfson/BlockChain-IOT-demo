@@ -1,0 +1,60 @@
+.headholder {
+    height: 52.63px;
+}
+.homeHugeImage {
+    height: 700px;
+    width: 100%;
+    background-image: url("../image/background.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+}
+.hugeImageCover {
+    background-color: rgba(0, 0, 0, 0.46);
+    height: 100%;
+}
+.centerPlacer {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 100px;
+    margin-top: -50px;
+}
+.masthead .logo.item img {
+    margin-right: 1em;
+}
+.masthead h2 {
+    font-size: 1.7em;
+    font-weight: normal;
+}
+.ui.vertical.stripe {
+    height: auto;
+    padding: 50px 0em;
+}
+.ui.vertical.stripe h3 {
+    font-size: 2em;
+}
+.ui.vertical.stripe .button + h3,
+.ui.vertical.stripe p + h3 {
+    margin-top: 3em;
+}
+.ui.vertical.stripe p {
+    font-size: 1.33em;
+}
+.ui.vertical.stripe .horizontal.divider {
+    margin: 3em 0em;
+}
+.footer.segment {
+    text-align: center;
+    padding: 5em 0em;
+    width: 100%;
+}
+@media only screen and (max-width: 700px) {
+    .masthead h2 {
+        margin-top: 0.5em;
+        font-size: 1.5em;
+    }
+}

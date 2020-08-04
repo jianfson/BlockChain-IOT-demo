@@ -1,10 +1,16 @@
-#----------beatutidul article
+
 #
 # https://lessisbetter.site/2019/09/02/fabric-sdk-go-chaincode/
 # template: https://github.com/hyperledger/fabric-sdk-go/blob/master/test/fixtures/config/config_e2e.yaml
+
 #
-# Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
-#
+# https://chainhero.io/2018/03/tutorial-build-blockchain-app-2/#fabric-sdk-go
+
+# 注册用户
+#https://github.com/hyperledger/fabric-sdk-go/blob/bdbc9bd3726076cb293774b6df539dc1a0af1187/test/integration/pkg/client/msp/enrollment_test.go#L61
+
+# sdk go client 包的使用
+# https://github.com/hyperledger/fabric-sdk-go/tree/bdbc9bd3726076cb293774b6df539dc1a0af1187/test/integration/pkg/client
 version: 1.0.0
 
 client:

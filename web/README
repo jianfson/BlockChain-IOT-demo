@@ -1,0 +1,7 @@
+在终端使用如下语句安装Session
+go get github.com/gin-contrib/sessions
+
+7月27日待做：
+表格翻页显示
+收发验证码
+员工管理

@@ -2,15 +2,14 @@ package main
 
 // tea describes basic details of what makes up a tea
 type Tea struct {
-	ObjectType string `json:"docType"` //docType is used to distinguish the various types of objects in state database
-	Id      string    `json:"Id"`
-	Maker    string `json:"Maker"`
-	Owner   string `json:"Owner"`
-	Weight  string `json:"Weight"`
-	//Histories []HistoryItem `json:"histories"`
+	ObjectType      string `json:"docType"`
+	Id              string `json:"id"`
+	Name            string `json:"name"`
+	Maker           string `json:"maker"`
+	Owner           string `json:"owner"`
+	Weight          string `json:"weight"`
+	Origin          string `json:"origin"`
+	Production_Date string `json:"production_date"`
+	Shelf_life      string `json:"shelf_life"`
+	TxID            string `json:"txID"`
 }
-
-//type HistoryItem struct {
-//	TxId string
-//	tea Tea
-//}

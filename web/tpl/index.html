@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-touch-fullsreen" content="YES">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+
+    <title>Tea Safe · 川茶</title>
+    <link rel="Shortcut Icon" href="../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+</head>
+<body>
+{{if .Msg}}
+    <div class="ui basic modal">
+        <div class="ui icon header">
+            <i class="times icon"></i>
+            {{.Msg}}
+        </div>
+
+        <div class="actions">
+            <div class="ui green ok inverted button">
+                <i class="checkmark icon"></i>
+                好的
+            </div>
+        </div>
+    </div>
+{{end}}
+
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="/backToHome" class="header item">
+            <img class="logo" src="../../static/image/login-logo.png">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            Tea Safe •　川茶
+        </a>
+        {{if .IsSuperAdmin}}
+            <div class="ui simple dropdown item">
+                后台管理 <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/superBackStage">
+                        后台首页
+                    </a>
+                    <div class="divider"></div>
+                    <div class="header">管理</div>
+                    <a class="item" href="/sbsDataMana">
+                        数据管理
+                    </a>
+                    <a class="item" href="/sbsAdminMana">
+                        管理员任命
+                    </a>
+                    <a class="item" href="/sbsUserMana">
+                        用户管理
+                    </a>
+                </div>
+            </div>
+        {{end}}
+        {{if .IsAdmin}}
+            <div class="ui simple dropdown item">
+                后台管理 <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/backStage">
+                        后台首页
+                    </a>
+                    <div class="divider"></div>
+                    <div class="header">管理</div>
+                    <a class="item" href="/bsDataMana">
+                        数据管理
+                    </a>
+                    <a class="item" href="/bsAdminMana">
+                        管理员任命
+                    </a>
+                    <a class="item" href="/bsUserMana">
+                        用户管理
+                    </a>
+                </div>
+            </div>
+        {{end}}
+        {{if .IsStaff}}
+            <a class="item" href="/addTeaPage">
+                添加记录
+            </a>
+            <a class="item" href="/modifyQueryPage">
+                修改记录
+            </a>
+        {{end}}
+        <a class="item" href="/queryPage">
+            搜寻ID
+        </a>
+        {{if .IsLogin}}
+            <div class="ui simple dropdown right item">
+                Welcome, {{.Sess.UserName}}
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/profilePage">
+                        我的信息
+                    </a>
+                    <a class="item" href="/logout">
+                        注销登陆
+                    </a>
+                </div>
+            </div>
+        {{else}}
+            <a href="/loginPage" class="header right item">
+                登录
+            </a>
+            <a href="/registerPage" class="header item">
+                注册
+            </a>
+        {{end}}
+    </div>
+</div>
+
+<div class="headholder"></div>
+
+<div class="homeHugeImage">
+    <div class="hugeImageCover">
+        <div class="centerPlacer">
+            <div class="ui text container">
+                <h1 class="ui inverted header">
+                    Tea Safe · 川茶
+                </h1>
+                <h2 class="ui inverted header">
+                    基于区块链技术的茶叶溯源系统
+                </h2>
+
+                <br/>
+
+                <div class="ui huge green button">
+                    了解我们
+                    <i class="right arrow icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pusher">
+    {{/*    <div class="ui inverted vertical masthead center aligned segment">
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu">
+                <a class="toc item">
+                    <i class="sidebar icon"></i>
+                </a>
+                <a class="active item" href="/backToHome">
+                    主页
+                </a>
+                <a class="item" href="/queryPage">
+                    搜寻ID
+                </a>
+
+                {{if .IsSuperAdmin}}
+                    <a class="item" href="/superBackStage">
+                        后台首页
+                    </a>
+                {{end}}
+
+                {{if .IsAdmin}}
+                    <a class="item" href="/backStage">
+                        后台首页
+                    </a>
+                {{end}}
+
+                {{if .IsStaff}}
+                    <a class="item" href="/addTeaPage">
+                        添加记录
+                    </a>
+                    <a class="item" href="/modifyQueryPage">
+                        修改记录
+                    </a>
+                {{end}}
+
+                <div class="right item">
+                    {{if .IsLogin}}
+                        <div class="ui inverted menu">
+                            <div class="ui dropdown item">
+                                Welcome, {{.Sess.UserName}}
+                                <i class="dropdown icon"></i>
+                                <div class="ui inverted menu">
+                                    <a class="item" href="/profilePage">
+                                        我的信息
+                                    </a>
+                                    <a class="item" href="/logout">
+                                        注销登陆
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {{else}}
+                        <a class="ui inverted button" href="/loginPage">登录</a>
+                        <a class="ui inverted button" href="/registerPage">注册</a>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+        <div class="ui text container">
+            <h1 class="ui inverted header">
+                Tea Safe · 川茶
+            </h1>
+            <h2>
+                基于区块链技术的茶叶溯源系统
+            </h2>
+
+            <br/>
+
+            <div class="ui huge green button">
+                了解我们
+                <i class="right arrow icon"></i>
+            </div>
+        </div>
+    </div>*/}}
+
+    <div class="ui vertical stripe segment">
+        <div class="ui text container">
+            <br/>
+            <h3 class="ui header">
+                川茶
+            </h3>
+            <p>
+                介绍
+            </p>
+            <a class="ui large button">
+                更多
+            </a>
+            <br/><br/><br/>
+
+            <h4 class="ui horizontal header divider">
+                <a href="#">
+                    Tea Safe · 川茶
+                </a>
+            </h4>
+
+            <br/>
+            <h3 class="ui header">
+                介绍
+            </h3>
+            <p>
+                介绍
+            </p>
+            <a class="ui large button">
+                更多
+            </a>
+            <br/><br/><br/>
+
+        </div>
+    </div>
+
+    <div class="ui inverted vertical footer segment">
+        <div class="ui container">
+            <div class="ui stackable inverted divided equal height stackable grid">
+                <div class="three wide column">
+                    <h4 class="ui inverted header">关于</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">网站地图</a>
+                        <a href="#" class="item">联系我们</a>
+                        <a href="#" class="item">隐私条款</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">
+                        服务
+                    </h4>
+                    <div class="ui inverted link list">
+                        <a href="http://127.0.0.1:8080/#/" class="item">
+                            区块链浏览器
+                        </a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header">
+                        Tea Safe · 川茶
+                    </h4>
+                    <p>
+                        All Copyright &copy; Tea Safe
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/semantic.min.js"></script>
+
+<script>
+    $(document)
+        .ready(
+            function () {
+
+                // fix menu when passed
+                $('.masthead')
+                    .visibility({
+                        once: false,
+                        onBottomPassed: function () {
+                            $('.fixed.menu').transition('fade in');
+                        },
+                        onBottomPassedReverse: function () {
+                            $('.fixed.menu').transition('fade out');
+                        }
+                    })
+                ;
+
+                // create sidebar and attach to menu open
+                $('.ui.sidebar')
+                    .sidebar('attach events', '.toc.item')
+                ;
+                $('.ui.basic.modal')
+                    .modal('show')
+                ;
+
+            })
+    ;
+
+
+    $(document)
+        .ready(function () {
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+            $('.ui.menu a.item')
+                .on('click', function () {
+                    $(this)
+                        .addClass('active')
+                        .siblings()
+                        .removeClass('active')
+                    ;
+                })
+            ;
+        })
+    ;
+
+</script>
+</body>
+
+</html>

@@ -36,7 +36,7 @@ func main() {
 	}
 }
 
-// 实现 Init 方法。
+// 实现 Init 方法, 实例化账本时使用。
 func (s *TeaChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	return shim.Success(nil)
 }
@@ -48,18 +48,29 @@ func (s *TeaChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	fn, args := stub.GetFunctionAndParameters()
 
 	//调用对应函数
-	if fn == "addTea" {
-		return s.addTea(stub, args)
-	} else if fn == "updateTea" {
-		return s.updateTea(stub, args)
+	if fn == "saveTea" {
+		return s.saveTea(stub, args)
+
+	} else if fn == "initLedger" {
+		return s.initLedger(stub, args)
+
+	}else if fn == "teaExchange" {
+		return s.teaExchange(stub, args)
+
 	} else if fn == "queryTeaById" {
 		return s.queryTeaById(stub, args)
-	} else if fn == "queryTeaByString" {
-		return s.queryTeaByString(stub, args)
+
+	} else if fn == "queryTeaByMaker" {
+		return s.queryTeaByMaker(stub, args)
+
+	}else if fn == "getTeasByRange" {
+		return s.getTeasByRange(stub, args)
+
 	} else if fn == "getHistoryForTea" {
 		return s.getHistoryForTea(stub, args)
-	} else if fn == "delete" {
-		return s.delete(stub, args)
+
+	} else if fn == "deleteTea" {
+		return s.deleteTea(stub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")

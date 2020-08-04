@@ -17,17 +17,14 @@ const DOC_TYPE = "teaObj"
 // PutTea() 将对象序列化后保存至账本中
 func PutTea(stub shim.ChaincodeStubInterface, tea Tea) bool {
 
-	//tea.ObjectType = DOC_TYPE
 	b, err := json.Marshal(tea)
 	if err != nil {
 		return false
 	}
-
 	err = stub.PutState(tea.Id, b)
 	if err != nil {
 		return false
 	}
-
 	return true
 }
 
@@ -62,7 +59,6 @@ func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) (
 
 	var buffer bytes.Buffer
 	buffer.WriteString("[")
-
 	bArrayMemberAlreadyWritten := false
 	for resultsIterator.HasNext() {
 		queryResponse, err := resultsIterator.Next()
@@ -73,29 +69,167 @@ func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) (
 		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
 		}
-		buffer.WriteString("{\"Key\":")
-		buffer.WriteString("\"")
-		buffer.WriteString(queryResponse.Key)
-		buffer.WriteString("\"")
+		//buffer.WriteString("{\"Key\":")
+		//buffer.WriteString("\"")
+		//buffer.WriteString(queryResponse.Key)
+		//buffer.WriteString("\"")
 
-		buffer.WriteString(", \"Record\":")
+		//buffer.WriteString(", \"Record\":")
 		// Record is a JSON object, so we write as-is
 		buffer.WriteString(string(queryResponse.Value))
-		buffer.WriteString("}")
 		bArrayMemberAlreadyWritten = true
 	}
 	buffer.WriteString("]")
-
 	fmt.Printf("- getTeaByQueryString queryResult:\n%s\n", buffer.String())
 
 	return buffer.Bytes(), nil
 }
 
-// args[0]: teaObj, args[1]: eventName; eventName 用于区分事件
-func (s *TeaChaincode) addTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func SwitchTimeStampToData(timeStamp int64) string {
+	t := time.Unix(timeStamp, 0)
+	return t.Format("2006-01-02 15:04:05")
+}
 
-	if len(args) != 2 {
-		return shim.Error("Incorrect number of arguments. Expecting 2")
+func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	shelf_life := "18个月"
+	createtime := SwitchTimeStampToData(time.Now().Unix())
+	teas := []Tea{
+		{
+			Id:     "01",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "02",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "03",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "04",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "05",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "06",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "07",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "08",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "09",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "10",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "11",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+		{
+			Id:     "12",
+			Name: "明前龙井",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Production_Date: createtime,
+			Shelf_life: shelf_life,
+		},
+	}
+	for k, tea := range teas {
+		good := PutTea(stub, tea)
+		if good != true {
+			fmt.Println("写入第 %d 条信息，失败", k)
+		}
+	}
+
+	return shim.Success(nil)
+}
+
+// args[0]: teaObj, args[1]: eventName; eventName 用于区分事件
+func (s *TeaChaincode) saveTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
 	var tea Tea
@@ -124,57 +258,33 @@ func (s *TeaChaincode) addTea(stub shim.ChaincodeStubInterface, args []string) p
 	}
 
 	tea.ObjectType = DOC_TYPE
+	tea.TxID = stub.GetTxID()
 	flag := PutTea(stub, tea)
 	if !flag {
 		return shim.Error("Add data failed")
 	}
 
-	err = stub.SetEvent(args[1], []byte{})
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
 	return shim.Success([]byte("Add Tea succeed"))
 }
 
-// args[0]: teaObj, args[1]: eventName;
-func (s *TeaChaincode) updateTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) teaExchange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
+	// exchange
 	if len(args) != 2 {
 		return shim.Error("Incorrect numbers of args, expecting 2")
 	}
 
-	var tea Tea
-	err := json.Unmarshal([]byte(args[0]), &tea)
-	if err != nil {
-		return shim.Error("Unmarshal tea failed")
-	}
+	teaID := args[0]
+	nextOwner := args[1]
+	tea,_ := GetTeaInfo(stub, teaID)
+	tea.Owner = nextOwner
 
-	if len(tea.Id) <= 0 {
-		return shim.Error("Id must be a non-empty string")
-	}
-	if len(tea.Maker) <= 0 {
-		return shim.Error("Maker must be a non-empty string")
-	}
-	if len(tea.Owner) <= 0 {
-		return shim.Error("Owner must be a non-empty string")
-	}
-	if len(tea.Weight) <= 0 {
-		return shim.Error("Weight must be a non-empty string")
-	}
-
-	tea.ObjectType = DOC_TYPE
 	flag := PutTea(stub, tea)
 	if !flag {
 		return shim.Error("Save data failed")
 	}
 
-	err = stub.SetEvent(args[1], []byte{})
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	return shim.Success([]byte("updata succeed"))
+	return shim.Success([]byte("exchange succeed"))
 }
 
 func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []string) pb.Response {
@@ -192,14 +302,14 @@ func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []str
 	return shim.Success(result)
 }
 
-func (s *TeaChaincode) queryTeaByString(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) queryTeaByMaker(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of args, expecting 1")
 	}
 
 	// 拼接富查询用到的 string
-	queryString := fmt.Sprintf("{\"selector\":{\"docType\":\"%s\",\"Owner\":\"%s\"}}", DOC_TYPE, args[0])
+	queryString := fmt.Sprintf("{\"selector\":{\"maker\":\"%s\"}}", args[0])
 	results, err := getTeaByQueryString(stub, queryString)
 	if err != nil {
 		return shim.Error(err.Error())
@@ -208,6 +318,53 @@ func (s *TeaChaincode) queryTeaByString(stub shim.ChaincodeStubInterface, args [
 		return shim.Error("get nothing according to weight and maker")
 	}
 	return shim.Success(results)
+}
+
+func (s *TeaChaincode) getTeasByRange(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) < 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	startKey := args[0]
+	endKey := args[1]
+
+	resultsIterator, err := stub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- getTeasByRange queryResult:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
 }
 
 func (s *TeaChaincode) getHistoryForTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
@@ -278,7 +435,7 @@ func (s *TeaChaincode) getHistoryForTea(stub shim.ChaincodeStubInterface, args [
 // ==================================================
 // delete - remove a tea key/value pair from state
 // ==================================================
-func (s *TeaChaincode) delete(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) deleteTea(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
