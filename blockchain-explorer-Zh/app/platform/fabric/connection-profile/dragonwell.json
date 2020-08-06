@@ -1,0 +1,76 @@
+{
+	"name": "茶叶区块链",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"client": {
+		"tlsEnable": true,
+		"adminUser": "admin",
+		"adminPassword": "adminpw",
+		"enableAuthentication": true,
+		"organization": "Org1MSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"teatraceability": {
+			"peers": {
+				"peer0.org1.dragonwell.com": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"Org1MSP": {
+			"mspid": "Org1MSP",
+			"fullpath": true,
+			"adminPrivateKey": {
+				"path": "/home/wk/go/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/users/Admin@org1.dragonwell.com/msp/keystore/4fbb2250bfab60818a080ec7b98d2321a3f390d169c6b5aca3e54cf8423bc057_sk"
+			},
+			"signedCert": {
+				"path": "/home/wk/go/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/users/Admin@org1.dragonwell.com/msp/signcerts/Admin@org1.dragonwell.com-cert.pem"
+			},
+			"certificateAuthorities": ["ca.org1.dragonwell.com"]
+		}
+	},
+	"peers": {
+		"peer0.org1.dragonwell.com": {
+			"tlsCACerts": {
+				"path": "/home/wk/go/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/peers/peer0.org1.dragonwell.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:7051",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.org1.dragonwell.com"
+			}
+		}
+	},
+	"certificateAuthorities": {
+		"ca.org1.example.com": {
+			"url": "https://localhost:7054",
+			"caName": "ca.org1.dragonwell.com",
+			"httpOptions": {
+				"verify": false
+			},
+			"tlsCACerts": {
+				"cacert": "-----BEGIN CERTIFICATE-----\nMIICXjCCAgSgAwIBAgIRAPeSrllNgQ2hp/BRahHnNDcwCgYIKoZIzj0EAwIweTEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xHDAaBgNVBAoTE29yZzEuZHJhZ29ud2VsbC5jb20xHzAdBgNVBAMT\nFmNhLm9yZzEuZHJhZ29ud2VsbC5jb20wHhcNMjAwNzExMDgwNzAwWhcNMzAwNzA5\nMDgwNzAwWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQG\nA1UEBxMNU2FuIEZyYW5jaXNjbzEcMBoGA1UEChMTb3JnMS5kcmFnb253ZWxsLmNv\nbTEfMB0GA1UEAxMWY2Eub3JnMS5kcmFnb253ZWxsLmNvbTBZMBMGByqGSM49AgEG\nCCqGSM49AwEHA0IABNmFq+gOgj+/lgN0cgGAh2FSdhMTMNxmvzPrXF+FfHmCttSO\n+Y1M1jclUA+ovnnrf9q8UrfXrFsoLrxN1mi+2CKjbTBrMA4GA1UdDwEB/wQEAwIB\npjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB\n/zApBgNVHQ4EIgQgxA513SPIaXG0K3zc8f5Ika7OwAJuQcEXB66CtbrioUkwCgYI\nKoZIzj0EAwIDSAAwRQIhAOEE11+9aFhvXxYG1EH7LiXuykgc00AzVo5kszfOJhHj\nAiBcUpa5nNCdLNjRmshEwZUJH2FXurzcoYxAHS7Pu6/8Dw==\n-----END CERTIFICATE-----\n"
+			},
+			"registrar": {
+				"enrollId": "admin",
+				"enrollSecret": "adminpw"
+			}
+		}
+	}
+}
