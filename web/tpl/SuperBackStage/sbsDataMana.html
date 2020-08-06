@@ -21,7 +21,7 @@
             <a href="/backToHome" class="header item">
                 <img class="logo" src="../../static/image/login-logo.png">
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                Tea Safe •　川茶
+                Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
             </a>
             <div class="ui simple dropdown item">
                 后台管理 <i class="dropdown icon"></i>
@@ -81,34 +81,28 @@
                             <th class="two wide">重量</th>
                             <th class="two wide">产地</th>
                             <th class="two wide">生产日期</th>
-                            <th class="two wide">保质期</th>
-                            <th class="two wide">交易ID</th>
                             <th class="two wide">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         {{range .Teas}}
-                            <tr class="center aligned">
-
-                                <td>{{.Id}}</td>
-                                <td>{{.Name}}</td>
-                                <td>{{.Maker}}</td>
-                                <td>{{.Owner}}</td>
-                                <td>{{.Weight}}</td>
-                                <td>{{.Origin}}</td>
-                                <td>{{.Production_Date}}</td>
-                                <td>{{.Shelf_life}}</td>
-                                <td>{{.TxID}}</td>
-                                <td>
-                                    <a class="item">
-                                        <form action="/modifyQuery">
-                                            <input name="id" type="hidden" value={{.Id}} style="width:80%"/>
-                                            <button class="ui black button">修改</button>
-                                        </form>
-                                    </a>
-                                </td>
-
-                            </tr>
+                        <tr class="center aligned">
+                            <td>{{.Id}}</td>
+                            <td>{{.Name}}</td>
+                            <td>{{.Maker}}</td>
+                            <td>{{.Owner}}</td>
+                            <td>{{.Weight}}</td>
+                            <td>{{.Origin}}</td>
+                            <td>{{.Production_Date}}</td>
+                            <td>
+                                <a class="item">
+                                    <form action="/modifyQuery">
+                                        <input name="id" type="hidden" value={{.Id}} style="width:80%"/>
+                                        <button class="ui black button">修改</button>
+                                    </form>
+                                </a>
+                            </td>
+                        </tr>
                         {{end}}
                         </tbody>
                     </table>

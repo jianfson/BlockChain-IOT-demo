@@ -60,7 +60,8 @@ func DeleteTable() {
 	sqlStr := `SET FOREIGN_KEY_CHECKS = 0;
 			DROP TABLE IF EXISTS user;
 			SET FOREIGN_KEY_CHECKS = 1;
-			DROP TABLE IF EXISTS session;`
+			DROP TABLE IF EXISTS session;
+			DROP TABLE IF EXISTS tea;`
 	fmt.Println("---------------------------------------------")
 	fmt.Println("table deleted")
 	_, _ = Exec(sqlStr)

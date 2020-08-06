@@ -21,7 +21,7 @@
             <a href="/backToHome" class="header item">
                 <img class="logo" src="../../static/image/login-logo.png">
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                Tea Safe •　川茶
+                Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
             </a>
             <div class="ui simple dropdown item">
                 后台管理 <i class="dropdown icon"></i>
@@ -80,6 +80,7 @@
                         <th class="two wide">手机号码</th>
                         <th class="two wide">账户状态</th>
                         <th class="two wide">注册时间</th>
+                        <th class="two wide">操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,6 +93,13 @@
                             <td>{{.Phone}}</td>
                             <td>{{.Status}}</td>
                             <td>{{.Createtime}}</td>
+                            <td>
+                                <form action="/modifyUserStatus">
+                                    <input name="userID" type="hidden" value={{.Id}}>
+                                    <input name="userStatus" type="hidden" value={{.Status}}>
+                                    <button class="ui black button">禁用/解禁</button>
+                                </form>
+                            </td>
                         </tr>
                     {{end}}
                     </tbody>

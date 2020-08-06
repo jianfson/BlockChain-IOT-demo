@@ -9,7 +9,7 @@
     min-height: 50px;
 }
 .teabody {
-    min-height: 600px;
+    min-height: 700px;
 }
 
 .ui.vertical.stripe h3 {
@@ -45,4 +45,14 @@ table.dataintable td {
     border-bottom: 1px solid #bfbfbf;
     padding: 5px 15px 5px 5px;
     vertical-align: text-top;
+}
+.ui.vertical.stripe {
+    height: auto;
+    padding: 50px 0em;
+}
+.ui.vertical.stripe{
+    clear: both;
+}
+.ui.vertical.stripe{
+    margin: 3em 0em;
 }

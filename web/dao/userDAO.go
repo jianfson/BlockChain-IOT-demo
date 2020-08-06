@@ -21,6 +21,7 @@ func CreateTableWithUser() {
 				createtime VARCHAR (64)
 			);
 			alter table user default character set utf8;
+			alter table user change username username varchar(64) character set utf8;
 			alter table user change role role varchar(64) character set utf8;
 			alter table user change STATUS status varchar(64) character set utf8;`
 	Exec(sqlStr)
@@ -326,3 +327,39 @@ func QueryAllStaff() ([]*model.User, error) {
 	}
 	return staffs, nil
 }
+
+
+func UpdateUser(userID int64, userStatus string) {
+	sqlStr := fmt.Sprintf(" UPDATE user SET STATUS='%s' WHERE id='%d'", userStatus, userID)
+	fmt.Println("更新用户状态")
+	_, _ = Exec(sqlStr)
+}
+
+
+
+
+//为每个用户建表
+//func CreateEveryUserTable(user model.User) {
+//	sqlStr := fmt.Sprintf("DROP TABLE IF EXISTS %s;" +
+//		"CREATE TABLE IF NOT EXISTS %s(" +
+//		"id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL," +
+//		"username VARCHAR (64)," +
+//		"action VARCHAR (64)," +
+//		"STATUS varchar (64));" +
+//		"alter table %s default character set utf8;" +
+//		"alter table %s change username username varchar(64) character set utf8;" +
+//		"alter table %s change action action varchar(64) character set utf8;" +
+//		"alter table %s change STATUS STATUS varchar(64) character set utf8;",
+//		user.Username, user.Username, user.Username, user.Username, user.Username, user.Username)
+//	_, _ = Exec(sqlStr)
+//	fmt.Println("---------------------------------------------")
+//	fmt.Println(user.Username, "table created")
+//}
+
+//插入
+//func InsertActionToEachUser(user string, action model.Action) (int64, error) {
+//
+//	sqlStr := fmt.Sprintf("insert into ? (username,action,STATUS) values (?,?,?)",
+//		user, action.Username, action.Action, action.Status)
+//	return Exec(sqlStr)
+//}

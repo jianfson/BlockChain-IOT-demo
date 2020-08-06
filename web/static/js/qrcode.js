@@ -12,7 +12,7 @@ function makeCode () {
         return;
     }
 
-    qrcode.makeCode("http://localhost:9000/findTeaByID?id=" + elText.value);
+    qrcode.makeCode("http://172.19.175.222:9000/findTeaByID?id=" + elText.value);
 }
 
 makeCode();

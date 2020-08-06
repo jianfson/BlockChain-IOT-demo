@@ -10,94 +10,8 @@
     <title>Tea Safe · 川茶</title>
     <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
-
-    <style type="text/css">
-        .masthead.segment {
-            min-height: 50px;
-            padding: 1em 0em;
-        }
-
-        .masthead .logo.item img {
-            margin-right: 1em;
-        }
-
-        .masthead .ui.menu .ui.button {
-            margin-left: 0.5em;
-        }
-
-        .masthead h1.ui.header {
-            margin-top: 3em;
-            margin-bottom: 0em;
-            font-size: 4em;
-            font-weight: normal;
-        }
-
-        .masthead h2 {
-            font-size: 1.7em;
-            font-weight: normal;
-        }
-
-
-        .ui.vertical.stripe h3 {
-            font-size: 2em;
-        }
-
-        .ui.vertical.stripe .button + h3,
-        .ui.vertical.stripe p + h3 {
-            margin-top: 3em;
-        }
-
-        .ui.vertical.stripe .floated.image {
-            clear: both;
-        }
-
-        .ui.vertical.stripe p {
-            font-size: 1.33em;
-        }
-
-        .ui.vertical.stripe .horizontal.divider {
-            margin: 3em 0em;
-        }
-
-        .footer.segment {
-            text-align: center;
-            padding: 5em 0em;
-            width: 100%;
-        }
-
-        .secondary.pointing.menu .toc.item {
-            display: none;
-        }
-
-        @media only screen and (max-width: 700px) {
-            .ui.fixed.menu {
-                display: none !important;
-            }
-
-            .secondary.pointing.menu .item,
-            .secondary.pointing.menu .menu {
-                display: none;
-            }
-
-            .secondary.pointing.menu .toc.item {
-                display: block;
-            }
-
-            .masthead.segment {
-                min-height: 50px;
-            }
-
-            .masthead h1.ui.header {
-                font-size: 2em;
-                margin-top: 1.5em;
-            }
-
-            .masthead h2 {
-                margin-top: 0.5em;
-                font-size: 1.5em;
-            }
-        }
-    </style>
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="../../static/css/queryResult.css" rel="stylesheet" id="bootstrap-css">
 </head>
 
 
@@ -107,61 +21,87 @@
         <a href="/backToHome" class="header item">
             <img class="logo" src="../../static/image/login-logo.png">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            Tea Safe •　川茶
+            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
         </a>
-        {{if .IsSuperAdmin}}
-            <div class="ui simple dropdown item">
-                后台管理 <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/superBackStage">
-                        后台首页
-                    </a>
-                    <div class="divider"></div>
-                    <div class="header">管理</div>
-                    <a class="item" href="/sbsDataMana">
-                        数据管理
-                    </a>
-                    <a class="item" href="/sbsAdminMana">
-                        管理员任命
-                    </a>
-                    <a class="item" href="/sbsUserMana">
-                        用户管理
-                    </a>
+        {{if .IsLogin}}
+            {{if .IsSuperAdmin}}
+                <div class="ui simple dropdown item">
+                    后台管理 <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="/superBackStage">
+                            后台首页
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                        <div class="divider"></div>
+                        <div class="header">管理</div>
+                        <a class="item" href="/sbsDataMana">
+                            数据管理
+                        </a>
+                        <a class="item" href="/sbsAdminMana">
+                            管理员任命
+                        </a>
+                        <a class="item" href="/sbsUserMana">
+                            用户管理
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {{end}}
-        {{if .IsAdmin}}
-            <div class="ui simple dropdown item">
-                后台管理 <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/backStage">
-                        后台首页
-                    </a>
-                    <div class="divider"></div>
-                    <div class="header">管理</div>
-                    <a class="item" href="/bsDataMana">
-                        数据管理
-                    </a>
-                    <a class="item" href="/bsAdminMana">
-                        管理员任命
-                    </a>
-                    <a class="item" href="/bsUserMana">
-                        用户管理
-                    </a>
+            {{end}}
+            {{if .IsAdmin}}
+                <div class="ui simple dropdown item">
+                    后台管理 <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="/backStage">
+                            后台首页
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                        <div class="divider"></div>
+                        <div class="header">管理</div>
+                        <a class="item" href="/bsDataMana">
+                            数据管理
+                        </a>
+                        <a class="item" href="/bsAdminMana">
+                            管理员任命
+                        </a>
+                        <a class="item" href="/bsUserMana">
+                            用户管理
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {{end}}
-        {{if .IsStaff}}
-            <a class="item" href="/addTeaPage">
-                添加记录
+            {{end}}
+            {{if .IsStaff}}
+                <div class="ui simple dropdown item">
+                    员工操作 <i class="dropdown icon"></i>
+                    <div class="menu">
+
+                        <a class="item" href="/addTeaPage">
+                            添加记录
+                        </a>
+                        <a class="active item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                    </div>
+                </div>
+            {{end}}
+            {{if .IsUser}}
+                <a class="item" href="/queryPage">
+                    搜寻ID
+                </a>
+            {{end}}
+        {{else}}
+            <a class="item" href="/queryPage">
+                搜寻ID
             </a>
-            <a class="item" href="/modifyQueryPage">
-                修改记录
+        {{end}}
+
+        {{if .IsUser}}
+            <a class="item" href="/queryPage">
+                搜寻ID
             </a>
         {{end}}
-        <a class="item" href="/queryPage">
-            搜寻ID
-        </a>
         {{if .IsLogin}}
             <div class="ui simple dropdown right item">
                 Welcome, {{.Sess.UserName}}
@@ -192,129 +132,143 @@
         <div class="ui middle aligned center aligned grid">
             <div class="column">
                 <h5 class="ui teal image header">
-                    <h2 class="ui teal image header">
+                    <h3 class="ui teal image header">
                         <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
-                    </h2>
+                        <h3>当前商品信息如下</h3>
+                    </h3>
                 </h5>
                 <br/><br/><br/>
             </div>
         </div>
 
         <div class="ui middle aligned center aligned grid">
-            <div class="ui list">
-                <a class="item" one-link-mark="yes">
-                    <i class="help icon"></i>
+            <div class="ui list" style="margin-top: 14px; margin-left: 30px">
+                <a class="item">
+                    <i class="boxes icon"></i>
                     <div class="content">
-                        <div class="header">浮动图标</div>
-                        <div class="description">此文本将始终有一个左边缘，以确保它坐在你的图标旁边</div>
+                        <div class="header">{{.Tea.Id}}</div>
+                        <div class="description">商品编号</div>
+                    </div>
+                </a>
+                <br/>
+                <a class="item">
+                    <i class="fire icon">&nbsp;</i>
+                    <div class="content">
+                        <div class="header">{{.Tea.Origin}}</div>
+                        <div class="description">产地</div>
+                    </div>
+                </a>
+                <br/>
+                <a class="item">
+                    <i class="leaf icon"></i>
+                    <div class="content">
+                        <div class="header">{{.Tea.Maker}}</div>
+                        <div class="description">制造商</div>
+                    </div>
+                </a>
+                <br/>
+                <a class="item">
+                    <i class="shopping cart icon"></i>
+                    <div class="content">
+                        <div class="header">{{.Tea.Owner}}</div>
+                        <div class="description">拥有者</div>
                     </div>
                 </a>
             </div>
-            <div class="column">
-                <div>
-                编号
-                </div>
-                <div>
-                商品名
-                </div>
-                <div>
-                制造商
-                </div>
-                <div>
-                拥有者
-                </div>
-                <div>
-                重量
-                </div>
-                <div>
-                产地
-                </div>
-                <div>
-                生产日期
-                </div>
-                <div>
-                保质期
-                </div>
-                <div>
-                交易ID
-                </div>
-            </div>
-        </div>
 
-        <div class="ui grid">
-            <div class="one wide column"></div>
-            <div class="fourteen wide column">
-                <table class="ui very basic table">
-                    <thead>
-                    <tr class="center aligned">
-                        <th class="two wide">编号</th>
-                        <th class="two wide">商品名</th>
-                        <th class="two wide">制造商</th>
-                        <th class="two wide">拥有者</th>
-                        <th class="two wide">重量</th>
-                        <th class="two wide">产地</th>
-                        <th class="two wide">生产日期</th>
-                        <th class="two wide">保质期</th>
-                        <th class="two wide">交易ID</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="center aligned">
-                        <td>{{.Tea.Id}}</td>
-                        <td>{{.Tea.Name}}</td>
-                        <td>{{.Tea.Maker}}</td>
-                        <td>{{.Tea.Owner}}</td>
-                        <td>{{.Tea.Weight}}</td>
-                        <td>{{.Tea.Origin}}</td>
-                        <td>{{.Tea.Production_Date}}</td>
-                        <td>{{.Tea.Shelf_life}}</td>
-                        <td>{{.Tea.TxID}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="ui middle aligned center aligned grid">
-                    <div class="column">
-                        <br/><br/><br/>
-                        <div class="ui statistic">
-                            <div class="label">
-                                该商品总计被查询
-                            </div>
-                            <div class="value">
-                                40,509&nbsp;&nbsp;次
-                            </div>
-                        </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="ui statistic">
-                            <div class="label">
-                                区块高度
-                            </div>
-                            <div class="value">
-                                {{.Block.Height}}
-                            </div>
-                        </div>
-                        <br/><br/><br/>
-                        <div>
-                            <h3>交易Hash</h3>
-                        </div>
-                        <br/>
-                        <div>
-                            {{.Block.DataHash}}
-                        </div>
-                        <div>
-                            <h3>区块Hash</h3>
-                        </div>
-                        <br/>
-                        <div>
-                            {{.Block.BlcHash}}
-                        </div>
-                        <br/><br/><br/>
+            <div style="width: 150px"></div>
+
+            <div class="ui list" style="margin-bottom: 14px; margin-left: 30px">
+                <a class="item">
+                    <i class="tag icon"></i>
+                    <div class="content">
+                        <div class="header">{{.Tea.Name}}</div>
+                        <div class="description">商品名</div>
                     </div>
-
-                </div>
-
+                </a>
+                <br/>
+                <a class="item">
+                    <i class="dolly flatbed icon"></i>
+                    <div class="content">
+                        <div class="header">{{.Tea.Weight}}</div>
+                        <div class="description">重量</div>
+                    </div>
+                </a>
+                <br/>
+                <a class="item">
+                    <i class="hourglass start icon"></i>
+                    <div class="content">
+                        <div class="header">{{.Tea.Production_Date}}</div>
+                        <div class="description">生产日期</div>
+                    </div>
+                </a>
+                <br/>
+                <a class="item">
+                    <i class="hourglass end icon"></i>
+                    <div class="content">
+                        <div class="header">{{.Tea.Shelf_life}}</div>
+                        <div class="description">保质期</div>
+                    </div>
+                </a>
             </div>
-            <div class="one wide column"></div>
         </div>
+        {{if .IsStaff}}
+            <br/><br/><br/><br/>
+            <div class="ui middle aligned center aligned grid">
+                <form action="/modifyQuery">
+                    <input type="hidden" name="id" type="text" value={{.Tea.Id}}>
+                    <button id="sub_btn" class="ui secondary button" onclick="loadingBtn()">修改当前信息</button>
+                </form>
+            </div>
+        {{end}}
+        <div class="ui middle aligned center aligned grid">
+            <div class="ui statistic">
+                <br/><br/><br/>
+                <div class="label">
+                    该商品总计被查询
+                </div>
+                <div class="value">
+                    {{.Tea.QueryCounter}}
+                </div>
+                <br/><br/><br/>
+            </div>
+        </div>
+        <div class="container mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <h4>这是您的溯源查询</h4>
+                    <ul class="timeline">
+
+                        <li>
+                            <div class="float-right">
+                                <a class="ui label" one-link-mark="yes">
+                                    <i class="clock outline icon cc_cursor"></i>
+                                    {{.Tea.Production_Date}}
+                                </a>
+                            </div>
+                            <p>
+                            <b>交易ID：</b><br/>
+                            {{.Tea.TxID}}
+                            </p>
+                            <p>
+                                <b>区块高度：</b><br/>
+                                {{.Block.Height}}
+                            </p>
+                            <p>
+                                <b>交易Hash：</b><br/>
+                                {{.Block.DataHash}}
+                            </p>
+                            <p>
+                                <b>区块Hash：</b><br/>
+                                {{.Block.BlcHash}}
+                            </p>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br/><br/><br/>
     </div>
 
     <div class="ui inverted vertical footer segment">
@@ -349,6 +303,7 @@
 
 <script src="../../static/js/jquery.min.js"></script>
 <script src="../../static/js/semantic.min.js"></script>
+<script src="../../static/js/bootstrap.min.js"></script>
 <script>
     $(document)
         .ready(function () {

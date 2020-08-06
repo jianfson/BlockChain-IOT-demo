@@ -5297,7 +5297,7 @@ $.fn.dropdown = function(parameters) {
           if(hasSelected && !module.is.multiple()) {
             module.debug('Forcing partial selection to selected item', $selectedItem);
             module.event.item.click.call($selectedItem, {}, true);
-            return;
+
           }
           else {
             if(settings.allowAdditions) {
@@ -6002,7 +6002,7 @@ $.fn.dropdown = function(parameters) {
             if( module.can.activate( $(element) ) ) {
               module.set.selected(value, $(element));
               if(module.is.multiple() && !module.is.allFiltered()) {
-                return;
+
               }
               else {
                 module.hideAndClear();
@@ -6018,7 +6018,7 @@ $.fn.dropdown = function(parameters) {
             if( module.can.activate( $(element) ) ) {
               module.set.value(value, text, $(element));
               if(module.is.multiple() && !module.is.allFiltered()) {
-                return;
+
               }
               else {
                 module.hideAndClear();
@@ -9507,7 +9507,7 @@ $.fn.modal = function(parameters) {
           }
           else {
             module.debug('Dimmer is not visible cannot hide');
-            return;
+
           }
         },
 
@@ -10293,7 +10293,7 @@ $.fn.nag = function(parameters) {
             }
             else {
               module.error(error.noCookieStorage);
-              return;
+
             }
           },
           get: function(key, value) {
@@ -17179,7 +17179,7 @@ $.fn.sticky = function(parameters) {
           }
           if($context.length === 0) {
             module.error(error.invalidContext, settings.context, $module);
-            return;
+
           }
         },
 
@@ -17190,7 +17190,7 @@ $.fn.sticky = function(parameters) {
           if(module.cache.element.height > module.cache.context.height) {
             module.reset();
             module.error(error.elementSize, $module);
-            return;
+
           }
         },
 

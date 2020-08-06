@@ -39,59 +39,80 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             Tea Safe •　川茶
         </a>
-        {{if .IsSuperAdmin}}
-            <div class="ui simple dropdown item">
-                后台管理 <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/superBackStage">
-                        后台首页
-                    </a>
-                    <div class="divider"></div>
-                    <div class="header">管理</div>
-                    <a class="item" href="/sbsDataMana">
-                        数据管理
-                    </a>
-                    <a class="item" href="/sbsAdminMana">
-                        管理员任命
-                    </a>
-                    <a class="item" href="/sbsUserMana">
-                        用户管理
-                    </a>
+        {{if .IsLogin}}
+            {{if .IsSuperAdmin}}
+                <div class="ui simple dropdown item">
+                    后台管理 <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="/superBackStage">
+                            后台首页
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                        <div class="divider"></div>
+                        <div class="header">管理</div>
+                        <a class="item" href="/sbsDataMana">
+                            数据管理
+                        </a>
+                        <a class="item" href="/sbsAdminMana">
+                            管理员任命
+                        </a>
+                        <a class="item" href="/sbsUserMana">
+                            用户管理
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {{end}}
-        {{if .IsAdmin}}
-            <div class="ui simple dropdown item">
-                后台管理 <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/backStage">
-                        后台首页
-                    </a>
-                    <div class="divider"></div>
-                    <div class="header">管理</div>
-                    <a class="item" href="/bsDataMana">
-                        数据管理
-                    </a>
-                    <a class="item" href="/bsAdminMana">
-                        管理员任命
-                    </a>
-                    <a class="item" href="/bsUserMana">
-                        用户管理
-                    </a>
+            {{end}}
+            {{if .IsAdmin}}
+                <div class="ui simple dropdown item">
+                    后台管理 <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="/backStage">
+                            后台首页
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                        <div class="divider"></div>
+                        <div class="header">管理</div>
+                        <a class="item" href="/bsDataMana">
+                            数据管理
+                        </a>
+                        <a class="item" href="/bsAdminMana">
+                            管理员任命
+                        </a>
+                        <a class="item" href="/bsUserMana">
+                            用户管理
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {{end}}
-        {{if .IsStaff}}
-            <a class="item" href="/addTeaPage">
-                添加记录
+            {{end}}
+            {{if .IsStaff}}
+                <div class="ui simple dropdown item">
+                    员工操作 <i class="dropdown icon"></i>
+                    <div class="menu">
+
+                        <a class="item" href="/addTeaPage">
+                            添加记录
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                    </div>
+                </div>
+            {{end}}
+            {{if .IsUser}}
+                <a class="item" href="/queryPage">
+                    搜寻ID
+                </a>
+            {{end}}
+        {{else}}
+            <a class="item" href="/queryPage">
+                搜寻ID
             </a>
-            <a class="item" href="/modifyQueryPage">
-                修改记录
-            </a>
         {{end}}
-        <a class="item" href="/queryPage">
-            搜寻ID
-        </a>
+
         {{if .IsLogin}}
             <div class="ui simple dropdown right item">
                 Welcome, {{.Sess.UserName}}

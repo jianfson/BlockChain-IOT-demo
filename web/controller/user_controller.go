@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -50,11 +51,24 @@ func (app *Application) Register(w http.ResponseWriter, r *http.Request) {
 		}
 		password := utils.MD5(Password)
 		createtime := utils.SwitchTimeStampToData(time.Now().Unix())
+
 		fmt.Println(createtime)
 
-		user := model.User{Username: username, Password: password, Role: role, Email: email, Phone: phone, Status: statue, Createtime: createtime}
+		user := model.User{
+			Username:   username,
+			Password:   password,
+			Role:       role,
+			Email:      email,
+			Phone:      phone,
+			Status:     statue,
+			Createtime: createtime,
+		}
 		_, err := dao.InsertUser(user) //user表插入记录
-		//为该用户建表
+
+		////获取该注册用户ID
+		//user.Id = ID
+		////为该用户建表
+		//dao.CreateEveryUserTable(user)
 
 		if err != nil {
 			ShowView(w, r, "AccountRelated/register.html", nil)
@@ -206,6 +220,7 @@ func (app *Application) Login(w http.ResponseWriter, r *http.Request) {
 // 退出登陆
 func (app *Application) Logout(w http.ResponseWriter, r *http.Request) {
 	data := utils.DeleteSession(r)
+	fmt.Println(data.Msg)
 	ShowView(w, r, "index.html", data)
 }
 
@@ -239,15 +254,15 @@ func (app *Application) SbsDataMana(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
 
 	if data.IsLogin {
-		result, _ := app.Setup.QueryTeaByMaker("杭州龙井茶业集团有限公司")
-		var teas []service.Tea
-		json.Unmarshal(result, &teas)
-		var Teas []*service.Tea
-		for i := 0; i < len(teas); i++ {
-			tea := teas[i]
-			Teas = append(Teas, &tea)
-		}
-		data.Teas = Teas
+				result, _ := app.Setup.QueryTeaByMaker("杭州龙井茶业集团有限公司")
+				var teas []service.Tea
+				json.Unmarshal(result, &teas)
+				var Teas []*service.Tea
+				for i := 0; i < len(teas); i++ {
+					tea := teas[i]
+					Teas = append(Teas, &tea)
+				}
+				data.Teas = Teas
 		ShowView(w, r, "SuperBackStage/sbsDataMana.html", data)
 		return
 	} else {
@@ -393,20 +408,59 @@ func (app *Application) BsUserMana(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+
+func (app *Application) ModifyStatus(w http.ResponseWriter, r *http.Request) {
+	data := utils.CheckLogin(r)
+	if data.IsLogin {
+		userID, _ := strconv.ParseInt(r.FormValue("userID"), 10, 64)
+		userStatus := r.FormValue("userStatus")
+		userRole := r.FormValue("userRole")
+
+		if userStatus == "正常"{
+			dao.UpdateUser(userID, "异常")
+		}else if userStatus == "异常"{
+			dao.UpdateUser(userID, "正常")
+		}
+
+		if userRole == "用户"{
+			users, _ := dao.QueryAllUser()
+			data.User = users
+			if data.IsAdmin{
+				ShowView(w, r, "BackStage/bsUserMana.html", data)
+				return
+			} else if data.IsSuperAdmin{
+				ShowView(w, r, "SuperBackStage/sbsUserMana.html", data)
+				return
+			}
+		} else if userRole == "员工"{
+			fmt.Println("---------------------------------------------")
+			fmt.Println("查询已有职员")
+			staffs, _ := dao.QueryAllStaff()
+			data.Staff = staffs
+			ShowView(w, r, "BackStage/bsStaffMana.html", data)
+		}
+	} else {
+		ShowView(w, r, "AccountRelated/login.html", data)
+		return
+	}
+}
+
+
+
 // 进入数据管理
 func (app *Application) BsDataMana(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
 
 	if data.IsLogin {
-		result, _ := app.Setup.QueryTeaByMaker("dragonwell")
-		var teas []service.Tea
-		json.Unmarshal(result, &teas)
-		var Teas []*service.Tea
-		for i := 0; i < len(teas); i++ {
-			tea := teas[i]
-			Teas = append(Teas, &tea)
-		}
-		data.Teas = Teas
+				result, _ := app.Setup.QueryTeaByMaker("dragonwell")
+				var teas []service.Tea
+				json.Unmarshal(result, &teas)
+				var Teas []*service.Tea
+				for i := 0; i < len(teas); i++ {
+					tea := teas[i]
+					Teas = append(Teas, &tea)
+				}
+				data.Teas = Teas
 		ShowView(w, r, "BackStage/bsDataMana.html", data)
 		return
 	} else {

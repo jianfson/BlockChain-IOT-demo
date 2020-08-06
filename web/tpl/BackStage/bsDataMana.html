@@ -33,12 +33,13 @@
                     <a class="active item" href="/bsDataMana">
                         数据管理
                     </a>
-                    <a class="item" href="/bsAdminMana">
-                        管理员任命
-                    </a>
                     <a class="item" href="/bsUserMana">
                         用户管理
                     </a>
+                    <a class="item" href="/bsStaffMana">
+                        员工管理
+                    </a>
+
                 </div>
             </div>
             <div class="ui simple dropdown right item">
@@ -73,29 +74,35 @@
                         <thead>
                         <tr class="center aligned">
                             <th class="two wide">编号</th>
-                            <th class="three wide">制造商</th>
-                            <th class="three wide">拥有者</th>
-                            <th class="three wide">重量</th>
-                            <th class="three wide">操作</th>
+                            <th class="two wide">商品名</th>
+                            <th class="two wide">拥有者</th>
+                            <th class="two wide">制造商</th>
+                            <th class="two wide">重量</th>
+                            <th class="two wide">产地</th>
+                            <th class="two wide">生产日期</th>
+                            <th class="two wide">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         {{range .Teas}}
-                            <tr class="center aligned">
-                                <td>{{.Id}}</td>
-                                <td>{{.Maker}}</td>
-                                <td>{{.Owner}}</td>
-                                <td>{{.Weight}}</td>
-                                <td>
-                                    <a class="item">
-                                        <form action="/modifyQuery">
-                                            <input name="id" type="hidden" value={{.Id}} style="width:80%"/>
-                                            <button class="ui black button">修改</button>
-                                        </form>
-                                    </a>
-                                </td>
-                            </tr>
-                        {{end}}
+                        <tr class="center aligned">
+                            <td>无记录</td>
+                            <td>无记录</td>
+                            <td>无记录</td>
+                            <td>无记录</td>
+                            <td>无记录</td>
+                            <td>无记录</td>
+                            <td>无记录</td>
+                            <td>
+                                <a class="item">
+                                    <form action="/modifyQuery">
+                                        <input name="id" type="hidden" value={{.Id}} style="width:80%"/>
+                                        <button class="ui black button">修改</button>
+                                    </form>
+                                </a>
+                            </td>
+                        </tr>
+                         {{end}}
                         </tbody>
                     </table>
 

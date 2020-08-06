@@ -12,213 +12,87 @@
 
     <title>Tea Safe · 川茶</title>
     <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
-
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
-
-
-    <style type="text/css">
-        html {
-            height: 100%;
-            width: 100%;
-        }
-
-        body {
-            background-color: #000000;
-            width: 100%;
-            height: 100%;
-            background-image: url("../../static/image/background.jpg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            -webkit-background-size: cover;
-            -o-background-size: cover;
-            -moz-background-size: cover;
-            -ms-background-size: cover;
-        }
-
-        body > .grid {
-            height: 100%;
-        }
-
-        .shade {
-            position: absolute;
-            background-color: rgba(3, 3, 3);
-            height: 100%;
-            width: 100%;
-            opacity: 0.6;
-        }
-
-        .image {
-            margin-top: -100px;
-        }
-
-        .column {
-            max-width: 450px;
-        }
-
-        .masthead.segment {
-            min-height: 50px;
-            padding: 1em 0em;
-        }
-
-        .masthead .logo.item img {
-            margin-right: 1em;
-        }
-
-        .masthead .ui.menu .ui.button {
-            margin-left: 0.5em;
-        }
-
-        .masthead h1.ui.header {
-            margin-top: 3em;
-            margin-bottom: 0em;
-            font-size: 4em;
-            font-weight: normal;
-        }
-
-        .masthead h2 {
-            font-size: 1.7em;
-            font-weight: normal;
-        }
-
-        .ui.vertical.stripe {
-            padding: 50px 0em;
-        }
-
-        .ui.vertical.stripe h3 {
-            font-size: 2em;
-        }
-
-        .ui.vertical.stripe .button + h3,
-        .ui.vertical.stripe p + h3 {
-            margin-top: 3em;
-        }
-
-        .ui.vertical.stripe .floated.image {
-            clear: both;
-        }
-
-        .ui.vertical.stripe p {
-            font-size: 1.33em;
-        }
-
-        .ui.vertical.stripe .horizontal.divider {
-            margin: 3em 0em;
-        }
-
-        .footer.segment {
-            text-align: center;
-            padding: 50px 0;
-            width: 100%;
-        }
-
-        .secondary.pointing.menu .toc.item {
-            display: none;
-        }
-
-        @media only screen and (max-width: 700px) {
-            .ui.fixed.menu {
-                display: none !important;
-            }
-
-            .secondary.pointing.menu .item,
-            .secondary.pointing.menu .menu {
-                display: none;
-            }
-
-            .secondary.pointing.menu .toc.item {
-                display: block;
-            }
-
-            .masthead.segment {
-                min-height: 50px;
-            }
-
-            .masthead h1.ui.header {
-                font-size: 2em;
-                margin-top: 1.5em;
-            }
-
-            .masthead h2 {
-                margin-top: 0.5em;
-                font-size: 1.5em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../../static/css/register.css">
 </head>
 
 
 <body>
-
-<div class="shade">
-    <p>&nbsp;</p>
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="/backToHome" class="header item">
+            <img class="logo" src="../../static/image/login-logo.png">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
+        </a>
+        <a href="/loginPage" class="header right item">
+            登录
+        </a>
+    </div>
 </div>
 
-<div class="pusher">
-    <div class="ui inverted vertical masthead center aligned segment">
-        <div class="ui container">
-            <div class="ui large secondary inverted menu">
-                <a class="item" href="/backToHome">主页</a>
-                <div class="right item">
-                    <a class="ui inverted button" href="/loginPage">登录</a>
+
+<div class="headholder"></div>
+
+<div class="homeHugeImage">
+    <div class="hugeImageCover">
+        <div class="formPlacer">
+            <div class="ui middle aligned center aligned grid">
+                <div class="column">
+                    <h2 class="ui teal image header">
+                        <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
+                        <h1>Tea Safe · 川茶</h1>
+                    </h2>
+                    <form id="registerForm" action="/register" class="ui large form">
+                        <div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user icon"></i>
+                                    <input class="form-control" name="loginName" type="text" placeholder="请输入用户名" required
+                                           autofocus>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input id="psd0" class="form-control" name="password" type="password"
+                                           placeholder="请输入密码" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="field psd1">
+                                <div class="ui left icon input">
+                                    <i class="check icon"></i>
+                                    <input id="psd1" class="form-control" name="password1" type="password"
+                                           onblur="checkPSD()" placeholder="请确认密码" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="field email">
+                                <div class="ui left icon input">
+                                    <i class="mail icon"></i>
+                                    <input id="fEmail" class="form-control" name="email" type="text" placeholder="请输入可用邮箱"
+                                           onblur="checkEmail()" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="field tel">
+                                <div class="ui action left icon input">
+                                    <i class="phone icon"></i>
+                                    <input id="fPhone" class="form-control" name="tel" type="text" placeholder="请输入可用手机号"
+                                           onblur="checkPhone()" autocomplete="off" required>
+                                    <a class="ui button" onclick="submitSms()">发送验证码</a>
+                                </div>
+                            </div>
+                            <button id="save" class="ui black inverted big button" type="submit" disabled="disabled">
+                                注&nbsp;&nbsp;&nbsp;&nbsp;册
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="ui vertical stripe segment bg-image">
-        <div class="ui middle aligned center aligned grid">
-            <div class="column">
-                <h2 class="ui teal image header">
-                    <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
-                    <h1>Tea Safe · 川茶</h1>
-                </h2>
-                <form id="registerForm" action="/register" class="ui large form">
-                    <div>
-                        <div class="field">
-                            <div class="ui left icon input">
-                                <i class="user icon"></i>
-                                <input class="form-control" name="loginName" type="text" placeholder="请输入用户名" required
-                                       autofocus>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui left icon input">
-                                <i class="lock icon"></i>
-                                <input id="psd0" class="form-control" name="password" type="password"
-                                       placeholder="请输入密码" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="field psd1">
-                            <div class="ui left icon input">
-                                <i class="check icon"></i>
-                                <input id="psd1" class="form-control" name="password1" type="password"
-                                       onblur="checkPSD()" placeholder="请确认密码" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="field email">
-                            <div class="ui left icon input">
-                                <i class="mail icon"></i>
-                                <input id="fEmail" class="form-control" name="email" type="text" placeholder="请输入可用邮箱"
-                                       onblur="checkEmail()" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="field tel">
-                            <div class="ui action left icon input">
-                                <i class="phone icon"></i>
-                                <input id="fPhone" class="form-control" name="tel" type="text" placeholder="请输入可用手机号"
-                                       onblur="checkPhone()" autocomplete="off" required>
-                                <a class="ui button" onclick="submitSms()">发送验证码</a>
-                            </div>
-                        </div>
-                        <button id="save" class="ui black inverted big button" type="submit" disabled="disabled">
-                            注&nbsp;&nbsp;&nbsp;&nbsp;册
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
+<div class="pusher">
     <div class="ui inverted vertical footer segment">
         <div class="ui container">
             <div class="ui stackable inverted divided equal height stackable grid">

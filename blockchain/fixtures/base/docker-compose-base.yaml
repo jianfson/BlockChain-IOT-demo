@@ -13,7 +13,7 @@ services:
       file: peer-base.yaml
       service: orderer-base
     volumes:
-        - ../artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../artifacts/genesis1.block:/var/hyperledger/orderer/orderer.genesis1.block
         - ../crypto-config/ordererOrganizations/dragonwell.com/orderers/orderer.dragonwell.com/msp:/var/hyperledger/orderer/msp
         - ../crypto-config/ordererOrganizations/dragonwell.com/orderers/orderer.dragonwell.com/tls/:/var/hyperledger/orderer/tls
         - orderer.dragonwell.com:/var/hyperledger/production/orderer

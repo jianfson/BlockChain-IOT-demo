@@ -267,7 +267,7 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
-    #./bin/configtxgen -profile TeaTraceabilityOrdererGenesis -outputBlock ./artifacts/genesis.block
+    #./bin/configtxgen -profile TeaTraceabilityOrdererGenesis -outputBlock ./artifacts/genesis1.block
     TeaTraceabilityOrdererGenesis:
         <<: *ChannelDefaults
         Orderer:

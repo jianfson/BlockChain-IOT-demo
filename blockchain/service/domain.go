@@ -19,6 +19,7 @@ type Tea struct {
 	Production_Date string `json:"production_date"`
 	Shelf_life      string `json:"shelf_life"`
 	TxID            string `json:"txID"`
+	QueryCounter    int    `json:"queryCounter"`
 }
 type Block struct {
 	Height      uint64 `json:"height"`

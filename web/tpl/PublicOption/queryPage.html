@@ -10,99 +10,7 @@
     <title>Tea Safe · 川茶</title>
     <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
-
-    <style type="text/css">
-        .masthead.segment {
-            min-height: 50px;
-            padding: 1em 0em;
-        }
-
-        .masthead .logo.item img {
-            margin-right: 1em;
-        }
-
-        .masthead .ui.menu .ui.button {
-            margin-left: 0.5em;
-        }
-
-        .masthead h1.ui.header {
-            margin-top: 3em;
-            margin-bottom: 0em;
-            font-size: 4em;
-            font-weight: normal;
-        }
-
-        .masthead h2 {
-            font-size: 1.7em;
-            font-weight: normal;
-        }
-
-        .ui.vertical.stripe {
-            height: 700px;
-            padding: 150px 0em;
-        }
-
-        .ui.vertical.stripe h3 {
-            font-size: 2em;
-        }
-
-        .ui.vertical.stripe .button + h3,
-        .ui.vertical.stripe p + h3 {
-            margin-top: 3em;
-        }
-
-        .ui.vertical.stripe .floated.image {
-            clear: both;
-        }
-
-        .ui.vertical.stripe p {
-            font-size: 1.33em;
-        }
-
-        .ui.vertical.stripe .horizontal.divider {
-            margin: 3em 0em;
-        }
-
-        .footer.segment {
-            bottom: 0;
-            text-align: center;
-            padding: 5em 0em;
-            width: 100%;
-        }
-
-        .secondary.pointing.menu .toc.item {
-            display: none;
-        }
-
-        @media only screen and (max-width: 700px) {
-            .ui.fixed.menu {
-                display: none !important;
-            }
-
-            .secondary.pointing.menu .item,
-            .secondary.pointing.menu .menu {
-                display: none;
-            }
-
-            .secondary.pointing.menu .toc.item {
-                display: block;
-            }
-
-            .masthead.segment {
-                min-height: 50px;
-            }
-
-            .masthead h1.ui.header {
-                font-size: 2em;
-                margin-top: 1.5em;
-            }
-
-            .masthead h2 {
-                margin-top: 0.5em;
-                font-size: 1.5em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../../static/css/option.css">
 </head>
 
 
@@ -112,61 +20,87 @@
         <a href="/backToHome" class="header item">
             <img class="logo" src="../../static/image/login-logo.png">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            Tea Safe •　川茶
+            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
         </a>
-        {{if .IsSuperAdmin}}
-            <div class="ui simple dropdown item">
-                后台管理 <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/superBackStage">
-                        后台首页
-                    </a>
-                    <div class="divider"></div>
-                    <div class="header">管理</div>
-                    <a class="item" href="/sbsDataMana">
-                        数据管理
-                    </a>
-                    <a class="item" href="/sbsAdminMana">
-                        管理员任命
-                    </a>
-                    <a class="item" href="/sbsUserMana">
-                        用户管理
-                    </a>
+        {{if .IsLogin}}
+            {{if .IsSuperAdmin}}
+                <div class="ui simple dropdown item">
+                    后台管理 <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="/superBackStage">
+                            后台首页
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                        <div class="divider"></div>
+                        <div class="header">管理</div>
+                        <a class="item" href="/sbsDataMana">
+                            数据管理
+                        </a>
+                        <a class="item" href="/sbsAdminMana">
+                            管理员任命
+                        </a>
+                        <a class="item" href="/sbsUserMana">
+                            用户管理
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {{end}}
-        {{if .IsAdmin}}
-            <div class="ui simple dropdown item">
-                后台管理 <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/backStage">
-                        后台首页
-                    </a>
-                    <div class="divider"></div>
-                    <div class="header">管理</div>
-                    <a class="item" href="/bsDataMana">
-                        数据管理
-                    </a>
-                    <a class="item" href="/bsAdminMana">
-                        管理员任命
-                    </a>
-                    <a class="item" href="/bsUserMana">
-                        用户管理
-                    </a>
+            {{end}}
+            {{if .IsAdmin}}
+                <div class="ui simple dropdown item">
+                    后台管理 <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="/backStage">
+                            后台首页
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                        <div class="divider"></div>
+                        <div class="header">管理</div>
+                        <a class="item" href="/bsDataMana">
+                            数据管理
+                        </a>
+                        <a class="item" href="/bsAdminMana">
+                            管理员任命
+                        </a>
+                        <a class="item" href="/bsUserMana">
+                            用户管理
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {{end}}
-        {{if .IsStaff}}
-            <a class="item" href="/addTeaPage">
-                添加记录
+            {{end}}
+            {{if .IsStaff}}
+                <div class="ui simple dropdown item">
+                    员工操作 <i class="dropdown icon"></i>
+                    <div class="menu">
+
+                        <a class="item" href="/addTeaPage">
+                            添加记录
+                        </a>
+                        <a class="active item" href="/queryPage">
+                            搜寻ID
+                        </a>
+                    </div>
+                </div>
+            {{end}}
+            {{if .IsUser}}
+                <a class="item" href="/queryPage">
+                    搜寻ID
+                </a>
+            {{end}}
+        {{else}}
+            <a class="item" href="/queryPage">
+                搜寻ID
             </a>
-            <a class="item" href="/modifyQueryPage">
-                修改记录
+        {{end}}
+
+        {{if .IsUser}}
+            <a class="item" href="/queryPage">
+                搜寻ID
             </a>
         {{end}}
-        <a class="item" href="/queryPage">
-            搜寻ID
-        </a>
         {{if .IsLogin}}
             <div class="ui simple dropdown right item">
                 Welcome, {{.Sess.UserName}}
@@ -191,19 +125,15 @@
     </div>
 </div>
 
-
+<div class="headholder"></div>
 <div class="pusher">
-    <br/><br/><br/><br/><br/>
-    <div style="height: 600px">
+    <div class="ui vertical stripe segment">
         <div class="ui middle aligned center aligned grid">
-
             <div class="column">
                 <h5 class="ui teal image header">
                     <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
-                    <h1>请输入产品包装上的ID</h1>
+                    <h3>请输入产品包装上的ID</h3>
                 </h5>
-                <br/><br/>
-
                 <form action="/findTeaByID">
                     <div class="ui icon input">
                         <input name="id" type="text" placeholder="搜索ID...">
@@ -214,8 +144,8 @@
                 </form>
             </div>
         </div>
-
     </div>
+
 
     <div class="ui inverted vertical footer segment">
         <div class="ui container">

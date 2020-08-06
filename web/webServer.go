@@ -46,22 +46,20 @@ func WebStart(app *controller.Application)  {
 	http.HandleFunc("/bsUserMana", app.BsUserMana)
 	http.HandleFunc("/bsStaffMana", app.BsStaffMana)
 	http.HandleFunc("/bsAddNewStaff", app.BsAddNewStaff)
+	http.HandleFunc("/modifyUserStatus", app.ModifyStatus)
 
 	// 添加
 	http.HandleFunc("/addTeaPage", app.AddTeaPage) // 显示添加信息页面
 	http.HandleFunc("/addTea", app.AddTea)         // 提交修改请求并跳转添加成功提示页面
 
 	// 修改
-	http.HandleFunc("/modifyQueryPage", app.ModifyQueryPage) // 进入修改查询页面
+	//http.HandleFunc("/modifyQueryPage", app.ModifyQueryPage) // 进入修改查询页面
 	http.HandleFunc("/modifyQuery", app.ModifyQuery)         // 显示查询结果并修改
 	http.HandleFunc("/modifyResult", app.ModifyResult)       // 显示修改结果
 
 	// 查询
 	http.HandleFunc("/queryPage", app.QueryPage)		// 转至查询信息页面
 	http.HandleFunc("/findTeaByID", app.FindTeaByID)	// 根据id查询并转至查询结果页面
-
-	http.HandleFunc("/getHistoryByID", app.GetHistoryByIDPage)
-	http.HandleFunc("/getHistoryById", app.GetHistoryById)
 
 	//http.HandleFunc("/backStagePage", app.BackStagePage)
 

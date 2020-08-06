@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 type Application struct {
@@ -31,7 +32,9 @@ func (app *Application) FindTeaByID(w http.ResponseWriter, r *http.Request) {
 	var tea = service.Tea{}
 
 	json.Unmarshal(result, &tea)
+	app.Setup.ModifyQueryCount(tea.Id)
 	data.Tea = tea
+	fmt.Printf("%+v",data.Tea)
 	block, err := app.Setup.QueryBlockByTxID(tea.TxID)
 	if err != nil {
 		log.Println("query block failed, err:", err)
@@ -57,8 +60,8 @@ func (app *Application) FindTeaByID(w http.ResponseWriter, r *http.Request) {
 	// 从零开始， 类比切片
 	curHeight := blcInfo.BCI.Height
 	fmt.Println("curHeight:", curHeight)
-	if height < curHeight - 1 {
-		block, _ := app.Setup.LedgerClient.QueryBlock(height+1)
+	if height < curHeight-1 {
+		block, _ := app.Setup.LedgerClient.QueryBlock(height + 1)
 		bh := hex.EncodeToString(block.GetHeader().PreviousHash)
 		data.Block.BlcHash = bh
 		fmt.Println("bh=", bh)
@@ -78,12 +81,12 @@ func (app *Application) AddTeaPage(w http.ResponseWriter, r *http.Request) {
 		if data.IsStaff {
 			ShowView(w, r, "StaffOption/addTeaPage.html", data)
 			return
-		}else {
+		} else {
 			data.Msg = "无权访问"
 			ShowView(w, r, "index.html", data)
 			return
 		}
-	} else if !data.IsLogin{
+	} else if !data.IsLogin {
 		ShowView(w, r, "AccountRelated/login.html", data)
 		return
 	}
@@ -94,34 +97,30 @@ func (app *Application) AddTea(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
 
 	if data.IsStaff {
+		uuid := utils.CreateUUID()
+		productionDate := utils.SwitchTimeStampToData(time.Now().Unix())
 		tea := service.Tea{
-			Id:     r.FormValue("new_id"),
-			Maker:  r.FormValue("new_maker"),
-			Owner:  r.FormValue("new_owner"),
-			Weight: r.FormValue("new_weight"),
+			Id:              uuid,
+			Name:            r.FormValue("teaName"),
+			Maker:           r.FormValue("teaMaker"),
+			Owner:           r.FormValue("teaOwner"),
+			Weight:          r.FormValue("teaWeight"),
+			Origin:          r.FormValue("teaOrigin"),
+			Production_Date: productionDate,
+			Shelf_life:      "18个月",
+			TxID:            "",
 		}
+		fmt.Println("---------------------------------------------")
+		fmt.Println("写入茶叶数据")
 		data.Tea = tea
 
-		app.Setup.SaveTea(tea)
+		txId, _ := app.Setup.SaveTea(tea)
+		tea.TxID = txId
 
 		ShowView(w, r, "StaffOption/addSuccess.html", data)
 		return
+
 	} else if !data.IsStaff {
-		data.Msg = "无权访问"
-		ShowView(w, r, "index.html", data)
-		return
-	}
-}
-
-// 进入修改查询页面
-func (app *Application) ModifyQueryPage(w http.ResponseWriter, r *http.Request) {
-
-	data := utils.CheckLogin(r)
-
-	if data.IsStaff {
-		ShowView(w, r, "StaffOption/modifyQueryPage.html", data)
-		return
-	} else {
 		data.Msg = "无权访问"
 		ShowView(w, r, "index.html", data)
 		return
@@ -132,8 +131,7 @@ func (app *Application) ModifyQueryPage(w http.ResponseWriter, r *http.Request) 
 func (app *Application) ModifyQuery(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
 
-	if data.IsStaff||data.IsSuperAdmin||data.IsAdmin {
-
+	if data.IsStaff || data.IsSuperAdmin || data.IsAdmin {
 		teaID := r.FormValue("id")
 		result, _ := app.Setup.FindTeaInfoByID(teaID)
 		var tea = service.Tea{}
@@ -153,72 +151,36 @@ func (app *Application) ModifyQuery(w http.ResponseWriter, r *http.Request) {
 // 修改信息
 func (app *Application) ModifyResult(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
+	if data.IsStaff || data.IsSuperAdmin || data.IsAdmin {
 
-	teaId := r.FormValue("new_id")
-	nextOwner := r.FormValue("new_owner")
+		teaId := r.FormValue("teaId")
+		teaName := r.FormValue("teaName")
+		teaMaker := r.FormValue("teaMaker")
+		teaOwner := r.FormValue("teaOwner")
+		teaWeight := r.FormValue("teaWeight")
+		teaOrigin := r.FormValue("teaOrigin")
 
-	tea := service.Tea{
-		Id:     r.FormValue("new_id"),
-		Maker:  r.FormValue("new_maker"),
-		Owner:  r.FormValue("new_owner"),
-		Weight: r.FormValue("new_weight"),
-	}
+		tea := service.Tea{
+			Id:     teaId,
+			Name:   teaName,
+			Maker:  teaMaker,
+			Owner:  teaOwner,
+			Weight: teaWeight,
+			Origin: teaOrigin,
+		}
 
-	data.Tea = tea
+		data.Tea = tea
 
-	fmt.Println(tea.Id)
-
-	_, err := app.Setup.ModifyTea(teaId, nextOwner)
-	if err != nil {
-		log.Println("modufied teas failed, err:", err)
-		return
-	}
-
-	if data.IsStaff {
+		_, err := app.Setup.ModifyTea(teaId, teaOwner)
+		if err != nil {
+			log.Println("modufied teas failed, err:", err)
+			return
+		}
 		ShowView(w, r, "StaffOption/modifySuccess.html", data)
 		return
-	} else if !data.IsStaff {
+	} else  {
 		data.Msg = "无权访问"
 		ShowView(w, r, "index.html", data)
 		return
 	}
-}
-func (app *Application) GetHistoryByIDPage(w http.ResponseWriter, r *http.Request) {
-	ShowView(w, r, "PublicOption/queryHistoryPage.html", nil)
-}
-func (app *Application) GetHistoryById(w http.ResponseWriter, r *http.Request) {
-	data := utils.CheckLogin(r)
-	id := r.FormValue("id")
-	history, err := app.Setup.GetHistoryForTea(id)
-	if err != nil{
-		log.Println(history)
-		log.Println(string(history))
-	}
-	type MyJsonName struct {
-		IsDelete  string `json:"IsDelete"`
-		Timestamp string `json:"Timestamp"`
-		TxID      string `json:"TxId"`
-		Value     struct {
-			DocType        string `json:"docType"`
-			ID             string `json:"id"`
-			Maker          string `json:"maker"`
-			Name           string `json:"name"`
-			Origin         string `json:"origin"`
-			Owner          string `json:"owner"`
-			ProductionDate string `json:"production_date"`
-			ShelfLife      string `json:"shelf_life"`
-			TxID           string `json:"txID"`
-			Weight         string `json:"weight"`
-		} `json:"Value"`
-	}
-	teaHistory := []MyJsonName{}
-	err = json.Unmarshal(history, &teaHistory)
-	if err != nil {
-		log.Printf("err: %v", err)
-		return
-	}
-	log.Printf("%+v", teaHistory)
-	s := string(history)
-	data.History = s
-	ShowView(w, r, "PublicOption/queryHistoryResult.html", data)
 }

@@ -7,7 +7,7 @@ a fabric-sdk-go-sample to build solutions that interact with [hyperledger fabric
 **Golang**
 
 
-		https://studygolang.com/dl/golang/go1.14.2.linux-amd64.tar.gz
+		wget https://studygolang.com/dl/golang/go1.14.2.linux-amd64.tar.gz
 
 		sudo tar -zvxf go1.14.2.linux-amd64.tar.gz -C /usr/local
 
@@ -25,8 +25,11 @@ a fabric-sdk-go-sample to build solutions that interact with [hyperledger fabric
 
 **Docker-compose**
 
-		sudo apt install docker-compose
+        sudo curl -L "https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o  /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 
 		docker-compose --version
+		
 		
 		sudo groupadd docker
 		sudo gpasswd -a $USER docker
@@ -38,18 +41,18 @@ a fabric-sdk-go-sample to build solutions that interact with [hyperledger fabric
 		//test 
 		docker run hello-world
 
-**Dl fabric source codes**
+**Dl codes**
 
-		mkdir -p ~/go/src/github.com/hyperledger  && cd ~/go/src/github.com/hyperledger
+		mkdir -p ~/go/src/github.com/jianfson  && cd ~/go/src/github.com/jianfson
 		
-		git clone https://github.com/hyperledger/fabric.git 
+		git clone https://github.com/jianfson/BlockChain-IOT-demo.git
 
-		git checkout -b 1.2 origin/release-1.2
+		cd ./blockchain/fixtures && ./pull_images.sh
 
-		make release
-		执行 fixtures 目录下的 `pull_images.sh` 拉取镜像
+**Dl psql**
 
-
+        [psql](https://blog.csdn.net/TBBetter/article/details/107807307)
+        
 ## Getting started
 **Directory Structure**
 
@@ -71,17 +74,15 @@ a fabric-sdk-go-sample to build solutions that interact with [hyperledger fabric
 - GetUserInfo
 
 **Quick start**
-		
-		git clone https://github.com/jianfson/BlockChain-IOT-demo.git
 
 		cd $GOPATH/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/ && make
 
 ## Documentation
 
-[hyperledger fabric V1.2](https://hyperledger-fabric.readthedocs.io/en/release-1.2/)
+[hyperledger fabric V1.2](https://hyperledger-fabric.readthedocs.io/en/release-1.4/)
 
 [Fabric-SDK-Go](https://github.com/hyperledger/fabric-sdk-go)
 
 [Kongyixueyuan](https://github.com/kevin-hf/kongyixueyuan)
 
-[Marbles_Chaincode](https://github.com/hyperledger/fabric-samples/blob/release-1.2/chaincode/marbles02/go/marbles_chaincode.go)
+[Marbles_Chaincode](https://github.com/hyperledger/fabric-samples/blob/release-1.4/chaincode/marbles02/go/marbles_chaincode.go)

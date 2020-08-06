@@ -69,13 +69,6 @@ func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) (
 		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
 		}
-		//buffer.WriteString("{\"Key\":")
-		//buffer.WriteString("\"")
-		//buffer.WriteString(queryResponse.Key)
-		//buffer.WriteString("\"")
-
-		//buffer.WriteString(", \"Record\":")
-		// Record is a JSON object, so we write as-is
 		buffer.WriteString(string(queryResponse.Value))
 		bArrayMemberAlreadyWritten = true
 	}
@@ -238,20 +231,6 @@ func (s *TeaChaincode) saveTea(stub shim.ChaincodeStubInterface, args []string) 
 		return shim.Error("Unmarshal tea failed")
 	}
 
-	// ==== Input sanitation ====
-	if len(tea.Id) <= 0 {
-		return shim.Error("Id must be a non-empty string")
-	}
-	if len(tea.Maker) <= 0 {
-		return shim.Error("Maker must be a non-empty string")
-	}
-	if len(tea.Owner) <= 0 {
-		return shim.Error("Owner must be a non-empty string")
-	}
-	if len(tea.Weight) <= 0 {
-		return shim.Error("Weight must be a non-empty string")
-	}
-
 	_, exist := GetTeaInfo(stub, tea.Id)
 	if exist {
 		return shim.Error("Id specified already exists")
@@ -259,6 +238,7 @@ func (s *TeaChaincode) saveTea(stub shim.ChaincodeStubInterface, args []string) 
 
 	tea.ObjectType = DOC_TYPE
 	tea.TxID = stub.GetTxID()
+	tea.QueryCounter = 0
 	flag := PutTea(stub, tea)
 	if !flag {
 		return shim.Error("Add data failed")
@@ -287,6 +267,25 @@ func (s *TeaChaincode) teaExchange(stub shim.ChaincodeStubInterface, args []stri
 	return shim.Success([]byte("exchange succeed"))
 }
 
+
+func (s *TeaChaincode) modifyQueryCount(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect numbers of args, expecting 1")
+	}
+
+	teaID := args[0]
+
+	tea,_ := GetTeaInfo(stub, teaID)
+	tea.QueryCounter++
+
+	flag := PutTea(stub, tea)
+	if !flag {
+		return shim.Error("Save data failed")
+	}
+
+	return shim.Success([]byte("modify succeed"))
+}
 func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if len(args) != 1 {
 		return shim.Error("incorrect nums of  args, expecting 1")
@@ -296,6 +295,7 @@ func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []str
 	if err != nil {
 		return shim.Error("query failed according to id")
 	}
+
 	if result == nil {
 		return shim.Error("get nothing according to id")
 	}
@@ -307,7 +307,6 @@ func (s *TeaChaincode) queryTeaByMaker(stub shim.ChaincodeStubInterface, args []
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of args, expecting 1")
 	}
-
 	// 拼接富查询用到的 string
 	queryString := fmt.Sprintf("{\"selector\":{\"maker\":\"%s\"}}", args[0])
 	results, err := getTeaByQueryString(stub, queryString)

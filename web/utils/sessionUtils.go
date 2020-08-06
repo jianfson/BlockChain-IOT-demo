@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"blc-iot-demo/web/service"
 	"blc-iot-demo/web/dao"
 	"blc-iot-demo/web/model"
+	"blc-iot-demo/web/service"
 	"fmt"
 	"net/http"
 )
@@ -65,7 +65,6 @@ func CheckLogin(r *http.Request) *struct {
 	Teas         []*service.Tea
 	Tea          service.Tea
 	Block		service.Block
-	History string
 } {
 
 	fmt.Println("---------------------------------------------")
@@ -85,7 +84,6 @@ func CheckLogin(r *http.Request) *struct {
 		Teas         []*service.Tea
 		Tea          service.Tea
 		Block		service.Block
-		History string
 	}{
 		Sess:         nil,
 		FailedLogin:  false,
@@ -101,7 +99,6 @@ func CheckLogin(r *http.Request) *struct {
 		Teas:         nil,
 		Tea:          service.Tea{},
 		Block: service.Block{},
-		History: "",
 	}
 
 	//获取cookie

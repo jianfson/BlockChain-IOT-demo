@@ -205,6 +205,7 @@ func InstantiateCC(sdk *fabsdk.FabricSDK, info *InitInfo) error {
 		Version: ChaincodeVersion,
 		Args:    [][]byte{[]byte("init")},
 		Policy:  ccPolicy,
+
 	}
 
 	_, err := info.OrgResMgmt.InstantiateCC(

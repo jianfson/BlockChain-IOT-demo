@@ -15,40 +15,21 @@
 
 <body>
 {{if .IsAdmin}}
-    <div class="ui vertical inverted sidebar menu">
-        <a class="item" href="/backToHome">
-            主页
-        </a>
-        <a class="item" href="/backStage">
-            后台首页
-        </a>
-        <a class="item" href="/bsDataMana">
-            数据管理
-        </a>
-        <a class="item" href="/bsUserMana">
-            用户管理
-        </a>
-        <a class="active item" href="/bsStaffMana">
-            员工管理
-        </a>
-        <a class="item" href="/logout">
-            {{.Sess.UserName}}&nbsp;&nbsp;&nbsp;注销登陆
-        </a>
-    </div>
-
-    <div class="pusher">
-        <div class="ui inverted vertical masthead center aligned segment">
-            <div class="ui container">
-                <div class="ui large secondary inverted pointing menu">
-                    <a class="toc item">
-                        <i class="sidebar icon"></i>
-                    </a>
-                    <a class="item" href="/backToHome">
-                        主页
-                    </a>
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+            <a href="/backToHome" class="header item">
+                <img class="logo" src="../../static/image/login-logo.png">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
+            </a>
+            <div class="ui simple dropdown item">
+                后台管理 <i class="dropdown icon"></i>
+                <div class="menu">
                     <a class="item" href="/backStage">
                         后台首页
                     </a>
+                    <div class="divider"></div>
+                    <div class="header">管理</div>
                     <a class="item" href="/bsDataMana">
                         数据管理
                     </a>
@@ -58,26 +39,25 @@
                     <a class="active item" href="/bsStaffMana">
                         员工管理
                     </a>
-                    <div class="right item">
-                        <div class="ui inverted menu">
-                            <div class="ui dropdown item">
-                                Welcome, {{.Sess.UserName}}
-                                <i class="dropdown icon"></i>
-                                <div class="ui inverted menu">
-                                    <a class="item" href="/profilePage">
-                                        我的信息
-                                    </a>
-                                    <a class="item" href="/logout">
-                                        注销登陆
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                </div>
+            </div>
+            <div class="ui simple dropdown right item">
+                Welcome, {{.Sess.UserName}}
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/profilePage">
+                        我的信息
+                    </a>
+                    <a class="item" href="/logout">
+                        注销登陆
+                    </a>
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="pusher">
+        <div class="headgap"></div>
         <div class="teabody">
             <div class="ui middle aligned center aligned grid">
                 <div class="column">
@@ -101,6 +81,7 @@
                             <th class="two wide">手机号码</th>
                             <th class="two wide">账户状态</th>
                             <th class="two wide">注册时间</th>
+                            <th class="two wide">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -113,6 +94,14 @@
                                 <td>{{.Phone}}</td>
                                 <td>{{.Status}}</td>
                                 <td>{{.Createtime}}</td>
+                                <td>
+                                    <form action="/modifyUserStatus">
+                                        <input name="userRole" type="hidden" value={{.Role}}>
+                                        <input name="userID" type="hidden" value={{.Id}}>
+                                        <input name="userStatus" type="hidden" value={{.Status}}>
+                                        <button class="ui black button">禁用/解禁</button>
+                                    </form>
+                                </td>
                             </tr>
                         {{end}}
                         </tbody>

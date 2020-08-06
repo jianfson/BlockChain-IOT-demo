@@ -12,119 +12,29 @@
 
     <title>Tea Safe · 川茶</title>
     <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
-
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/mana.css">
-
-    <style type="text/css">
-        .masthead.segment {
-            min-height: 50px;
-            padding: 1em 0em;
-        }
-
-        .masthead .logo.item img {
-            margin-right: 1em;
-        }
-
-        .masthead .ui.menu .ui.button {
-            margin-left: 0.5em;
-        }
-
-        .masthead h1.ui.header {
-            margin-top: 3em;
-            margin-bottom: 0em;
-            font-size: 4em;
-            font-weight: normal;
-        }
-
-        .masthead h2 {
-            font-size: 1.7em;
-            font-weight: normal;
-        }
-
-        .ui.vertical.stripe {
-            height: auto;
-            padding: 50px 0em;
-        }
-
-        .ui.vertical.stripe h3 {
-            font-size: 2em;
-        }
-
-        .ui.vertical.stripe .button + h3,
-        .ui.vertical.stripe p + h3 {
-            margin-top: 3em;
-        }
-
-        .ui.vertical.stripe .floated.image {
-            clear: both;
-        }
-
-        .ui.vertical.stripe p {
-            font-size: 1.33em;
-        }
-
-        .ui.vertical.stripe .horizontal.divider {
-            margin: 3em 0em;
-        }
-
-        .footer.segment {
-            text-align: center;
-            padding: 5em 0em;
-            width: 100%;
-        }
-
-        .secondary.pointing.menu .toc.item {
-            display: none;
-        }
-
-        @media only screen and (max-width: 700px) {
-            .ui.fixed.menu {
-                display: none !important;
-            }
-
-            .secondary.pointing.menu .item,
-            .secondary.pointing.menu .menu {
-                display: none;
-            }
-
-            .secondary.pointing.menu .toc.item {
-                display: block;
-            }
-
-            .masthead.segment {
-                min-height: 50px;
-            }
-
-            .masthead h1.ui.header {
-                font-size: 2em;
-                margin-top: 1.5em;
-            }
-
-            .masthead h2 {
-                margin-top: 0.5em;
-                font-size: 1.5em;
-            }
-        }
-    </style>
 </head>
 
 
 <body>
-{{if .IsLogin}}
-    <div class="ui fixed inverted menu">
-        <div class="ui container">
-            <a href="/backToHome" class="header item">
-                <img class="logo" src="../../static/image/login-logo.png">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                Tea Safe •　川茶
-            </a>
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="/backToHome" class="header item">
+            <img class="logo" src="../../static/image/login-logo.png">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
+        </a>
+        {{if .IsLogin}}
             {{if .IsSuperAdmin}}
                 <div class="ui simple dropdown item">
                     后台管理 <i class="dropdown icon"></i>
                     <div class="menu">
                         <a class="item" href="/superBackStage">
                             后台首页
+                        </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
                         </a>
                         <div class="divider"></div>
                         <div class="header">管理</div>
@@ -147,6 +57,9 @@
                         <a class="item" href="/backStage">
                             后台首页
                         </a>
+                        <a class="item" href="/queryPage">
+                            搜寻ID
+                        </a>
                         <div class="divider"></div>
                         <div class="header">管理</div>
                         <a class="item" href="/bsDataMana">
@@ -162,42 +75,63 @@
                 </div>
             {{end}}
             {{if .IsStaff}}
-                <a class="item" href="/addTeaPage">
-                    添加记录
-                </a>
-                <a class="item" href="/modifyQueryPage">
-                    修改记录
-                </a>
-            {{end}}
-            <a class="item" href="/queryPage">
-                搜寻ID
-            </a>
-            {{if .IsLogin}}
-                <div class="ui simple dropdown right item">
-                    Welcome, {{.Sess.UserName}}
-                    <i class="dropdown icon"></i>
+                <div class="ui simple dropdown item">
+                    员工操作 <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a class="item" href="/profilePage">
-                            我的信息
+
+                        <a class="item" href="/addTeaPage">
+                            添加记录
                         </a>
-                        <a class="item" href="/logout">
-                            注销登陆
+                        <a class="item" href="/queryPage">
+                            搜寻ID
                         </a>
                     </div>
                 </div>
-            {{else}}
-                <a href="/loginPage" class="header right item">
-                    登录
-                </a>
-                <a href="/registerPage" class="header item">
-                    注册
+            {{end}}
+            {{if .IsUser}}
+                <a class="item" href="/queryPage">
+                    搜寻ID
                 </a>
             {{end}}
-        </div>
+        {{else}}
+            <a class="item" href="/queryPage">
+                搜寻ID
+            </a>
+        {{end}}
+
+        {{if .IsLogin}}
+            <div class="ui simple dropdown right item">
+                Welcome, {{.Sess.UserName}}
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/profilePage">
+                        我的信息
+                    </a>
+                    <a class="item" href="/logout">
+                        注销登陆
+                    </a>
+                </div>
+            </div>
+        {{else}}
+            <a href="/loginPage" class="header right item">
+                登录
+            </a>
+            <a href="/registerPage" class="header item">
+                注册
+            </a>
+        {{end}}
     </div>
+</div>
+
+
+
     <div class="pusher">
         <div class="headgap"></div>
-        <div class="ui vertical stripe quote segment">
+        <div class="headgap"></div>
+        <div class="headgap"></div>
+        <div class="headgap"></div>
+        <div class="headgap"></div>
+        <div class="ui vertical stripe quote segment" style="min-height: 530px; margin-bottom: 0">
             <div class="ui equal width stackable internally celled grid">
                 <div class="center aligned column">
                     <div class="column">
@@ -212,7 +146,7 @@
                         </div>
                         <div class="item">
                             <div class="content">
-                                &nbsp;&nbsp;成都，中国
+                                {{.Sess.Role}}
                             </div>
                         </div>
                         <div class="item">
@@ -229,11 +163,9 @@
                 </div>
             </div>
         </div>
+{{/*
 
-        {{if .IsSuperAdmin}}
-            <div style="height: 300px"></div>
-        {{else}}
-
+        {{if .IsUser}}
             <div class="ui vertical stripe segment">
                 <div class="ui text container">
                     <h3 class="ui header">我的查询记录</h3>
@@ -275,12 +207,10 @@
                             </div>
                         </div>
                     </div>
-                    <br/><br/>
-                    对记录有疑惑？了解我们的&nbsp;<a href="#">记录方式</a>
                 </div>
             </div>
-
         {{end}}
+*/}}
 
         <div class="ui inverted vertical footer segment">
             <div class="ui container">
@@ -311,7 +241,6 @@
             </div>
         </div>
     </div>
-{{end}}
 <script src="../../static/js/jquery.min.js"></script>
 <script src="../../static/js/semantic.min.js"></script>
 <script src="../../static/js/iframe-content.js"></script>

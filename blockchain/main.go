@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
-	"log"
 	"os"
 	"strconv"
 	"time"
@@ -92,6 +91,7 @@ func main() {
 	err = sdkInit.InstantiateCC(sdk, initInfo)
 	if err != nil {
 		fmt.Printf("实例化 %v failed, err:%v", initInfo.ChaincodeID, err)
+		return
 	}
 
 	//-------------------------------------------------------------------
@@ -252,24 +252,22 @@ func main() {
 	//
 	fmt.Println("----------------查询茶叶信息---------------")
 	b, err := serviceSetup.QueryTeaByMaker("杭州龙井茶业集团有限公司")
-	log.Println(string(b))
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
 		var tea []service.Tea
 		json.Unmarshal(b, &tea)
 		fmt.Printf("%+v", tea)
-		fmt.Println(len(tea))
 	}
-	enrollmentSecret, err := sdkInit.Register(sdk,initInfo,"user2")
-	log.Println("enrollmentSecret:", enrollmentSecret)
-	if err != nil {
-		log.Println(err)
-	} else {
-		err = sdkInit.Enroll(sdk,initInfo,enrollmentSecret)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	sdkInit.GetUserInfo(sdk, "user2", "Org1")
+	//enrollmentSecret, err := sdkInit.Register(sdk,initInfo,"user2")
+	//log.Println("enrollmentSecret:", enrollmentSecret)
+	//if err != nil {
+	//	log.Println(err)
+	//} else {
+	//	err = sdkInit.Enroll(sdk,initInfo,enrollmentSecret)
+	//	if err != nil {
+	//		log.Println(err)
+	//	}
+	//}
+	//sdkInit.GetUserInfo(sdk, "user2", "Org1")
 }

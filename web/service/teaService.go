@@ -6,7 +6,6 @@ import (
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
-
 )
 
 // 初始化账本
@@ -73,6 +72,21 @@ func (t *ServiceSetup) FindTeaInfoByID(teaID string) ([]byte, error) {
 	return respone.Payload, nil
 }
 
+func (t *ServiceSetup) ModifyQueryCount(teaID string) ([]byte, error) {
+
+	req := channel.Request{
+		ChaincodeID: t.ChaincodeId,
+		Fcn: "modifyQueryCount",
+		Args: [][]byte{[]byte(teaID)},
+	}
+
+	respone, err := t.ChannelClient.Execute(req)
+	if err != nil {
+		return []byte{0x00}, err
+	}
+
+	return respone.Payload, nil
+}
 // 通过 s 查询
 func (t *ServiceSetup) QueryTeaByMaker(s string) ([]byte, error) {
 

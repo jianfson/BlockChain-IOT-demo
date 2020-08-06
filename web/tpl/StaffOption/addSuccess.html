@@ -10,130 +10,46 @@
     <title>Tea Safe · 川茶</title>
     <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
-
-    <style type="text/css">
-        .masthead.segment {
-            min-height: 50px;
-            padding: 1em 0em;
-        }
-        .masthead .logo.item img {
-            margin-right: 1em;
-        }
-        .masthead .ui.menu .ui.button {
-            margin-left: 0.5em;
-        }
-        .masthead h1.ui.header {
-            margin-top: 3em;
-            margin-bottom: 0em;
-            font-size: 4em;
-            font-weight: normal;
-        }
-        .masthead h2 {
-            font-size: 1.7em;
-            font-weight: normal;
-        }
-
-        .ui.vertical.stripe {
-            height: 750px;
-            padding: 50px 0em;
-        }
-        .ui.vertical.stripe h3 {
-            font-size: 2em;
-        }
-        .ui.vertical.stripe .button + h3,
-        .ui.vertical.stripe p + h3 {
-            margin-top: 3em;
-        }
-        .ui.vertical.stripe .floated.image {
-            clear: both;
-        }
-        .ui.vertical.stripe p {
-            font-size: 1.33em;
-        }
-        .ui.vertical.stripe .horizontal.divider {
-            margin: 3em 0em;
-        }
-
-        .footer.segment {
-            text-align: center;
-            padding: 5em 0em;
-            width: 100%;
-        }
-
-        .secondary.pointing.menu .toc.item {
-            display: none;
-        }
-
-        @media only screen and (max-width: 700px) {
-            .ui.fixed.menu {
-                display: none !important;
-            }
-            .secondary.pointing.menu .item,
-            .secondary.pointing.menu .menu {
-                display: none;
-            }
-            .secondary.pointing.menu .toc.item {
-                display: block;
-            }
-            .masthead.segment {
-                min-height: 50px;
-            }
-            .masthead h1.ui.header {
-                font-size: 2em;
-                margin-top: 1.5em;
-            }
-            .masthead h2 {
-                margin-top: 0.5em;
-                font-size: 1.5em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../../static/css/option.css">
 </head>
 </head>
-
 
 <body>
-<div class="ui vertical inverted sidebar menu">
-    <a class="item" href="/backToHome">主页</a>
-    <a class="item" href="/queryPage"> 搜寻ID</a>
-    <a class="active item" href="/addTeaPage"> 添加记录</a>
-    <a class="item" href="/modifyQueryPage"> 修改记录</a>
-</div>
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="/backToHome" class="header item">
+            <img class="logo" src="../../static/image/login-logo.png">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
+        </a>
+        <div class="ui simple dropdown item">
+            员工操作 <i class="dropdown icon"></i>
+            <div class="menu">
 
-<div class="pusher">
-    <div class="ui inverted vertical masthead center aligned segment">
-
-        <div class="ui container">
-            <div class="ui large secondary inverted pointing menu">
-                <a class="toc item">
-                    <i class="sidebar icon"></i>
+                <a class="active item" href="/addTeaPage">
+                    添加记录
                 </a>
-
-                <a class="item" href="/backToHome">主页</a>
-                <a class="item" href="/queryPage"> 搜寻ID</a>
-                <a class="active item" href="/addTeaPage"> 添加记录</a>
-                <a class="item" href="/modifyQueryPage"> 修改记录</a>
-
-                <div class="right item">
-                    <div class="ui inverted menu">
-                        <div class="ui dropdown item">
-                            Welcome, {{.Sess.UserName}}
-                            <i class="dropdown icon"></i>
-                            <div class="ui inverted menu">
-                                <a class="item" href="/profilePage">
-                                    我的信息
-                                </a>
-                                <a class="item" href="/logout">
-                                    注销登陆
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a class="item" href="/queryPage">
+                    搜寻ID
+                </a>
             </div>
         </div>
 
+        <div class="ui simple dropdown right item">
+            Welcome, {{.Sess.UserName}}
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item" href="/profilePage">
+                    我的信息
+                </a>
+                <a class="item" href="/logout">
+                    注销登陆
+                </a>
+            </div>
+        </div>
     </div>
+</div>
+<div class="pusher">
 
     <div class="ui vertical stripe segment bg-image">
         <div class="ui middle aligned center aligned grid">
@@ -142,16 +58,16 @@
                     <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
                     <h1>添加成功！请扫描二维码查看</h1>
                 </h2>
-                <p>
                 <h5>
                     <br/>
                     注意：扫码前请确认已接入局域网！
                 </h5>
-                </p>
+                <div style="height: 30px"></div>
                 <input type="hidden" id="text" value={{.Tea.Id}} style="width:80%" /><br />
                 <br/>
                 <br/><br/>
                 <div id="qrcode" class="ui centered medium image"></div>
+
             </div>
         </div>
     </div>

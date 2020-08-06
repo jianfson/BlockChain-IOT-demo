@@ -152,7 +152,7 @@ $.fn.sticky = function(parameters) {
           }
           if($context.length === 0) {
             module.error(error.invalidContext, settings.context, $module);
-            return;
+
           }
         },
 
@@ -163,7 +163,7 @@ $.fn.sticky = function(parameters) {
           if(module.cache.element.height > module.cache.context.height) {
             module.reset();
             module.error(error.elementSize, $module);
-            return;
+
           }
         },
 
