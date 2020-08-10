@@ -176,12 +176,15 @@ organizations:
     cryptoPath: peerOrganizations/org1.dragonwell.com/users/{userName}@org1.dragonwell.com/msp
     peers:
       - peer0.org1.dragonwell.com
+      - peer1.org1.dragonwell.com
 
     # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
     # network. Typically certificates provisioning is done in a separate process outside of the
     # runtime network. Fabric-CA is a special certificate authority that provides a REST APIs for
     # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
     # Fabric-CA servers.
+    certificateAuthorities:
+      - ca.org1.dragonwell.com
 
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
@@ -237,10 +240,47 @@ peers:
       # Certificate location absolute path
       path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/tlsca/tlsca.org1.dragonwell.com-cert.pem
 
+  peer1.org1.dragonwell.com:
+    # this URL is used to send endorsement and query requests
+    url: grpcs://localhost:8051
+    # eventUrl is only needed when using eventhub (default is delivery service)
+    eventUrl: grpcs://localhost:8053
+
+    grpcOptions:
+      ssl-target-name-override: peer1.org1.dragonwell.com
+      # These parameters should be set in coordination with the keepalive policy on the server,
+      # as incompatible settings can result in closing of connection.
+      # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      # allow-insecure will be taken into consideration if address has no protocol defined, if true then grpc or else grpcs
+      allow-insecure: false
+
+    tlsCACerts:
+      # Certificate location absolute path
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/tlsca/tlsca.org1.dragonwell.com-cert.pem
+
 #
 # Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
 # certificate management to be done via REST APIs. Application may choose to use a standard
-# Certificate Authority instead of Fabric-CA, in which case this section would not be spe
+# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
+#
+certificateAuthorities:
+  ca.org1.dragonwell.com:
+    url: http://localhost:7054
+    tlsCACerts:
+      # Certificate location absolute path
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/ca/ca.org1.dragonwell.com-cert.pem
+
+    # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
+    # needed to enroll and invoke new users.
+    registrar:
+      enrollId: admin
+      enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.org1.dragonwell.com
 
 entityMatchers:
   peer:
@@ -250,6 +290,11 @@ entityMatchers:
       sslTargetOverrideUrlSubstitutionExp: peer0.org1.dragonwell.com
       mappedHost: peer0.org1.dragonwell.com
 
+    - pattern: (\w*)peer1.org1.dragonwell.com(\w*)
+      urlSubstitutionExp: localhost:8051
+      eventUrlSubstitutionExp: localhost:8053
+      sslTargetOverrideUrlSubstitutionExp: peer1.org1.dragonwell.com
+      mappedHost: peer1.org1.dragonwell.com
 
   orderer:
     - pattern: (\w*)orderer.dragonwell.com(\w*)
@@ -257,3 +302,8 @@ entityMatchers:
       sslTargetOverrideUrlSubstitutionExp: orderer.dragonwell.com
       mappedHost: orderer.dragonwell.com
 
+  certificateAuthority:
+    - pattern: (\w*)ca.org1.dragonwell.com(\w*)
+      urlSubstitutionExp: https://localhost:7054
+      sslTargetOverrideUrlSubstitutionExp: ca.org1.dragonwell.com
+      mappedHost: ca.org1.dragonwell.com

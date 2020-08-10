@@ -64,7 +64,8 @@ func CheckLogin(r *http.Request) *struct {
 	Staff        []*model.User
 	Teas         []*service.Tea
 	Tea          service.Tea
-	Block		service.Block
+	Block        service.Block
+	IsBulkAdd    bool
 } {
 
 	fmt.Println("---------------------------------------------")
@@ -83,7 +84,8 @@ func CheckLogin(r *http.Request) *struct {
 		Staff        []*model.User
 		Teas         []*service.Tea
 		Tea          service.Tea
-		Block		service.Block
+		Block        service.Block
+		IsBulkAdd    bool
 	}{
 		Sess:         nil,
 		FailedLogin:  false,
@@ -98,7 +100,8 @@ func CheckLogin(r *http.Request) *struct {
 		Staff:        nil,
 		Teas:         nil,
 		Tea:          service.Tea{},
-		Block: service.Block{},
+		Block:        service.Block{},
+		IsBulkAdd:    false,
 	}
 
 	//获取cookie

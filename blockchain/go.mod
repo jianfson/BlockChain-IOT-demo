@@ -1,4 +1,4 @@
-module fab-sdk-go-sample
+module blc
 
 go 1.14
 

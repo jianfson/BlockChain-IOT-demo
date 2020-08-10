@@ -218,7 +218,7 @@ func InstantiateCC(sdk *fabsdk.FabricSDK, info *InitInfo) error {
 		return errors.Errorf("实例化链码失败: %v\n", err)
 	}
 
-	fmt.Printf("实例化 %v 成功", info.ChaincodeID)
+	fmt.Printf("实例化 %v 成功\n", info.ChaincodeID)
 	return nil
 }
 

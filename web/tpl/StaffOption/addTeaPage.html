@@ -7,7 +7,7 @@
     <meta name="apple-touch-fullsreen" content="YES">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <title>Tea Safe · 川茶</title>
+    <title>Tea Safe · 茶查</title>
     <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/option.css">
@@ -15,52 +15,239 @@
 
 
 <body>
-    <div class="ui fixed inverted menu">
-        <div class="ui container">
-            <a href="/backToHome" class="header item">
-                <img class="logo" src="../../static/image/login-logo.png">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
-            </a>
-            <div class="ui simple dropdown item">
-                员工操作 <i class="dropdown icon"></i>
-                <div class="menu">
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="/backToHome" class="header item">
+            <img class="logo" src="../../static/image/login-logo.png">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;茶查
+        </a>
+        <div class="ui simple dropdown item">
+            员工操作 <i class="dropdown icon"></i>
+            <div class="menu">
 
-                    <a class="active item" href="/addTeaPage">
-                        添加记录
-                    </a>
-                    <a class="item" href="/queryPage">
-                        搜寻ID
-                    </a>
-                </div>
+                <a class="active item" href="/addTeaPage">
+                    添加记录
+                </a>
+                <a class="item" href="/queryPage">
+                    搜寻ID
+                </a>
             </div>
+        </div>
 
-            <div class="ui simple dropdown right item">
-                Welcome, {{.Sess.UserName}}
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/profilePage">
-                        我的信息
-                    </a>
-                    <a class="item" href="/logout">
-                        注销登陆
-                    </a>
-                </div>
+        <div class="ui simple dropdown right item">
+            Welcome, {{.Sess.UserName}}
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item" href="/profilePage">
+                    我的信息
+                </a>
+                <a class="item" href="/logout">
+                    注销登陆
+                </a>
             </div>
         </div>
     </div>
-    <div class="headholder"></div>
+</div>
+<div class="headholder"></div>
 
-    <div class="pusher">
-        <div class="ui vertical stripe segment bg-image">
-            <div class="ui middle aligned center aligned grid">
-                <div class="column">
-                    <h2 class="ui teal image header">
-                        <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
-                        <h1>请输入一条记录</h1>
-                    </h2>
-                    <div style="height: 30px"></div>
+<div class="pusher">
+    <div class="ui vertical stripe segment bg-image">
+
+
+        <div class="ui middle aligned grid">
+            <div class="ui center aligned text container">
+
+                <h2 class="ui teal image header">
+                    <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
+                    <h1>请输入新记录</h1>
+                </h2>
+
+                <div style="height: 30px"></div>
+
+                <div class="ui top attached tabular menu">
+                    <a class="item active" data-tab="first">批量添加</a>
+                    {{/*<a class="item" data-tab="second">逐条添加</a>*/}}
+                </div>
+                <div class="ui bottom attached tab segment active" data-tab="first" style="margin-bottom: 0px">
+                    <form action="/bulkAddTea" class="ui large form">
+                        <div class="ui two column divided grid container">
+                            <div class="row">
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="clipboard check icon"></i>
+                                            <input name="batchSizeInCHN" placeholder="添加条数（可选）" list="batchSize"
+                                                   autocomplete="off">
+                                            <datalist id="batchSize">
+                                                <option value="十条"/>
+                                                <option value="一千条"/>
+                                                <option value="一万条"/>
+                                                <option value="十万条"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="tag icon"></i>
+                                            <input name="teaNameBulk" placeholder="商品名（可选）" list="teaNameList"
+                                                   autocomplete="off">
+                                            <datalist id="teaNameList">
+                                                <option value="峨眉竹叶青"/>
+                                                <option value="蒙顶甘露"/>
+                                                <option value="川红工夫"/>
+                                                <option value="雅安藏茶"/>
+                                                <option value="文君绿茶"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="shopping cart icon"></i>
+                                            <input name="teaOwnerBulk" placeholder="拥有者" list="teaOwnerList" autocomplete="off">
+                                            <datalist id="teaOwnerList">
+                                                <option value="川茶"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="leaf icon"></i>
+                                            <input name="teaMakerBulk" placeholder="制造商（可选）" list="teaMakerList"
+                                                   autocomplete="off">
+                                            <datalist id="teaMakerList">
+                                                <option value="川茶"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon action input">
+                                            <i class="fire icon">&nbsp;</i>
+                                            <input id="location" name="teaOriginBulk" placeholder="点击定位获取您的位置"
+                                                   autocomplete="off">
+                                            <a class="ui button" onclick="getLocation()">定位</a>
+                                            <input id="longitude" name="longitude" type="hidden">
+                                            <input id="latitude" name="latitude" type="hidden">
+                                        </div>
+                                        <p id="demo" style="min-height:32px"></p>
+                                    </div>
+
+                                </div>
+
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="dolly flatbed icon"></i>
+                                            <input name="teaWeightBulk" placeholder="重量（可选）" list="teaWeightList"
+                                                   autocomplete="off">
+                                            <datalist id="teaWeightList">
+                                                <option value="50g"/>
+                                                <option value="500g"/>
+                                                <option value="1000g"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="height: 30px"></div>
+                        <button id="sub_btn" class="ui secondary button cc_pointer" onclick="loadingBtn()">
+                            确认添加
+                        </button>
+                    </form>
+                </div>
+
+{{/*
+                <div class="ui bottom attached tab segment" data-tab="second">
                     <form action="/addTea" class="ui large form">
+                        <div class="ui two column divided grid container">
+                            <div class="row">
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="tag icon"></i>
+                                            <input name="teaName" placeholder="商品名（可选）" list="teaNameList"
+                                                   autocomplete="off">
+                                            <datalist id="teaNameList">
+                                                <option value="峨眉竹叶青"/>
+                                                <option value="蒙顶甘露"/>
+                                                <option value="川红工夫"/>
+                                                <option value="雅安藏茶"/>
+                                                <option value="文君绿茶"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="leaf icon"></i>
+                                            <input name="teaMaker" placeholder="制造商（可选）" list="teaMakerList"
+                                                   autocomplete="off">
+                                            <datalist id="teaMakerList">
+                                                <option value="川茶"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="shopping cart icon"></i>
+                                            <input name="teaOwner" placeholder="拥有者" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="dolly flatbed icon"></i>
+                                            <input name="teaWeight" placeholder="重量（可选）" list="teaWeightList"
+                                                   autocomplete="off">
+                                            <datalist id="teaWeightList">
+                                                <option value="50g"/>
+                                                <option value="500g"/>
+                                                <option value="1000g"/>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <div class="field">
+                                        <div class="ui left icon input">
+                                            <i class="fire icon">&nbsp;</i>
+                                            <input name="teaOrigin" placeholder="宜宾" value="宜宾" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div style="height: 30px"></div>
+                        <button id="sub_btn" class="ui secondary button cc_pointer" onclick="loadingBtn()">
+                            确认添加
+                        </button>
+                    </form>
+                </div>*/}}
+
+
+                {{/*                    <form action="/addTea" class="ui large form">
                         <div class="ui two column divided grid container">
                             <div class="row">
                                 <div class="column">
@@ -84,7 +271,7 @@
                                             <i class="leaf icon"></i>
                                             <input name="teaMaker" placeholder="制造商（可选）" list="teaMakerList" autocomplete="off">
                                             <datalist id="teaMakerList">
-                                                <option value="川茶"/>
+                                                <option value="茶查"/>
                                             </datalist>
                                         </div>
                                     </div>
@@ -129,42 +316,43 @@
                         <button id="sub_btn" class="ui secondary button cc_pointer" onclick="loadingBtn()">
                             确认添加
                         </button>
-                    </form>
-                </div>
+                    </form>*/}}
             </div>
         </div>
+    </div>
 
-        <div class="ui inverted vertical footer segment">
-            <div class="ui container">
-                <div class="ui stackable inverted divided equal height stackable grid">
-                    <div class="three wide column">
-                        <h4 class="ui inverted header">关于</h4>
-                        <div class="ui inverted link list">
-                            <a href="#" class="item">网站地图</a>
-                            <a href="#" class="item">联系我们</a>
-                            <a href="#" class="item">隐私条款</a>
-                        </div>
+    <div class="ui inverted vertical footer segment">
+        <div class="ui container">
+            <div class="ui stackable inverted divided equal height stackable grid">
+                <div class="three wide column">
+                    <h4 class="ui inverted header">关于</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">网站地图</a>
+                        <a href="#" class="item">联系我们</a>
+                        <a href="#" class="item">隐私条款</a>
                     </div>
-                    <div class="three wide column">
-                        <h4 class="ui inverted header">服务</h4>
-                        <div class="ui inverted link list">
-                            <a href="http://127.0.0.1:8080/#/" class="item">
-                                区块链浏览器
-                            </a>
-                        </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header">服务</h4>
+                    <div class="ui inverted link list">
+                        <a href="http://127.0.0.1:8080/#/" class="item">
+                            区块链浏览器
+                        </a>
                     </div>
-                    <div class="seven wide column">
-                        <h4 class="ui inverted header">Tea Safe · 川茶</h4>
-                        <p>
-                            All Copyright &copy; Tea Safe
-                        </p>
-                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header">Tea Safe · 茶查</h4>
+                    <p>
+                        All Copyright &copy; Tea Safe
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <script src="../../static/js/jquery.min.js"></script>
 <script src="../../static/js/semantic.min.js"></script>
+<script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=GSERroqEUKqTktv08PlgP6qYIfgmY4Ks"></script>
 <script>
     $(document)
         .ready(function () {
@@ -194,6 +382,36 @@
         var sub_btn = document.getElementById("sub_btn");
         sub_btn.className = "ui loading black inverted big button";
     }
+
+    $('.menu .item')
+        .tab()
+    ;
+
+    var x = document.getElementById("demo");
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        x.innerHTML = "<div class=\"ui label\"><i class=\"map marker icon\"></i> 北纬: " + position.coords.latitude +
+            "&nbsp;&nbsp;&nbsp;东经: " + position.coords.longitude + "</div>";
+        // 百度地图API功能
+        var geoc = new BMap.Geocoder();
+        var pt = new BMap.Point(position.coords.longitude, position.coords.latitude);//经纬度
+        geoc.getLocation(pt, function (rs) {
+            var addComp = rs.addressComponents;
+            document.getElementById("location").value=addComp.city + addComp.district;
+            document.getElementById("longitude").value=position.coords.longitude;
+            document.getElementById("latitude").value=position.coords.latitude;
+        });
+
+    }
+
+
 </script>
 </body>
 

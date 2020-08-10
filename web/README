@@ -1,7 +1,18 @@
-在终端使用如下语句安装Session
+Install Session:
 go get github.com/gin-contrib/sessions
 
-7月27日待做：
-表格翻页显示
-收发验证码
-员工管理
+-------------------------------------------------------------------------
+服务器系统Ubuntu (Server) 18.04
+安装 MySQL8.0(推荐)
+将mysql-apt-config_0.8.15-1_all.deb移至待安装目录
+执行  sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
+选择MySQL 8.0
+执行  sudo apt update
+执行  sudo apt install mysql-serve
+
+!!!重要!!!
+选择加密方式时不选择推荐项，要选择"Use Legacy Authentication Method(...)"
+
+验证MySQL8.0安装：
+终端输入mysql -u root -p命令并输入密码检查安装成功而且可以看到MySQL版本号为8.0
+-------------------------------------------------------------------------

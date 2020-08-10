@@ -1,6 +1,6 @@
 # BlockChain-IOT-demo
 
-<div align=center><img width="100" height="100" src="https://github.com/jianfson/BlockChain-IOT-demo/blob/master/login-logo.png"/></div>
+<div align=center><img width="100" height="100" src="https://github.com/jianfson/BlockChain-IOT-demo/blob/master/web/static/image/login-logo.png"/></div>
 
 <!-- Badges -->
 ![TensorFlow](https://img.shields.io/badge/TeaSafe-v1.0-brightgreen)

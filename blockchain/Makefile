@@ -1,14 +1,14 @@
 .PHONY: all dev clean build env-up env-down run
 
-all: env-down clean env-up run
+all: env-down clean env-up build run
 
 # dev: build run
 
-# ##### BUILD    Tab 分隔符 不能用空格
-# build:
-# 	@echo "Build ..."
-# 	@go build
-# 	@echo "Build done"
+##### BUILD    用 tab 不能用空格
+build:
+	@echo "Build ..."
+	@go build
+	@echo "Build done"
 
 ##### ENV
 env-up:
@@ -23,7 +23,7 @@ env-down:
 
 ##### RUN
 run:
-	@go run main.go
+	@./blc
 
 
 ##### CLEAN

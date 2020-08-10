@@ -51,6 +51,7 @@ func WebStart(app *controller.Application)  {
 	// 添加
 	http.HandleFunc("/addTeaPage", app.AddTeaPage) // 显示添加信息页面
 	http.HandleFunc("/addTea", app.AddTea)         // 提交修改请求并跳转添加成功提示页面
+	http.HandleFunc("/bulkAddTea", app.BulkAddTea)
 
 	// 修改
 	//http.HandleFunc("/modifyQueryPage", app.ModifyQueryPage) // 进入修改查询页面

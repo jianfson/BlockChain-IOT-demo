@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/skip2/go-qrcode"
 	"log"
 	"net/http"
 	"time"
@@ -30,11 +31,16 @@ func (app *Application) FindTeaByID(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 	var tea = service.Tea{}
-
-	json.Unmarshal(result, &tea)
-	app.Setup.ModifyQueryCount(tea.Id)
+fmt.Println("string res,", string(result))
+	err = json.Unmarshal(result, &tea)
+	if err != nil {
+		log.Println("unmarshal failed, err:", err)
+	}
 	data.Tea = tea
 	fmt.Printf("%+v",data.Tea)
+
+	app.Setup.ModifyQueryCount(tea.Id)
+
 	block, err := app.Setup.QueryBlockByTxID(tea.TxID)
 	if err != nil {
 		log.Println("query block failed, err:", err)
@@ -126,6 +132,106 @@ func (app *Application) AddTea(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+
+
+func (app *Application) BulkAddTea(w http.ResponseWriter, r *http.Request) {
+	data := utils.CheckLogin(r)
+	if data.IsStaff {
+		data.IsBulkAdd = true
+		//获取表单输入
+		batchSizeInCHN := r.FormValue("batchSizeInCHN")		//批次大小
+		teaName := r.FormValue("teaNameBulk")
+		teaMaker := r.FormValue("teaMakerBulk")
+		teaOwner := r.FormValue("teaOwnerBulk")
+		teaWeight := r.FormValue("teaWeightBulk")
+		teaOrigin := r.FormValue("teaOriginBulk")
+		longitude := r.FormValue("longitude")
+		latitude := r.FormValue("latitude")
+		shelfLife := "18个月"
+		codePath := "./QRcode/"
+		tea := service.Tea{
+			Id:             "",
+			Name:           teaName,
+			Maker:          teaMaker,
+			Owner:          teaOwner,
+			Weight:         teaWeight,
+			Origin:         teaOrigin,
+			Production_Date: "",
+			Shelf_life:      shelfLife,
+			TxID:           "",
+			Origin_IP      : service.IP{longitude,latitude},
+		}
+		if batchSizeInCHN == "十条" {
+			batchSize := 10
+			for i := 0; i < batchSize; i++{
+				productionDate := utils.SwitchTimeStampToData(time.Now().Unix())	//该批次包装时间
+				tea.Production_Date = productionDate
+				uuid := utils.CreateUUID()			// 生成1000条uuid
+				tea.Id = uuid
+				fmt.Printf("%+v",tea)
+				_, _ = app.Setup.SaveTea(tea)		// 替换批量添加区块链算法
+				wholePath := codePath + uuid +".png"
+				//生成1000张二维码并保存到文件夹，等待上传
+				err := qrcode.WriteFile("http://223.128.86.134:9000/findTeaByID?id=" + uuid, qrcode.Medium, 256, wholePath)
+				fmt.Println(err)
+			}
+		} else if batchSizeInCHN == "一千条" {
+			batchSize := 1000
+			for i := 0; i < batchSize; i++{
+				productionDate := utils.SwitchTimeStampToData(time.Now().Unix())	//该批次包装时间
+				tea.Production_Date = productionDate
+				uuid := utils.CreateUUID()			// 生成1000条uuid
+				tea.Id = uuid
+				_, _ = app.Setup.SaveTea(tea)		// 替换批量添加区块链算法
+				wholePath := codePath + uuid +".png"
+				//生成1000张二维码并保存到文件夹，等待上传
+				err := qrcode.WriteFile("http://223.128.86.134:9000/findTeaByID?id=" + uuid, qrcode.Medium, 256, wholePath)
+				fmt.Println(err)
+			}
+		} else if batchSizeInCHN == "一万条" {
+			batchSize := 10000
+			for i := 0; i < batchSize; i++{
+				uuid := utils.CreateUUID()			// 生成1000条uuid
+				_, _ = app.Setup.SaveTea(tea)		// 替换批量添加区块链算法
+				wholePath := codePath + uuid +".png"
+
+				//生成1000张二维码并保存到文件夹，等待上传
+				_ = qrcode.WriteFile("http://223.128.86.134:9000/findTeaByID?id=" + uuid, qrcode.Medium, 256, wholePath)
+
+			}
+		}else if batchSizeInCHN == "十万条"{
+			batchSize := 100000
+			for i := 0; i < batchSize; i++{
+				uuid := utils.CreateUUID()			// 生成1000条uuid
+
+				_, _ = app.Setup.SaveTea(tea)		// 替换批量添加区块链算法
+
+				wholePath := codePath + uuid +".png"
+
+				//生成1000张二维码并保存到文件夹，等待上传
+				_ = qrcode.WriteFile("http://223.128.86.134:9000/findTeaByID?id=" + uuid, qrcode.Medium, 256, wholePath)
+
+			}
+		}
+
+		fmt.Println("---------------------------------------------")
+		fmt.Println("写入茶叶数据")
+
+		ShowView(w, r, "StaffOption/addSuccess.html", data)
+		return
+	} else if !data.IsStaff {
+		data.Msg = "无权访问"
+		ShowView(w, r, "index.html", data)
+		return
+	}
+}
+
+
+
+
+
+
 
 // 根据teaID查询信息
 func (app *Application) ModifyQuery(w http.ResponseWriter, r *http.Request) {

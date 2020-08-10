@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// tea describes basic details of what makes up a tea
+// tea describes basic details of what makes up a tea
 type Tea struct {
 	ObjectType      string `json:"docType"`
 	Id              string `json:"id"`
@@ -16,20 +18,28 @@ type Tea struct {
 	Owner           string `json:"owner"`
 	Weight          string `json:"weight"`
 	Origin          string `json:"origin"`
+	Origin_IP       IP     `json:"origin_ip"`
 	Production_Date string `json:"production_date"`
 	Shelf_life      string `json:"shelf_life"`
 	TxID            string `json:"txID"`
-	QueryCounter int `json:"queryCounter"`
+	Size 			string `json:"size"`
+	QueryCounter    int    `json:"queryCounter"`
 }
+
+// 成都市 经度:104.07 纬度:30.67
+type IP struct {
+	Longitude string
+	Latitude  string
+}
+
 type Block struct {
-	Height      uint64 `json:"height"`
-	DataHash              string `json:"datahash"`
-	BlcHash              string `json:"blchash"`
-	Timestamp            string `json:"timestamp"`
+	Height    uint64 `json:"height"`
+	DataHash  string `json:"datahash"`
+	BlcHash   string `json:"blchash"`
+	Timestamp string `json:"timestamp"`
 }
 
 type ServiceSetup struct {
-
 	ChaincodeId   string
 	ChannelClient *channel.Client
 	LedgerClient  *ledger.Client

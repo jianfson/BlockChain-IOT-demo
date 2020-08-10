@@ -90,7 +90,6 @@ func (t *ServiceSetup) ModifyQueryCount(teaID string) ([]byte, error) {
 // 通过 s 查询
 func (t *ServiceSetup) QueryTeaByMaker(s string) ([]byte, error) {
 
-
 	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaByMaker", Args: [][]byte{[]byte(s)}}
 
 	respone, err := t.ChannelClient.Query(req)
