@@ -29,10 +29,17 @@ func InitMysql() {
 		CreateTableWithUser()
 		CreateSuperAdminInUser()
 		CreateTableWithSession()
+		CreateTableWithAction()
+
 		CreateAdminInUser()
 		CreateUser0InUser()
 		CreateUser1InUser()
 		CreateStaffInUser()
+
+		CreateSuperAdminActionInAction()
+		CreateAdminActionInAction()
+		CreateUserActionInAction()
+		CreateStaffActionInAction()
 	}
 }
 
@@ -61,6 +68,7 @@ func DeleteTable() {
 			DROP TABLE IF EXISTS user;
 			SET FOREIGN_KEY_CHECKS = 1;
 			DROP TABLE IF EXISTS session;
+			DROP TABLE IF EXISTS action;
 			DROP TABLE IF EXISTS tea;`
 	fmt.Println("---------------------------------------------")
 	fmt.Println("table deleted")

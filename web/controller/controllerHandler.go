@@ -1,11 +1,15 @@
 package controller
 
 import (
+	"blc-iot-demo/web/dao"
+	"blc-iot-demo/web/model"
 	"blc-iot-demo/web/service"
 	"blc-iot-demo/web/utils"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/skip2/go-qrcode"
+	"github.com/thinkeridea/go-extend/exnet"
 	"log"
 	"net/http"
 	"time"
@@ -24,17 +28,26 @@ func (app *Application) QueryPage(w http.ResponseWriter, r *http.Request) {
 // 根据teaID查询信息
 func (app *Application) FindTeaByID(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
+
 	teaID := r.FormValue("id")
 	result, err := app.Setup.FindTeaInfoByID(teaID)
 	if err != nil {
 		log.Println(err)
 	}
 	var tea = service.Tea{}
+	err = json.Unmarshal(result, &tea)
 
-	json.Unmarshal(result, &tea)
-	app.Setup.ModifyQueryCount(tea.Id)
+	if err != nil {
+		log.Println("unmarshal failed, err:", err)
+	}
+
 	data.Tea = tea
-	fmt.Printf("%+v",data.Tea)
+fmt.Println("----->",data.Tea)
+	userIP := exnet.ClientIP(r)
+	fmt.Println(userIP)
+
+	_, _ = app.Setup.ModifyQueryCount(tea.Id)
+
 	block, err := app.Setup.QueryBlockByTxID(tea.TxID)
 	if err != nil {
 		log.Println("query block failed, err:", err)
@@ -71,6 +84,18 @@ func (app *Application) FindTeaByID(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("bh=", bh)
 	}
 
+	if data.IsLogin {
+		actionTime := utils.SwitchTimeStampToData(time.Now().Unix())
+		action := model.Action{
+			UserID:           data.Sess.UserID,
+			ActionType:       "查询",
+			ActionTargetName: data.Tea.Name,
+			ActionTargetID:   data.Tea.Id,
+			ActionTime:       actionTime,
+		}
+		_, _ = dao.InsertAction(action)
+	}
+
 	ShowView(w, r, "PublicOption/queryResult.html", data)
 }
 
@@ -92,40 +117,181 @@ func (app *Application) AddTeaPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// 添加信息
+/*
 func (app *Application) AddTea(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
-
 	if data.IsStaff {
-		uuid := utils.CreateUUID()
-		productionDate := utils.SwitchTimeStampToData(time.Now().Unix())
-		tea := service.Tea{
-			Id:              uuid,
-			Name:            r.FormValue("teaName"),
-			Maker:           r.FormValue("teaMaker"),
-			Owner:           r.FormValue("teaOwner"),
-			Weight:          r.FormValue("teaWeight"),
-			Origin:          r.FormValue("teaOrigin"),
-			Production_Date: productionDate,
-			Shelf_life:      "18个月",
-			TxID:            "",
-		}
-		fmt.Println("---------------------------------------------")
-		fmt.Println("写入茶叶数据")
-		data.Tea = tea
 
-		txId, _ := app.Setup.SaveTea(tea)
+		//获取表单输入
+		uuid := utils.CreateUUID()
+		teaName := r.FormValue("teaNameBulk")
+		teaMaker := r.FormValue("teaMakerBulk")
+		teaOwner := r.FormValue("teaOwnerBulk")
+		teaWeight := r.FormValue("teaWeightBulk")
+		teaOrigin := r.FormValue("teaOriginBulk")
+		productionDate := utils.SwitchTimeStampToData(time.Now().Unix())	//该批次包装时间
+		shelfLife := "18个月"
+
+		tea := service.Tea{
+			Id:             uuid,
+			Name:           teaName,
+			Maker:          teaMaker,
+			Owner:          teaOwner,
+			Weight:         teaWeight,
+			Origin:         teaOrigin,
+			Production_Date: productionDate,
+			Shelf_life:      shelfLife,
+			TxID:           "",
+		}
+		fmt.Println("------>save tea,", tea)
+		txId, err := app.Setup.SaveTea(tea)
+		if err !=nil {
+			fmt.Println("errr 2:", err)
+		}
+		data.Tea = tea
 		tea.TxID = txId
+
+		actionTime := utils.SwitchTimeStampToData(time.Now().Unix())
+		action := model.Action{
+			UserID:           data.Sess.UserID,
+			ActionType:       "单件上链",
+			ActionTargetName: data.Tea.Name,
+			ActionTargetID:   data.Tea.Id,
+			ActionTime:       actionTime,
+		}
+		_, _ = dao.InsertAction(action)
 
 		ShowView(w, r, "StaffOption/addSuccess.html", data)
 		return
+	} else if !data.IsStaff {
+		ShowView(w, r, "index.html", data)
+		return
+	}
+}
+*/
+// 添加信息
+//8.7 新代码
+func (app *Application) BulkAddTea(w http.ResponseWriter, r *http.Request) {
+	data := utils.CheckLogin(r)
 
+	if data.IsStaff {
+		data.IsBulkAdd = true
+
+		//获取表单输入
+		batchSizeInCHN := r.FormValue("batchSizeInCHN")		//批次大小
+		teaName := r.FormValue("teaNameBulk")
+		teaMaker := r.FormValue("teaMakerBulk")
+		teaOwner := r.FormValue("teaOwnerBulk")
+		teaWeight := r.FormValue("teaWeightBulk")
+		teaOrigin := r.FormValue("teaOriginBulk")
+		lng := "104"
+		lat := "23"
+		ip := service.IP{
+			Longitude: lng,
+			Latitude: lat,
+		}
+
+		//lnglat := "104,52"
+
+		shelfLife := "18个月"
+		codePath := "./QRcode/"
+
+		tea := service.Tea{
+			ObjectType: "teaObj",
+			Id:              "",
+			Name:            teaName,
+			Maker:           teaMaker,
+			Owner:           teaOwner,
+			Weight:          teaWeight,
+			Origin:          teaOrigin,
+			Production_Date: "",
+			Shelf_life:      shelfLife,
+			TxID:            "",
+			Origin_IP:ip,
+			Size: "small",
+			QueryCounter: 0,
+			Boxed: service.Box{
+
+			},
+		}
+
+
+		if batchSizeInCHN == "十条" {
+			batchSize := 10
+			for i := 0; i < batchSize; i++{
+				productionDate := utils.SwitchTimeStampToData(time.Now().Unix())	//该批次包装时间
+				tea.Production_Date = productionDate
+				uuid := utils.CreateUUID()			// 生成1000条uuid
+				tea.Id = uuid
+				fmt.Println("----->", tea,"JINGWEIDU",tea.Origin_IP)
+
+				txID, err := app.Setup.SaveTea(tea)
+				tea.TxID = txID
+				if err !=nil {
+					fmt.Println("save tea err:", err)
+				}
+
+				wholePath := codePath + uuid +".png"
+
+				//生成1000张二维码并保存到文件夹，等待上传
+				err = qrcode.WriteFile("http://47.108.134.136:9000/findTeaByID?id="+uuid, qrcode.Medium, 256, wholePath)
+				fmt.Println(err)
+
+			}
+		} else if batchSizeInCHN == "一万条" {
+			batchSize := 10000
+			for i := 0; i < batchSize; i++{
+				productionDate := utils.SwitchTimeStampToData(time.Now().Unix())	//该批次包装时间
+				tea.Production_Date = productionDate
+				uuid := utils.CreateUUID()			// 生成1000条uuid
+				tea.Id = uuid
+				_, _ = app.Setup.SaveTea(tea)
+
+				wholePath := codePath + uuid +".png"
+
+				err := qrcode.WriteFile("http://47.108.134.136:9000/findTeaByID?id="+uuid, qrcode.Medium, 256, wholePath)
+				fmt.Println(err)
+
+			}
+		}else if batchSizeInCHN == "十万条"{
+			batchSize := 100000
+			for i := 0; i < batchSize; i++{
+				productionDate := utils.SwitchTimeStampToData(time.Now().Unix())	//该批次包装时间
+				tea.Production_Date = productionDate
+				uuid := utils.CreateUUID()			// 生成1000条uuid
+				tea.Id = uuid
+				_, _ = app.Setup.SaveTea(tea)
+
+				wholePath := codePath + uuid +".png"
+
+				//生成1000张二维码并保存到文件夹，等待上传
+				err := qrcode.WriteFile("http://47.108.134.136:9000/findTeaByID?id="+uuid, qrcode.Medium, 256, wholePath)
+				fmt.Println(err)
+
+			}
+		}
+
+		actionTime := utils.SwitchTimeStampToData(time.Now().Unix())
+		action := model.Action{
+			UserID:           data.Sess.UserID,
+			ActionType:       "批量上链",
+			ActionTargetName: data.Tea.Name,
+			ActionTargetID:   "111",
+			ActionTime:       actionTime,
+		}
+		_, _ = dao.InsertAction(action)
+
+		ShowView(w, r, "StaffOption/addSuccess.html", data)
+		return
 	} else if !data.IsStaff {
 		data.Msg = "无权访问"
 		ShowView(w, r, "index.html", data)
 		return
 	}
 }
+
+
+
 
 // 根据teaID查询信息
 func (app *Application) ModifyQuery(w http.ResponseWriter, r *http.Request) {
@@ -135,10 +301,9 @@ func (app *Application) ModifyQuery(w http.ResponseWriter, r *http.Request) {
 		teaID := r.FormValue("id")
 		result, _ := app.Setup.FindTeaInfoByID(teaID)
 		var tea = service.Tea{}
-		json.Unmarshal(result, &tea)
+		_ = json.Unmarshal(result, &tea)
 
 		data.Tea = tea
-
 		ShowView(w, r, "StaffOption/modifyPage.html", data)
 		return
 	} else {
@@ -151,7 +316,8 @@ func (app *Application) ModifyQuery(w http.ResponseWriter, r *http.Request) {
 // 修改信息
 func (app *Application) ModifyResult(w http.ResponseWriter, r *http.Request) {
 	data := utils.CheckLogin(r)
-	if data.IsStaff || data.IsSuperAdmin || data.IsAdmin {
+
+	if data.IsStaff {
 
 		teaId := r.FormValue("teaId")
 		teaName := r.FormValue("teaName")
@@ -169,6 +335,7 @@ func (app *Application) ModifyResult(w http.ResponseWriter, r *http.Request) {
 			Origin: teaOrigin,
 		}
 
+
 		data.Tea = tea
 
 		_, err := app.Setup.ModifyTea(teaId, teaOwner)
@@ -178,7 +345,7 @@ func (app *Application) ModifyResult(w http.ResponseWriter, r *http.Request) {
 		}
 		ShowView(w, r, "StaffOption/modifySuccess.html", data)
 		return
-	} else  {
+	} else if !data.IsStaff {
 		data.Msg = "无权访问"
 		ShowView(w, r, "index.html", data)
 		return

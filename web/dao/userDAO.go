@@ -13,15 +13,16 @@ func CreateTableWithUser() {
 	sqlStr := `CREATE TABLE IF NOT EXISTS user (
 				id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 				username VARCHAR (64),
+				propic VARCHAR (64),
 				PASSWORD VARCHAR (64),
 				role varchar(64),
-				email VARCHAR (64),
 				phone VARCHAR (64),
 				STATUS varchar(64),
 				createtime VARCHAR (64)
 			);
 			alter table user default character set utf8;
 			alter table user change username username varchar(64) character set utf8;
+			alter table user change propic propic varchar(64) character set utf8;
 			alter table user change role role varchar(64) character set utf8;
 			alter table user change STATUS status varchar(64) character set utf8;`
 	Exec(sqlStr)
@@ -39,94 +40,86 @@ func MD5(str string) string {
 	return md5str
 }
 
-func CreateSuperAdminInUser(){
+func CreateSuperAdminInUser() {
 	un := "sa"
 	psw := MD5("1")
 	role := "超级管理员"
-	em := "elijah0501@outlook.com"
 	tel := 17778340501
 	st := "正常"
 	ct := TimeStampToData(time.Now().Unix())
 
-	_, _ = Exec("insert into user(username,password,role,email,phone,status,createtime) values (?,?,?,?,?,?,?)",
-		un, psw, role, em, tel, st, ct)
+	_, _ = Exec("insert into user(username,password,role,phone,status,createtime) values (?,?,?,?,?,?)",
+		un, psw, role, tel, st, ct)
 
 	fmt.Println("---------------------------------------------")
 	fmt.Println("Super Admin created")
 
 }
 
-
-func CreateAdminInUser(){
+func CreateAdminInUser() {
 	un := "a1"
 	psw := MD5("1")
 	role := "管理员"
-	em := "elijah0501@outlook.com"
 	tel := 17778340501
 	st := "正常"
 	ct := TimeStampToData(time.Now().Unix())
 
-	_, _ = Exec("insert into user(username,password,role,email,phone,status,createtime) values (?,?,?,?,?,?,?)",
-		un, psw, role, em, tel, st, ct)
-
+	_, _ = Exec("insert into user(username,password,role,phone,status,createtime) values (?,?,?,?,?,?)",
+		un, psw, role, tel, st, ct)
 
 	fmt.Println("---------------------------------------------")
 	fmt.Println("Admin created")
 }
 
-func CreateUser0InUser(){
+func CreateUser0InUser() {
 	un := "u1"
 	psw := MD5("1")
 	role := "用户"
-	em := "elijah0501@outlook.com"
 	tel := 17778340501
 	st := "正常"
 	ct := TimeStampToData(time.Now().Unix())
 
-	_, _ = Exec("insert into user(username,password,role,email,phone,status,createtime) values (?,?,?,?,?,?,?)",
-		un, psw, role, em, tel, st, ct)
+	_, _ = Exec("insert into user(username,password,role,phone,status,createtime) values (?,?,?,?,?,?)",
+		un, psw, role, tel, st, ct)
 
 	fmt.Println("---------------------------------------------")
 	fmt.Println("User created")
 }
 
-func CreateUser1InUser(){
+func CreateUser1InUser() {
 	un := "u2"
 	psw := MD5("1")
 	role := "用户"
-	em := "elijah0501@outlook.com"
 	tel := 17778340501
 	st := "异常"
 	ct := TimeStampToData(time.Now().Unix())
 
-	_, _ = Exec("insert into user(username,password,role,email,phone,status,createtime) values (?,?,?,?,?,?,?)",
-		un, psw, role, em, tel, st, ct)
+	_, _ = Exec("insert into user(username,password,role,phone,status,createtime) values (?,?,?,?,?,?)",
+		un, psw, role, tel, st, ct)
 
 	fmt.Println("---------------------------------------------")
 	fmt.Println("User created")
 }
 
-func CreateStaffInUser(){
+func CreateStaffInUser() {
 	un := "s1"
 	psw := MD5("1")
 	role := "员工"
-	em := "elijah0501@outlook.com"
 	tel := 17778340501
 	st := "正常"
 	ct := TimeStampToData(time.Now().Unix())
 
-	_, _ = Exec("insert into user(username,password,role,email,phone,status,createtime) values (?,?,?,?,?,?,?)",
-		un, psw, role, em, tel, st, ct)
+	_, _ = Exec("insert into user(username,password,role,phone,status,createtime) values (?,?,?,?,?,?)",
+		un, psw, role, tel, st, ct)
 
 	fmt.Println("---------------------------------------------")
 	fmt.Println("User created")
 }
 
-
 //插入
 func InsertUser(user model.User) (int64, error) {
-	return Exec("insert into user(username,password,role,email,phone,status,createtime) values (?,?,?,?,?,?,?)",
-		user.Username, user.Password, user.Role, user.Email, user.Phone, user.Status, user.Createtime)
+	return Exec("insert into user(username,password,role,phone,status,createtime) values (?,?,?,?,?,?)",
+		user.Username, user.Password, user.Role, user.Phone, user.Status, user.Createtime)
 }
 
 //按条件查询
@@ -154,39 +147,38 @@ func QueryUserWithUsername(username string) int {
 // 通过 username 和 password 查找 User全部信息
 func FindUserByUsernameAndPassword(username string, password string) (user *model.User) {
 
-	var id			int
-	var role		string			//0 普通， 1 管理员
-	var email		string
-	var phone		string
-	var status     	string			// 0 正常状态， 1 删除
-	var createtime 	string
+	var id int
+	var role string //0 普通， 1 管理员
 
-	sqlStr := fmt.Sprintf("select id, role, email, phone, status, createtime from user where username='%s' and password='%s'", username, password)
+	var phone string
+	var status string // 0 正常状态， 1 删除
+	var createtime string
+
+	sqlStr := fmt.Sprintf("select id, role,  phone, status, createtime from user where username='%s' and password='%s'", username, password)
 	row := QueryRowDB(sqlStr)
-	_ = row.Scan(&id, &role, &email, &phone, &status, &createtime)
+	_ = row.Scan(&id, &role,  &phone, &status, &createtime)
 
 	user = &model.User{
-		Id:			id,
-		Username:	username,
-		Password:	password,
-		Role:		role,
-		Email:		email,
-		Phone:		phone,
-		Status:		status,
-		Createtime:	createtime,
+		Id:         id,
+		Username:   username,
+		Password:   password,
+		Role:       role,
+		Phone:      phone,
+		Status:     status,
+		Createtime: createtime,
 	}
 	return
 }
 
 //查询所有管理员
 func QueryAllAdmin() ([]*model.User, error) {
-	sqlStr := "select id, username, password, role, email, phone, status, createtime from user where role = '管理员'"
+	sqlStr := "select id, username, password, role,  phone, status, createtime from user where role = '管理员'"
 
 	fmt.Println("--------------------------准备查询所有管理员-------------------")
 	fmt.Println(sqlStr)
 	rows, err := db.Query(sqlStr)
 
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -194,29 +186,28 @@ func QueryAllAdmin() ([]*model.User, error) {
 	var admins []*model.User
 
 	for rows.Next() {
-		var id			int
-		var username	string
-		var password	string
-		var role		string			//0 普通， 1 管理员
-		var email		string
-		var phone		string
-		var status     	string			// 0 正常状态， 1 删除
-		var createtime 	string
+		var id int
+		var username string
+		var password string
+		var role string //0 普通， 1 管理员
+
+		var phone string
+		var status string // 0 正常状态， 1 删除
+		var createtime string
 
 		fmt.Println("-------------------------写入行-------------------")
-		err := rows.Scan(&id, &username, &password, &role, &email, &phone, &status, &createtime)
+		err := rows.Scan(&id, &username, &password, &role,  &phone, &status, &createtime)
 		if err != nil {
 			return nil, err
 		}
 		admin := &model.User{
-			Id:			id,
-			Username:	username,
-			Password:	password,
-			Role:		role,
-			Email:		email,
-			Phone:		phone,
-			Status:		status,
-			Createtime:	createtime,
+			Id:         id,
+			Username:   username,
+			Password:   password,
+			Role:       role,
+			Phone:      phone,
+			Status:     status,
+			Createtime: createtime,
 		}
 
 		admins = append(admins, admin)
@@ -230,13 +221,13 @@ func QueryAllAdmin() ([]*model.User, error) {
 
 //查询所有用户
 func QueryAllUser() ([]*model.User, error) {
-	sqlStr := "select id, username, password, role, email, phone, status, createtime from user where role = '用户'"
+	sqlStr := "select id, username, password, role, phone, status, createtime from user where role = '用户'"
 
 	fmt.Println("--------------------------准备查询所有用户-------------------")
 	fmt.Println(sqlStr)
 	rows, err := db.Query(sqlStr)
 
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -244,29 +235,27 @@ func QueryAllUser() ([]*model.User, error) {
 	var users []*model.User
 
 	for rows.Next() {
-		var id			int
-		var username	string
-		var password	string
-		var role		string			//0 普通， 1 管理员
-		var email		string
-		var phone		string
-		var status     	string			// 0 正常状态， 1 删除
-		var createtime 	string
+		var id int
+		var username string
+		var password string
+		var role string //0 普通， 1 管理员
+		var phone string
+		var status string // 0 正常状态， 1 删除
+		var createtime string
 
 		fmt.Println("-------------------------写入行-------------------")
-		err := rows.Scan(&id, &username, &password, &role, &email, &phone, &status, &createtime)
+		err := rows.Scan(&id, &username, &password, &role, &phone, &status, &createtime)
 		if err != nil {
 			return nil, err
 		}
 		user := &model.User{
-			Id:			id,
-			Username:	username,
-			Password:	password,
-			Role:		role,
-			Email:		email,
-			Phone:		phone,
-			Status:		status,
-			Createtime:	createtime,
+			Id:         id,
+			Username:   username,
+			Password:   password,
+			Role:       role,
+			Phone:      phone,
+			Status:     status,
+			Createtime: createtime,
 		}
 
 		users = append(users, user)
@@ -280,13 +269,13 @@ func QueryAllUser() ([]*model.User, error) {
 
 //查询所有职员
 func QueryAllStaff() ([]*model.User, error) {
-	sqlStr := "select id, username, password, role, email, phone, status, createtime from user where role = '员工'"
+	sqlStr := "select id, username, password, role, phone, status, createtime from user where role = '员工'"
 
 	fmt.Println("--------------------------准备查询所有职员-------------------")
 	fmt.Println(sqlStr)
 	rows, err := db.Query(sqlStr)
 
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -294,29 +283,27 @@ func QueryAllStaff() ([]*model.User, error) {
 	var staffs []*model.User
 
 	for rows.Next() {
-		var id			int
-		var username	string
-		var password	string
-		var role		string			//0 普通， 1 管理员
-		var email		string
-		var phone		string
-		var status     	string
-		var createtime 	string
+		var id int
+		var username string
+		var password string
+		var role string //0 普通， 1 管理员
+		var phone string
+		var status string
+		var createtime string
 
 		fmt.Println("-------------------------写入行-------------------")
-		err := rows.Scan(&id, &username, &password, &role, &email, &phone, &status, &createtime)
+		err := rows.Scan(&id, &username, &password, &role, &phone, &status, &createtime)
 		if err != nil {
 			return nil, err
 		}
 		staff := &model.User{
-			Id:			id,
-			Username:	username,
-			Password:	password,
-			Role:		role,
-			Email:		email,
-			Phone:		phone,
-			Status:		status,
-			Createtime:	createtime,
+			Id:         id,
+			Username:   username,
+			Password:   password,
+			Role:       role,
+			Phone:      phone,
+			Status:     status,
+			Createtime: createtime,
 		}
 
 		staffs = append(staffs, staff)
@@ -328,38 +315,33 @@ func QueryAllStaff() ([]*model.User, error) {
 	return staffs, nil
 }
 
-
 func UpdateUser(userID int64, userStatus string) {
 	sqlStr := fmt.Sprintf(" UPDATE user SET STATUS='%s' WHERE id='%d'", userStatus, userID)
 	fmt.Println("更新用户状态")
 	_, _ = Exec(sqlStr)
 }
 
+func CheckPsd(userID int, oldPsd string) bool {
 
+	var psd string
 
+	sqlStr := fmt.Sprintf("select PASSWORD from user where id='%d'", userID)
+	row := QueryRowDB(sqlStr)
+	_ = row.Scan(&psd)
+	if oldPsd == psd {
+		return true
+	}
+	return false
+}
 
-//为每个用户建表
-//func CreateEveryUserTable(user model.User) {
-//	sqlStr := fmt.Sprintf("DROP TABLE IF EXISTS %s;" +
-//		"CREATE TABLE IF NOT EXISTS %s(" +
-//		"id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL," +
-//		"username VARCHAR (64)," +
-//		"action VARCHAR (64)," +
-//		"STATUS varchar (64));" +
-//		"alter table %s default character set utf8;" +
-//		"alter table %s change username username varchar(64) character set utf8;" +
-//		"alter table %s change action action varchar(64) character set utf8;" +
-//		"alter table %s change STATUS STATUS varchar(64) character set utf8;",
-//		user.Username, user.Username, user.Username, user.Username, user.Username, user.Username)
-//	_, _ = Exec(sqlStr)
-//	fmt.Println("---------------------------------------------")
-//	fmt.Println(user.Username, "table created")
-//}
+func ApplyPsd(userID int, newPsd string) {
+	sqlStr := fmt.Sprintf(" UPDATE user SET PASSWORD='%s' WHERE id='%d'", newPsd, userID)
+	fmt.Println("更新密码")
+	_, _ = Exec(sqlStr)
+}
 
-//插入
-//func InsertActionToEachUser(user string, action model.Action) (int64, error) {
-//
-//	sqlStr := fmt.Sprintf("insert into ? (username,action,STATUS) values (?,?,?)",
-//		user, action.Username, action.Action, action.Status)
-//	return Exec(sqlStr)
-//}
+func ForgetApplyPsd(phone string, newPsd string) {
+	sqlStr := fmt.Sprintf(" UPDATE user SET PASSWORD='%s' WHERE phone='%s'", newPsd, phone)
+	fmt.Println("更新密码")
+	_, _ = Exec(sqlStr)
+}

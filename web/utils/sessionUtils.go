@@ -62,9 +62,12 @@ func CheckLogin(r *http.Request) *struct {
 	Admin        []*model.User
 	User         []*model.User
 	Staff        []*model.User
+	Action       []*model.Action
 	Teas         []*service.Tea
 	Tea          service.Tea
 	Block		service.Block
+	IsBulkAdd bool
+	CodePath  string
 } {
 
 	fmt.Println("---------------------------------------------")
@@ -81,9 +84,12 @@ func CheckLogin(r *http.Request) *struct {
 		Admin        []*model.User
 		User         []*model.User
 		Staff        []*model.User
+		Action       []*model.Action
 		Teas         []*service.Tea
 		Tea          service.Tea
 		Block		service.Block
+		IsBulkAdd bool
+		CodePath  string
 	}{
 		Sess:         nil,
 		FailedLogin:  false,
@@ -96,9 +102,12 @@ func CheckLogin(r *http.Request) *struct {
 		Admin:        nil,
 		User:         nil,
 		Staff:        nil,
+		Action:       nil,
 		Teas:         nil,
 		Tea:          service.Tea{},
 		Block: service.Block{},
+		IsBulkAdd: false,
+		CodePath:  "",
 	}
 
 	//获取cookie

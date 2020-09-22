@@ -1,0 +1,78 @@
+{
+	"name": "茶查",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"client": {
+		"tlsEnable": true,
+		"caCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw",
+			"affiliation": "org1.department1"
+		},
+		"enableAuthentication": false,
+		"organization": "Org1MSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"teatraceability": {
+			"peers": {
+				"peer0.org1.goldenBud.com": {}
+			},
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"Org1MSP": {
+			"mspid": "Org1MSP",
+			"adminPrivateKey": {
+				"path": "/home/wk/go/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/Admin@org1.goldenBud.com/msp/keystore/1eb12e08464bacd5980388146c92acbb3626822972f95fd52ff5ec8b2846f2c8_sk"
+			},
+			"peers": ["peer0.org1.goldenBud.com"],
+			"signedCert": {
+				"path": "/home/wk/go/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/Admin@org1.goldenBud.com/msp/signcerts/Admin@org1.goldenBud.com-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.org1.goldenBud.com": {
+			"tlsCACerts": {
+				"path": "/home/wk/go/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem"
+			},
+			"url": "grpcs://localhost:7051",
+			"grpcOptions": {
+				"ssl-target-name-override": "peer0.org1.goldenBud.com"
+			}
+		}
+	},
+	"certificateAuthorities": {
+		"ca.org1.goldenBud.com": {
+			"url": "https://localhost:7054",
+			"httpOptions": {
+				"verify": false
+			},
+			"tlsCACerts": {
+				"path": "/home/wk/go/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/ca/ca.org1.goldenBud.com-cert.pem"
+			},
+			"caName": "ca.org1.goldenBud.com"
+		}
+	}
+}

@@ -1,363 +1,836 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="cn">
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-touch-fullsreen" content="YES">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta http-equiv="Expires" CONTENT="0">
-    <meta http-equiv="Cache-Control" CONTENT="no-cache">
-    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Tea Safe · 川茶</title>
-    <link rel="Shortcut Icon" href="../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="../static/css/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+    <!-- Bootstrap Min CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <!-- Animate Min CSS -->
+    <link rel="stylesheet" href="../assets/css/animate.min.css">
+    <!-- FontAwesome Min CSS -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+    <!-- FlatIcon CSS -->
+    <link rel="stylesheet" href="../assets/css/flaticon.css">
+    <!-- Popup CSS -->
+    <link rel="stylesheet" href="../assets/css/magnific-popup.min.css">
+    <!-- Owl Carousel Min CSS -->
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <!-- Image LightBox Min CSS -->
+    <link rel="stylesheet" href="../assets/css/imagelightbox.min.css">
+    <!-- Nice Select Min CSS -->
+    <link rel="stylesheet" href="../assets/css/nice-select.min.css">
+    <!-- MeanMenu CSS -->
+    <link rel="stylesheet" href="../assets/css/meanmenu.css">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="../assets/css/odometer.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <title>TeaTrack&nbsp;·&nbsp;茶查</title>
+
+    <link rel="icon" type="image/png" href="../assets/image/favicon.ico">
 </head>
+
 <body>
-{{if .Msg}}
-    <div class="ui basic modal">
-        <div class="ui icon header">
-            <i class="times icon"></i>
-            {{.Msg}}
-        </div>
 
-        <div class="actions">
-            <div class="ui green ok inverted button">
-                <i class="checkmark icon"></i>
-                好的
-            </div>
-        </div>
-    </div>
-{{end}}
-
-<div class="ui fixed inverted menu">
-    <div class="ui container">
-        <a href="/backToHome" class="header item">
-            <img class="logo" src="../../static/image/login-logo.png">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            Tea Safe •　川茶
-        </a>
-        {{if .IsLogin}}
-            {{if .IsSuperAdmin}}
-                <div class="ui simple dropdown item">
-                    后台管理 <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="/superBackStage">
-                            后台首页
-                        </a>
-                        <a class="item" href="/queryPage">
-                            搜寻ID
-                        </a>
-                        <div class="divider"></div>
-                        <div class="header">管理</div>
-                        <a class="item" href="/sbsDataMana">
-                            数据管理
-                        </a>
-                        <a class="item" href="/sbsAdminMana">
-                            管理员任命
-                        </a>
-                        <a class="item" href="/sbsUserMana">
-                            用户管理
-                        </a>
-                    </div>
-                </div>
-            {{end}}
-            {{if .IsAdmin}}
-                <div class="ui simple dropdown item">
-                    后台管理 <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="/backStage">
-                            后台首页
-                        </a>
-                        <a class="item" href="/queryPage">
-                            搜寻ID
-                        </a>
-                        <div class="divider"></div>
-                        <div class="header">管理</div>
-                        <a class="item" href="/bsDataMana">
-                            数据管理
-                        </a>
-                        <a class="item" href="/bsAdminMana">
-                            管理员任命
-                        </a>
-                        <a class="item" href="/bsUserMana">
-                            用户管理
-                        </a>
-                    </div>
-                </div>
-            {{end}}
-            {{if .IsStaff}}
-                <div class="ui simple dropdown item">
-                    员工操作 <i class="dropdown icon"></i>
-                    <div class="menu">
-
-                        <a class="item" href="/addTeaPage">
-                            添加记录
-                        </a>
-                        <a class="item" href="/queryPage">
-                            搜寻ID
-                        </a>
-                    </div>
-                </div>
-            {{end}}
-            {{if .IsUser}}
-                <a class="item" href="/queryPage">
-                    搜寻ID
-                </a>
-            {{end}}
-        {{else}}
-            <a class="item" href="/queryPage">
-                搜寻ID
-            </a>
-        {{end}}
-
-        {{if .IsLogin}}
-            <div class="ui simple dropdown right item">
-                Welcome, {{.Sess.UserName}}
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/profilePage">
-                        我的信息
-                    </a>
-                    <a class="item" href="/logout">
-                        注销登陆
-                    </a>
-                </div>
-            </div>
-        {{else}}
-            <a href="/loginPage" class="header right item">
-                登录
-            </a>
-            <a href="/registerPage" class="header item">
-                注册
-            </a>
-        {{end}}
+<!-- Start Preloader Area -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
     </div>
 </div>
+<!-- End Preloader Area -->
 
-<div class="headholder"></div>
-
-<div class="homeHugeImage">
-    <div class="hugeImageCover">
-        <div class="centerPlacer">
-            <div class="ui text container">
-                <h1 class="ui inverted header">
-                    Tea Safe · 川茶
-                </h1>
-                <h2 class="ui inverted header">
-                    基于区块链技术的茶叶溯源系统
-                </h2>
-
-                <br/>
-
-                <div class="ui huge green button">
-                    了解我们
-                    <i class="right arrow icon"></i>
+<!-- Start Navbar Area -->
+<div class="navbar-area">
+    <div class="trifles-responsive-nav">
+        <div class="container">
+            <div class="trifles-responsive-menu">
+                <div class="logo">
+                    <a href="/backToHome">
+                        <img src="../assets/image/logo-full-black.png" alt="logo">
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="trifles-nav">
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="index.html">
+                    <img src="../assets/image/logo-full-black.png" alt="logo">
+                </a>
+
+                <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/backToHome" class="nav-link active">
+                                首页
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                产品
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">川红工夫</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">宜宾早茶</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">宜宾早白尖</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/newsOverall" class="nav-link">
+                                新闻
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link">
+                                关于
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/contact" class="nav-link">
+                                联系我们
+                            </a>
+                        </li>
+
+
+                        {{if .IsLogin}}
+                            {{if .IsStaff}}
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        员工
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="/addTeaPage" class="nav-link">
+                                                货物入库
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/modifyQuery" class="nav-link">
+                                                物流更新
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/profilePage" class="nav-link">
+                                                个人主页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link">
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{end}}
+                            {{if .IsSuperAdmin}}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        超级管理员
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="/superBackStage" class="nav-link">
+                                                后台首页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/profilePage" class="nav-link">
+                                                个人主页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link">
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{end}}
+                            {{if .IsAdmin}}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        管理员
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="/backStage" class="nav-link">
+                                                后台首页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/profilePage" class="nav-link">
+                                                个人主页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link">
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{end}}
+                            {{if .IsUser}}
+                                <li class="nav-item">
+                                    <a href="/profilePage" class="nav-link">
+                                        个人主页
+                                    </a>
+                                </li>
+                            {{end}}
+                        {{end}}
+
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+    </div>
 </div>
-<div class="pusher">
-    {{/*    <div class="ui inverted vertical masthead center aligned segment">
-        <div class="ui container">
-            <div class="ui large secondary inverted pointing menu">
-                <a class="toc item">
-                    <i class="sidebar icon"></i>
-                </a>
-                <a class="active item" href="/backToHome">
-                    主页
-                </a>
-                <a class="item" href="/queryPage">
-                    搜寻ID
-                </a>
+<!-- End Navbar Area -->
 
-                {{if .IsSuperAdmin}}
-                    <a class="item" href="/superBackStage">
-                        后台首页
-                    </a>
-                {{end}}
 
-                {{if .IsAdmin}}
-                    <a class="item" href="/backStage">
-                        后台首页
-                    </a>
-                {{end}}
+<!-- Start Main Banner Area -->
+<div class="main-banner-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="main-banner-content">
+                            <ul class="banner-list">
+                                <li>
+                                    <span>宜宾早茶</span>
+                                </li>
+                                <li>
+                                    <span>宜宾早白尖</span>
+                                </li>
+                                <li>
+                                    <span>川红功夫</span>
+                                </li>
+                            </ul>
 
-                {{if .IsStaff}}
-                    <a class="item" href="/addTeaPage">
-                        添加记录
-                    </a>
-                    <a class="item" href="/modifyQueryPage">
-                        修改记录
-                    </a>
-                {{end}}
+                            <h1>TeaTrack&nbsp;·&nbsp;茶查</h1>
+                            <p>
 
-                <div class="right item">
-                    {{if .IsLogin}}
-                        <div class="ui inverted menu">
-                            <div class="ui dropdown item">
-                                Welcome, {{.Sess.UserName}}
-                                <i class="dropdown icon"></i>
-                                <div class="ui inverted menu">
-                                    <a class="item" href="/profilePage">
-                                        我的信息
-                                    </a>
-                                    <a class="item" href="/logout">
-                                        注销登陆
-                                    </a>
-                                </div>
+                                茶溯源平台
+                                &nbsp;&nbsp;&nbsp;&nbsp;中国&nbsp;·&nbsp;宜宾</p>
+                            <br/>
+                            <form action="/findTeaByID">
+                                <input class="teaIDInput" type="text" placeholder="搜寻ID" name="id" required
+                                       autocomplete="off">
+                                <br/><br/>
+                                <button class="optional-btn" style="margin-left: 0;">
+                                    确认
+                                    <i class="fa fa-leaf"></i>
+                                </button>
+                            </form>
+                            <br/>
+                            {{if .IsLogin}}
+                            {{else}}
+                                <a href="/login" class="optional-btn" style="margin-left: 0;">
+                                    登录
+                                    <i class="fa fa-check"></i>
+                                </a>
+                            {{end}}
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 p-0">
+                        <div class="banner-image">
+                            <img src="../assets/image/main-banner.png" alt="image">
+                        </div>
+
+                        <div class="shape-area">
+                            <div class="creative-shape">
+                                <img src="../assets/img/home-one/shape.png" alt="main-image">
+                            </div>
+
+                            <div class="creative-shape-two">
+                                <img src="../assets/img/home-one/shape.png" alt="main-image">
                             </div>
                         </div>
-                    {{else}}
-                        <a class="ui inverted button" href="/loginPage">登录</a>
-                        <a class="ui inverted button" href="/registerPage">注册</a>
-                    {{end}}
-                </div>
-            </div>
-        </div>
-
-        <div class="ui text container">
-            <h1 class="ui inverted header">
-                Tea Safe · 川茶
-            </h1>
-            <h2>
-                基于区块链技术的茶叶溯源系统
-            </h2>
-
-            <br/>
-
-            <div class="ui huge green button">
-                了解我们
-                <i class="right arrow icon"></i>
-            </div>
-        </div>
-    </div>*/}}
-
-    <div class="ui vertical stripe segment">
-        <div class="ui text container">
-            <br/>
-            <h3 class="ui header">
-                川茶
-            </h3>
-            <p>
-                介绍
-            </p>
-            <a class="ui large button">
-                更多
-            </a>
-            <br/><br/><br/>
-
-            <h4 class="ui horizontal header divider">
-                <a href="#">
-                    Tea Safe · 川茶
-                </a>
-            </h4>
-
-            <br/>
-            <h3 class="ui header">
-                介绍
-            </h3>
-            <p>
-                介绍
-            </p>
-            <a class="ui large button">
-                更多
-            </a>
-            <br/><br/><br/>
-
-        </div>
-    </div>
-
-    <div class="ui inverted vertical footer segment">
-        <div class="ui container">
-            <div class="ui stackable inverted divided equal height stackable grid">
-                <div class="three wide column">
-                    <h4 class="ui inverted header">关于</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">网站地图</a>
-                        <a href="#" class="item">联系我们</a>
-                        <a href="#" class="item">隐私条款</a>
                     </div>
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header">
-                        服务
-                    </h4>
-                    <div class="ui inverted link list">
-                        <a href="http://127.0.0.1:8080/#/" class="item">
-                            区块链浏览器
-                        </a>
-                    </div>
-                </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header">
-                        Tea Safe · 川茶
-                    </h4>
-                    <p>
-                        All Copyright &copy; Tea Safe
-                    </p>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="shape-img1">
+        <img src="../assets/img/home-one/1.png" alt="image">
+    </div>
+
+    <div class="shape-img2">
+        <img src="../assets/img/home-one/2.png" alt="image">
+    </div>
+
+    <div class="shape-img3">
+        <img src="../assets/img/home-one/3.png" alt="image">
+    </div>
+
+    <div class="shape-img4">
+        <img src="../assets/img/home-one/4.png" alt="image">
+    </div>
+
+    <div class="shape-img5">
+        <img src="../assets/img/home-one/5.svg" alt="image">
+    </div>
 </div>
+<!-- End Main Banner Area -->
+
+<!-- Start About Section -->
+<section class="about-section ptb-100">
+    <div class="container">
+        <div class="about-title-area">
+            <div class="row">
+                <div class="col-lg-7 col-md-12">
+                    <div class="about-title">
+                        <span>TeaTrack&nbsp;·&nbsp;茶查</span>
+                        <h2>宜宾好茶，自然馈赠</h2>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-12">
+                    <div class="about-text">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;宜宾气候温和，雨量充沛，长年温差不大，无霜期达三百天以上。
+                            由于独特的地理环境和小区气候，宜宾的茶树在相似、同纬度主产茶区发芽早，采期长，其鲜叶嫩度高，
+                            芽毫披露，制成的茶叶香高味爽。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="about-image img-cover">
+                    <img src="../assets/image/bg_intro.jpg" alt="image">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="about-slider owl-carousel owl-theme">
+                    <div class="about-item">
+                        <div class="about-slide-image">
+                            <img src="../assets/image/chuanhong.jpg" alt="image">
+                        </div>
+                        <div class="about-text">
+                            <span>川红功夫</span>
+                            <h3>香气清鲜，醇厚鲜爽，汤色浓亮</h3>
+                        </div>
+                    </div>
+
+                    <div class="about-item">
+                        <div class="about-slide-image">
+                            <img src="../assets/image/zaocha.png" alt="image">
+                        </div>
+                        <div class="about-text">
+                            <span>宜宾早茶</span>
+                            <h3>挺直秀丽，嫩绿鲜亮，鲜爽甘醇</h3>
+                        </div>
+                    </div>
+
+                    <div class="about-item">
+                        <div class="about-slide-image">
+                            <img src="../assets/image/zaobaijian.jpg" alt="image">
+                        </div>
+                        <div class="about-text">
+                            <span>宜宾早白尖</span>
+                            <h3>红茶珍品——“早白尖”，汤色浓亮，厚软红匀</h3>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-content-area">
+                    <div class="about-content">
+                        <h3>宜宾，四川省茶区主产业之一</h3>
+                        <p>产区地处川南，一年四季气候温和，夏无酷暑，冬无严寒</p>
+                    </div>
+
+                    <ul class="about-list">
+                        <li>
+                            <i class="flaticon-check"></i>
+                            红砂壤土，PH介于4.5&nbsp;~&nbsp;5.6
+                        </li>
+
+                        <li>
+                            <i class="flaticon-check"></i>
+                            年均气温17.3&nbsp;~&nbsp;19.9&nbsp;摄氏度
+                        </li>
+
+                        <li>
+                            <i class="flaticon-check"></i>
+                            年降雨量可达1050&nbsp;~&nbsp;1618&nbsp;mm
+                        </li>
+
+                        <li>
+                            <i class="flaticon-check"></i>
+                            年均日照时数1000&nbsp;~&nbsp;1130&nbsp;h
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about-shape-image">
+        <img src="../assets/image/about-shape.png" alt="image">
+    </div>
+</section>
+<!-- End About Section -->
 
 
-<script src="../static/js/jquery.min.js"></script>
-<script src="../static/js/semantic.min.js"></script>
+<!-- Start Summary Section -->
+<section class="summary-section pb-100">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="summary-image">
+                    <img src="../assets/img/summary/1.png" alt="image">
+                </div>
+            </div>
 
-<script>
-    $(document)
-        .ready(
-            function () {
+            <div class="col-lg-6">
+                <div class="summary-content">
+                    <span>TeaTrack&nbsp;·&nbsp;茶查</span>
+                    <h3>茶叶溯源平台</h3>
+                    <p>食品流通日益全球化的今天，打造“从农田到餐桌”的全供应链食品追溯体系是我国成为食品安全大国的必然选择。
+                        而“区块链”是一项新兴的共享账本技术，最早被用于支持数字货币——比特币的可信交易。这两者相结合，会给零
+                        售业带来怎样的惊喜和发展？沃尔玛先人一步，用科研投入和成功试点做出了有益探索。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="summary-shape-image">
+        <img src="../assets/img/summary/shape.png" alt="image">
+    </div>
+</section>
+<!-- End Summary Section -->
 
-                // fix menu when passed
-                $('.masthead')
-                    .visibility({
-                        once: false,
-                        onBottomPassed: function () {
-                            $('.fixed.menu').transition('fade in');
-                        },
-                        onBottomPassedReverse: function () {
-                            $('.fixed.menu').transition('fade out');
-                        }
-                    })
-                ;
+<!-- Start Services Section -->
+<section class="services-section pb-100">
+    <div class="container">
+        <div class="services-content-area">
+            <div class="services-slider owl-carousel owl-theme">
+                <div class="services-item">
+                    <div class="icon">
+                        <i class="flaticon-mission-accomplished"></i>
+                        <h3>
+                            <a href="single-services.html">
+                                茶园
+                            </a>
+                        </h3>
+                    </div>
+                </div>
 
-                // create sidebar and attach to menu open
-                $('.ui.sidebar')
-                    .sidebar('attach events', '.toc.item')
-                ;
-                $('.ui.basic.modal')
-                    .modal('show')
-                ;
+                <div class="services-item">
+                    <div class="icon">
+                        <i class="flaticon-sushi"></i>
+                        <h3>
+                            <a href="single-services.html">
+                                采摘
+                            </a>
+                        </h3>
+                    </div>
+                </div>
 
-            })
-    ;
+                <div class="services-item">
+                    <div class="icon">
+                        <i class="flaticon-shipping-and-delivery"></i>
+                        <h3>
+                            <a href="single-services.html">
+                                物流
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="services-item">
+                    <div class="icon">
+                        <i class="flaticon-vendor"></i>
+                        <h3>
+                            <a href="single-services.html">
+                                分销
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="services-item">
+                    <div class="icon">
+                        <i class="flaticon-harvest"></i>
+                        <h3>
+                            <a href="single-services.html">
+                                消费
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Services Section -->
 
 
-    $(document)
-        .ready(function () {
-            $('.ui.menu .ui.dropdown').dropdown({
-                on: 'hover'
-            });
-            $('.ui.menu a.item')
-                .on('click', function () {
-                    $(this)
-                        .addClass('active')
-                        .siblings()
-                        .removeClass('active')
-                    ;
-                })
-            ;
-        })
-    ;
+<!-- Start Video Section -->
+<div class="video-section">
+    <div class="container">
+        <div class="video-content">
+            <a href="https://v.qq.com/x/page/q0916zdxgvf.html" class="video-btn popup-youtube">
+                <i class="fas fa-play"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- End Video Section -->
 
-</script>
+<!-- Start Fun Facts Section -->
+<section class="fun-facts-area pb-100">
+    <div class="container">
+        <div class="fun-facts-content-area">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-fun-fact">
+                        <h3>
+                            <span class="odometer" data-count="2.59">00</span>
+                            <span class="sign-icon">+</span>
+                        </h3>
+                        <p>机械化采摘（万公顷）</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-fun-fact">
+                        <h3>
+                            <span class="odometer" data-count="23">00</span>
+                            <span class="sign-icon">个</span>
+                        </h3>
+                        <p>茶园绿色防控示范基地</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-fun-fact">
+                        <h3>
+                            <span class="odometer" data-count="5.58">00</span>
+                            <span class="sign-icon">+</span>
+                        </h3>
+                        <p>茶叶产量（万吨）</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-fun-fact">
+                        <h3>
+                            <span class="odometer" data-count="22.03">00</span>
+                            <span class="sign-icon">%</span>
+                        </h3>
+                        <p>综合产值增长</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Fun Facts Section -->
+
+<!-- Start Testimonials Section -->
+<section class="testimonials-section pt-100">
+    <div class="container-fluid p-0">
+        <div class="testimonials-title">
+            <span>新闻聚焦</span>
+            <h3>宜宾茶产业园</h3>
+        </div>
+
+        <div class="testimonials-slider owl-carousel owl-theme">
+            <div class="testimonials-item">
+                <div class="testimonials-content">
+                    <h3>四川宜宾高县势将做强茶产业</h3>
+                    <span>2020-08-10</span>
+                    <p>乌蒙西下三千里，僰道南来第一城<br/>四川宜宾高县是全国早茶生产基地和茶叶原产地之一，有着3000多年的种茶
+                        历史，是茶马古道的重要驿站，也是全省茶叶的主产区、绿色生态茶区——现有茶园面积32.7万亩，茶树良种化率达100%；
+                        培育了茶产业加工企业98个，国家级龙头企业1家，省级龙头企业2家。</p>
+
+                    <div class="testimonials-info">
+                        <div class="icon">
+                            <i class="flaticon-quote"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonials-item">
+                <div class="testimonials-content">
+                    <h3>高县多基多园打造全省茶叶第一县</h3>
+                    <span>2020-08-08</span>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;近年来，高县围绕“基地、园区、品牌、市场”，“多基多园”打造全省茶叶产业第一县，已建成8个万亩亿元茶叶基地，
+                        早白尖“中国红茶第一庄园”、川红“潆溪乡柏杨湖生态茶园”、峰顶寺“茶山公园”、云州“云岭彩茶园”、龙溪茶叶科
+                        技示范园享誉全川，引领和支撑着高县茶叶产业发展;形成6个茶叶产业示范带，县境内名优特新农产品茶叶品牌已
+                        远销摩洛哥、俄罗斯、香港等国家和地区。</p>
+
+                    <div class="testimonials-info">
+                        <div class="icon">
+                            <i class="flaticon-quote"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials-item">
+                <div class="testimonials-content">
+                    <h3>高县茶叶以创新为驱动助茶农增收</h3>
+                    <span>2020-05-24</span>
+                    <p>5月24日，记者来到高县峰顶寺茶业的落润乡茶叶基地采访时了解到，该县茶场通过机采机修、统防统治减轻了
+                        茶农的重体力劳动，节省了大量劳动力，大大提高了茶农经济效益。
+                        <br/>
+                        　　据了解，由于冬干春旱，今年宜宾春茶明显减产，然而夏季雨水充足，夏茶长势迅猛，茶农人力顿感不足，
+                        高县农技站果断出计，采用机采机修、统防统治，解决了劳动力不足问题，同时也提升了茶农经济效益。
+                    </p>
+
+                    <div class="testimonials-info">
+                        <div class="icon">
+                            <i class="flaticon-quote"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials-item">
+                <div class="testimonials-content">
+                    <h3>高县积极壮大茶叶产业</h3>
+                    <span>2016-11-24</span>
+                    <p>
+                        “两带”优化产业布局<br/>
+                        “良繁”更新茶树品种<br/>
+                        “龙头”带动农户增收<br/>
+                        “品牌”提升竞争实力
+                    </p>
+
+                    <div class="testimonials-info">
+                        <div class="icon">
+                            <i class="flaticon-quote"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="testimonials-item">
+                <div class="testimonials-content">
+                    <h3>高县茶叶面积年内将达25万亩 综合产值13亿</h3>
+                    <span>2014-07-31</span>
+                    <p>高县是全国茶叶生产基地、优质出口茶基地县和全省茶叶良繁基地。近年来，该县紧扣“规模、科技、
+                        品牌、效益”主题，坚持规模化、标准化、产业化“三化”并举，狠抓6大山区茶叶产业带建设，形成了
+                        “核心示范、连片开发、全面覆盖”的发展格局，全县茶业健康持续发展。2013年，全县茶园面积迅速
+                        达23万余亩。</p>
+
+                    <div class="testimonials-info">
+                        <div class="icon">
+                            <i class="flaticon-quote"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Testimonials Section -->
+
+<!-- Start Blog Section -->
+<section class="blog-section pt-100 pb-70">
+    <div class="container">
+        <div class="section-title">
+            <span>宜宾好茶</span>
+            <h3>产品聚焦</h3>
+            <p>近年来，四川省建成了川西名优绿茶产业带、川东北富硒茶产业带以及川南工夫红茶、川中茉莉花茶集中发展区。
+                四川的茶叶品牌也日益增多，其中“宜宾早茶”“峨眉山茶”“蒙顶山茶”“米仓山茶”等区域品牌的影响力和产品市场
+                占有率不断提升。</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="single-blog-item bg-1">
+                    <span>工夫红茶后起之秀</span>
+                    <h3>川红工夫</h3>
+                    <p>川红工夫茶产于四川省宜宾等地，诞生于20世纪50年代，为工夫红茶的后起之秀。四川省是我国
+                        茶树的发地之一，茶叶生产历史悠久。</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="single-blog-item bg-2">
+                    <span>全国农产品地理标志</span>
+                    <h3>宜宾早茶</h3>
+                    <p>宜宾早茶（绿茶）外形扁平挺直秀丽，色泽翠绿油润，香气栗香馥郁，汤色嫩绿鲜亮，滋味鲜爽
+                        甘醇，叶底嫩绿明亮。主栽品种为“早白尖五号”、福选九号等。</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
+                <div class="single-blog-item bg-3">
+                    <span>川红珍品</span>
+                    <h3>宜宾早白尖</h3>
+                    <p>早白尖工夫红茶为我国在国际市场上应市较早的一个茶叶品种。每年四月即可进入国际市场，以早、嫩、
+                        快、好的突出特点及优良品质，博得国内外茶界的赞誉。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Blog Section -->
+
+<!-- Start Footer Section -->
+<section class="footer-section footer-bg text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>茶园服务</h3>
+                    </div>
+
+                    <ul class="footer-quick-links">
+                        <li>
+                            溯源查询
+                        </li>
+                        <li>
+                            批量订购
+                        </li>
+                        <li>
+                            茶园参观
+                        </li>
+                        <li>
+                            生产线参观
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>网站服务</h3>
+                    </div>
+                    <ul class="footer-quick-links">
+                        <li>
+                            <a href="http://47.108.134.136:8080/#/" class="item">
+                                区块链浏览器
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:08889802047">
+                                客服热线
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="signup.html">
+                                账户详情
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>联系方式</h3>
+                    </div>
+                    <div class="footer-info-contact">
+                        <span>中国，宜宾，高县</span>
+                    </div>
+                    <div class="footer-info-contact">
+                        <span><a href="tel:+882-569-756">987-0986-0987</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="copyright-area">
+        <div class="container">
+            <div class="copyright-area-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 col-md-4">
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <p>
+
+                            All Rights Reserved
+                            <i class="far fa-copyright"></i>
+                            2020 TeaTrack&nbsp;·&nbsp;茶查
+
+                        </p>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Footer Section -->
+
+<!-- Start Go Top Section -->
+<div class="go-top">
+    <i class="fas fa-chevron-up"></i>
+    <i class="fas fa-chevron-up"></i>
+</div>
+<!-- End Go Top Section -->
+
+
+<!-- jQuery Min JS -->
+<script src="../assets/js/jquery.min.js"></script>
+<!-- Popper Min JS -->
+<script src="../assets/js/popper.min.js"></script>
+<!-- Bootstrap Min JS -->
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- MeanMenu JS -->
+<script src="../assets/js/jquery.meanmenu.js"></script>
+<!-- Appear JS -->
+<script src="../assets/js/jquery.appear.min.js"></script>
+<!-- Odometer JS -->
+<script src="../assets/js/odometer.min.js"></script>
+<!-- Owl Carousel Min JS -->
+<script src="../assets/js/owl.carousel.min.js"></script>
+<!-- Popup JS -->
+<script src="../assets/js/jquery.magnific-popup.min.js"></script>
+<!-- Nice Selects Min JS -->
+<script src="../assets/js/jquery.nice-select.min.js"></script>
+<!-- Image LightBox Min JS -->
+<script src="../assets/js/imagelightbox.min.js"></script>
+<!-- AjaxChimp Min JS -->
+<script src="../assets/js/jquery.ajaxchimp.min.js"></script>
+<!-- Form Validator Min JS -->
+<script src="../assets/js/form-validator.min.js"></script>
+<!-- Contact Form Min JS -->
+<script src="../assets/js/contact-form-script.js"></script>
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+
 </body>
-
 </html>

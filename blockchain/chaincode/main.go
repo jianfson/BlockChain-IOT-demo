@@ -19,6 +19,7 @@ func main() {
 
 // 实现 Init 方法, 实例化账本时使用。
 func (s *TeaChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
+	s.initLedger(stub)
 	return shim.Success(nil)
 }
 
@@ -32,19 +33,16 @@ func (s *TeaChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	if fn == "saveTea" {
 		return s.saveTea(stub, args)
 
-	} else if fn == "initLedger" {
-		return s.initLedger(stub, args)
-
 	}else if fn == "teaExchange" {
 		return s.teaExchange(stub, args)
+
+	} else if fn == "queryTeaById" {
+		return s.queryTeaById(stub, args)
 
 	} else if fn == "modifyQueryCount" {
 		return s.modifyQueryCount(stub, args)
 
-	}else if fn == "queryTeaById" {
-		return s.queryTeaById(stub, args)
-
-	} else if fn == "queryTeaByMaker" {
+	}else if fn == "queryTeaByMaker" {
 		return s.queryTeaByMaker(stub, args)
 
 	}else if fn == "getTeasByRange" {

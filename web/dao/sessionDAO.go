@@ -13,7 +13,6 @@ func CreateTableWithSession() {
 				username VARCHAR (64) NOT NULL,
 				PASSWORD VARCHAR (64) NOT NULL,
 				role VARCHAR (64) NOT NULL,
-				email VARCHAR (64) NOT NULL,
 				phone VARCHAR (64) NOT NULL,
 				STATUS VARCHAR (64) NOT NULL,
 				createtime VARCHAR (64) NOT NULL,
@@ -29,10 +28,10 @@ func CreateTableWithSession() {
 
 // 添加session记录
 func AddSession(sess *model.Session) error{
-	sqlStr := `INSERT INTO session VALUES(?,?,?,?,?,?,?,?,?);`
+	sqlStr := `INSERT INTO session VALUES(?,?,?,?,?,?,?,?);`
 	fmt.Println("---------------------------------------------")
 	fmt.Println("正在写入Session表")
-	_, err := Exec(sqlStr, sess.SessionID, sess.UserID, sess.UserName, sess.PassWord, sess.Role, sess.Email, sess.Phone, sess.Status, sess.CreateTime)
+	_, err := Exec(sqlStr, sess.SessionID, sess.UserID, sess.UserName, sess.PassWord, sess.Role, sess.Phone, sess.Status, sess.CreateTime)
 	if err != nil{
 		return err
 	}
@@ -45,21 +44,21 @@ func GetSession(sessID string) (sess *model.Session) {
 	var userName	string
 	var passWord	string
 	var role		string
-	var email		string
+	//var email		string
 	var phone		string
 	var status    	string
 	var createTime 	string
 
-	sqlStr := fmt.Sprintf("select session_id, user_id, username, password, role, email, phone, status, createtime from session where session_id='%s'", sessID)
+	sqlStr := fmt.Sprintf("select session_id, user_id, username, password, role, phone, status, createtime from session where session_id='%s'", sessID)
 	row := QueryRowDB(sqlStr)
-	_ = row.Scan(&sessionID, &userID, &userName, &passWord, &role, &email, &phone, &status, &createTime)
+	_ = row.Scan(&sessionID, &userID, &userName, &passWord, &role, &phone, &status, &createTime)
 	sess = &model.Session{
 		SessionID:		sessionID,
 		UserID:			userID,
 		UserName:		userName,
 		PassWord:		passWord,
 		Role:			role,
-		Email:			email,
+		//Email:			email,
 		Phone:			phone,
 		Status:			status,
 		CreateTime:		createTime,

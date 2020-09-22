@@ -1,0 +1,10 @@
+{
+	"network-configs": {
+		"茶查": {
+			"name": "茶查",
+			"profile": "./connection-profile/chacha.json",
+			"enableAuthentication": false
+		}
+	},
+	"license": "Apache-2.0"
+}

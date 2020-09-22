@@ -1,334 +1,555 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="cn">
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-touch-fullsreen" content="YES">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Tea Safe · 川茶</title>
-    <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
-    <link href="../../static/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="../../static/css/queryResult.css" rel="stylesheet" id="bootstrap-css">
+    <!-- Bootstrap Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <!-- Animate Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/animate.min.css">
+    <!-- FontAwesome Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/fontawesome.min.css">
+    <!-- FlatIcon CSS -->
+    <link rel="stylesheet" href="../../assets/css/flaticon.css">
+    <!-- Popup CSS -->
+    <link rel="stylesheet" href="../../assets/css/magnific-popup.min.css">
+    <!-- Owl Carousel Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/owl.carousel.min.css">
+    <!-- Image LightBox Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/imagelightbox.min.css">
+    <!-- Nice Select Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/nice-select.min.css">
+    <!-- MeanMenu CSS -->
+    <link rel="stylesheet" href="../../assets/css/meanmenu.css">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="../../assets/css/odometer.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="../../assets/css/responsive.css">
+
+    <!--引用地图API-->
+    <style>
+        html,
+        body,
+        #gaode_container {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+
+    <title>TeaTrack&nbsp;·&nbsp;茶查</title>
+
+    <link rel="icon" type="image/png" href="../../assets/image/favicon.ico">
 </head>
 
+</head>
 
 <body>
-<div class="ui fixed inverted menu">
-    <div class="ui container">
-        <a href="/backToHome" class="header item">
-            <img class="logo" src="../../static/image/login-logo.png">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
-        </a>
-        {{if .IsLogin}}
-            {{if .IsSuperAdmin}}
-                <div class="ui simple dropdown item">
-                    后台管理 <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="/superBackStage">
-                            后台首页
-                        </a>
-                        <a class="item" href="/queryPage">
-                            搜寻ID
-                        </a>
-                        <div class="divider"></div>
-                        <div class="header">管理</div>
-                        <a class="item" href="/sbsDataMana">
-                            数据管理
-                        </a>
-                        <a class="item" href="/sbsAdminMana">
-                            管理员任命
-                        </a>
-                        <a class="item" href="/sbsUserMana">
-                            用户管理
-                        </a>
-                    </div>
-                </div>
-            {{end}}
-            {{if .IsAdmin}}
-                <div class="ui simple dropdown item">
-                    后台管理 <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="/backStage">
-                            后台首页
-                        </a>
-                        <a class="item" href="/queryPage">
-                            搜寻ID
-                        </a>
-                        <div class="divider"></div>
-                        <div class="header">管理</div>
-                        <a class="item" href="/bsDataMana">
-                            数据管理
-                        </a>
-                        <a class="item" href="/bsAdminMana">
-                            管理员任命
-                        </a>
-                        <a class="item" href="/bsUserMana">
-                            用户管理
-                        </a>
-                    </div>
-                </div>
-            {{end}}
-            {{if .IsStaff}}
-                <div class="ui simple dropdown item">
-                    员工操作 <i class="dropdown icon"></i>
-                    <div class="menu">
 
-                        <a class="item" href="/addTeaPage">
-                            添加记录
-                        </a>
-                        <a class="active item" href="/queryPage">
-                            搜寻ID
-                        </a>
-                    </div>
-                </div>
-            {{end}}
-            {{if .IsUser}}
-                <a class="item" href="/queryPage">
-                    搜寻ID
-                </a>
-            {{end}}
-        {{else}}
-            <a class="item" href="/queryPage">
-                搜寻ID
-            </a>
-        {{end}}
-
-        {{if .IsUser}}
-            <a class="item" href="/queryPage">
-                搜寻ID
-            </a>
-        {{end}}
-        {{if .IsLogin}}
-            <div class="ui simple dropdown right item">
-                Welcome, {{.Sess.UserName}}
-                <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="/profilePage">
-                        我的信息
-                    </a>
-                    <a class="item" href="/logout">
-                        注销登陆
-                    </a>
-                </div>
-            </div>
-        {{else}}
-            <a href="/loginPage" class="header right item">
-                登录
-            </a>
-            <a href="/registerPage" class="header item">
-                注册
-            </a>
-        {{end}}
+<!-- Start Preloader Area -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
     </div>
 </div>
+<!-- End Preloader Area -->
 
-<div class="pusher">
-    <br/><br/><br/><br/><br/>
-    <div style="height: auto">
-        <div class="ui middle aligned center aligned grid">
-            <div class="column">
-                <h5 class="ui teal image header">
-                    <h3 class="ui teal image header">
-                        <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
-                        <h3>当前商品信息如下</h3>
-                    </h3>
-                </h5>
-                <br/><br/><br/>
-            </div>
-        </div>
-
-        <div class="ui middle aligned center aligned grid">
-            <div class="ui list" style="margin-top: 14px; margin-left: 30px">
-                <a class="item">
-                    <i class="boxes icon"></i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Id}}</div>
-                        <div class="description">商品编号</div>
-                    </div>
-                </a>
-                <br/>
-                <a class="item">
-                    <i class="fire icon">&nbsp;</i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Origin}}</div>
-                        <div class="description">产地</div>
-                    </div>
-                </a>
-                <br/>
-                <a class="item">
-                    <i class="leaf icon"></i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Maker}}</div>
-                        <div class="description">制造商</div>
-                    </div>
-                </a>
-                <br/>
-                <a class="item">
-                    <i class="shopping cart icon"></i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Owner}}</div>
-                        <div class="description">拥有者</div>
-                    </div>
-                </a>
-            </div>
-
-            <div style="width: 150px"></div>
-
-            <div class="ui list" style="margin-bottom: 14px; margin-left: 30px">
-                <a class="item">
-                    <i class="tag icon"></i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Name}}</div>
-                        <div class="description">商品名</div>
-                    </div>
-                </a>
-                <br/>
-                <a class="item">
-                    <i class="dolly flatbed icon"></i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Weight}}</div>
-                        <div class="description">重量</div>
-                    </div>
-                </a>
-                <br/>
-                <a class="item">
-                    <i class="hourglass start icon"></i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Production_Date}}</div>
-                        <div class="description">生产日期</div>
-                    </div>
-                </a>
-                <br/>
-                <a class="item">
-                    <i class="hourglass end icon"></i>
-                    <div class="content">
-                        <div class="header">{{.Tea.Shelf_life}}</div>
-                        <div class="description">保质期</div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        {{if .IsStaff}}
-            <br/><br/><br/><br/>
-            <div class="ui middle aligned center aligned grid">
-                <form action="/modifyQuery">
-                    <input type="hidden" name="id" type="text" value={{.Tea.Id}}>
-                    <button id="sub_btn" class="ui secondary button" onclick="loadingBtn()">修改当前信息</button>
-                </form>
-            </div>
-        {{end}}
-        <div class="ui middle aligned center aligned grid">
-            <div class="ui statistic">
-                <br/><br/><br/>
-                <div class="label">
-                    该商品总计被查询
+<!-- Start Navbar Area -->
+<div class="navbar-area">
+    <div class="trifles-responsive-nav">
+        <div class="container">
+            <div class="trifles-responsive-menu">
+                <div class="logo">
+                    <a href="/backToHome">
+                        <img src="../assets/image/logo-full-black.png" alt="logo">
+                    </a>
                 </div>
-                <div class="value">
-                    {{.Tea.QueryCounter}}
-                </div>
-                <br/><br/><br/>
             </div>
         </div>
-        <div class="container mt-5 mb-5">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <h4>这是您的溯源查询</h4>
-                    <ul class="timeline">
+    </div>
 
-                        <li>
-                            <div class="float-right">
-                                <a class="ui label" one-link-mark="yes">
-                                    <i class="clock outline icon cc_cursor"></i>
-                                    {{.Tea.Production_Date}}
-                                </a>
-                            </div>
-                            <p>
-                            <b>交易ID：</b><br/>
-                            {{.Tea.TxID}}
-                            </p>
-                            <p>
-                                <b>区块高度：</b><br/>
-                                {{.Block.Height}}
-                            </p>
-                            <p>
-                                <b>交易Hash：</b><br/>
-                                {{.Block.DataHash}}
-                            </p>
-                            <p>
-                                <b>区块Hash：</b><br/>
-                                {{.Block.BlcHash}}
-                            </p>
+    <div class="trifles-nav">
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="index.html">
+                    <img src="../assets/image/logo-full-black.png" alt="logo">
+                </a>
+
+                <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/backToHome" class="nav-link">
+                                首页
+                            </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                产品
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">川红工夫</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">宜宾早茶</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">宜宾早白尖</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/newsOverall" class="nav-link">
+                                新闻
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link">
+                                关于
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/contact" class="nav-link">
+                                联系我们
+                            </a>
+                        </li>
+
+
+                        {{if .IsLogin}}
+                            {{if .IsStaff}}
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        员工
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="/addTeaPage" class="nav-link">
+                                                货物入库
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/modifyQuery" class="nav-link">
+                                                物流更新
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/profilePage" class="nav-link">
+                                                个人主页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link">
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{end}}
+                            {{if .IsSuperAdmin}}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        超级管理员
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="/superBackStage" class="nav-link">
+                                                后台首页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/profilePage" class="nav-link">
+                                                个人主页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link">
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{end}}
+                            {{if .IsAdmin}}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        管理员
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="/backStage" class="nav-link">
+                                                后台首页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/profilePage" class="nav-link">
+                                                个人主页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link">
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{end}}
+                            {{if .IsUser}}
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        {{.Sess.UserName}}
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="/profilePage" class="nav-link">
+                                                个人主页
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/logout" class="nav-link">
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{end}}
+                        {{end}}
+
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- End Navbar Area -->
+<!-- Start Page Title Area -->
+<div class="page-title-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container">
+                <div class="page-title-content">
+                    <h2>查询结果</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Page Title Area -->
+
+
+<!-- Start Shop Section -->
+<section class="shop-section pt-100 pb-70">
+    <div class="container">
+        <div class="section-title">
+            <span>TeaTrack&nbsp;·&nbsp;茶查</span>
+            <h3>茶叶溯源查询</h3>
+        </div>
+
+        <div class="tab shop-list-tab">
+            <div class="tab_content">
+                <div class="tabs_item">
+                    <div class="row align-items-center">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-5 col-md-12">
+                            <div class="shop-item">
+                                <div class="shop-image">
+                                    <img src="../../assets/image/zaobaijian_small.jpg" alt="image">
+                                </div>
+
+                                <ul class="shop-list">
+                                    <li>
+                                        <i class="fas fa-star"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-star"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-star"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-star"></i>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-star"></i>
+                                    </li>
+                                </ul>
+
+                                <div class="shop-content" style="height: 150px">
+                                    <br/>
+                                    <br/>
+                                    <span>已查：{{.Tea.QueryCounter}}&nbsp;次</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-5 col-md-12">
+                            <div class="product-details-desc">
+                                <h3>{{.Tea.Name}}</h3>
+                                <div class="price">
+                                    <span class="new-price">ID：{{.Tea.Id}}</span>
+                                </div>
+                                <p>生产商：{{.Tea.Maker}}</p>
+                                <p>产地：{{.Tea.Origin}}</p>
+                                <p>规格：{{.Tea.Weight}}</p>
+                                <p>生产日期：{{.Tea.Production_Date}}</p>
+                                <p>保质期：{{.Tea.Shelf_life}}</p>
+                                <p>拥有者：{{.Tea.Owner}}</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-md-12">
+                <div class="tab products-details-tab">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <ul class="tabs">
+                                <li>
+                                    <a href="#">
+                                        <div class="dot"></div>
+                                        区块溯源
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="dot"></div>
+                                        产地信息
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="tab_content">
+                                <div class="tabs_item">
+                                    <div class="products-details-tab-content">
+                                        <div class="product-review-form">
+                                            <h3>区块链溯源信息</h3>
+
+                                            <div class="review-comments">
+                                                <div class="review-item">
+                                                    <h3>包装</h3>
+                                                    <span><strong>{{.Tea.Production_Date}}</strong></span>
+                                                    <p>交易ID：{{.Tea.TxID}}</p>
+                                                    <p>区块高度：{{.Block.Height}}</p>
+                                                    <p>交易HASH：{{.Block.DataHash}}</p>
+                                                    <p>区块HASH：{{.Block.BlcHash}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tabs_item">
+                                    <div id="gaode_container"></div>
+                                </div>
+                                <input id="longitude" type="hidden" value={{.Tea.Origin_IP.Longitude}}>
+                                <input id="latitude" type="hidden" value={{.Tea.Origin_IP.Latitude}}>
+                                <input id="origin" type="hidden" value={{.Tea.Origin}}>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</section>
+<!-- End Shop Section -->
+
+
+<!-- Start Product Details Area -->
+<section class="product-details-area ptb-100">
+    <div class="container">
+
+    </div>
+</section>
+<!-- End Product Details Area -->
+<!-- Start Footer Section -->
+<section class="footer-section footer-bg text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>茶园服务</h3>
+                    </div>
+
+                    <ul class="footer-quick-links">
+                        <li>
+                            溯源查询
+                        </li>
+                        <li>
+                            批量订购
+                        </li>
+                        <li>
+                            茶园参观
+                        </li>
+                        <li>
+                            生产线参观
+                        </li>
                     </ul>
                 </div>
             </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>网站服务</h3>
+                    </div>
+                    <ul class="footer-quick-links">
+                        <li>
+                            <a href="http://47.108.134.136:8080/#/" class="item">
+                                区块链浏览器
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:08889802047">
+                                客服热线
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="signup.html">
+                                账户详情
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>联系方式</h3>
+                    </div>
+                    <div class="footer-info-contact">
+                        <span>中国，宜宾，高县</span>
+                    </div>
+                    <div class="footer-info-contact">
+                        <span><a href="tel:+882-569-756">987-0986-0987</a></span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br/><br/><br/>
+
     </div>
 
-    <div class="ui inverted vertical footer segment">
-        <div class="ui container">
-            <div class="ui stackable inverted divided equal height stackable grid">
-                <div class="three wide column">
-                    <h4 class="ui inverted header">关于</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">网站地图</a>
-                        <a href="#" class="item">联系我们</a>
-                        <a href="#" class="item">隐私条款</a>
+    <div class="copyright-area">
+        <div class="container">
+            <div class="copyright-area-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 col-md-4">
                     </div>
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header">服务</h4>
-                    <div class="ui inverted link list">
-                        <a href="http://127.0.0.1:8080/#/" class="item">
-                            区块链浏览器
-                        </a>
+                    <div class="col-lg-4 col-md-4">
+                        <p>
+
+                            All Rights Reserved
+                            <i class="far fa-copyright"></i>
+                            2020 TeaTrack&nbsp;·&nbsp;茶查
+
+                        </p>
                     </div>
-                </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header">Tea Safe · 川茶</h4>
-                    <p>
-                        All Copyright &copy; Tea Safe
-                    </p>
+                    <div class="col-lg-4 col-md-4">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<!-- End Footer Section -->
+
+
+<!-- Start Go Top Section -->
+<div class="go-top">
+    <i class="fas fa-chevron-up"></i>
+    <i class="fas fa-chevron-up"></i>
 </div>
+<!-- End Go Top Section -->
 
-<script src="../../static/js/jquery.min.js"></script>
-<script src="../../static/js/semantic.min.js"></script>
-<script src="../../static/js/bootstrap.min.js"></script>
+<script src="https://webapi.amap.com/maps?v=1.4.13&key=9a4a1faf5738c2580fe335441055dcaf"></script>
+<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 <script>
-    $(document)
-        .ready(function () {
+    //初始化地图对象，加载地图
+    var map = new AMap.Map("gaode_container", {
+        zoom: 10,
+        resizeEnable: true
+    });
 
-            // fix menu when passed
-            $('.masthead')
-                .visibility({
-                    once: false,
-                    onBottomPassed: function () {
-                        $('.fixed.menu').transition('fade in');
-                    },
-                    onBottomPassedReverse: function () {
-                        $('.fixed.menu').transition('fade out');
-                    }
-                })
-            ;
+    var longitude = 104.5177;
+    var latitude = 28.4362;
+    //var longitude = document.getElementById("longitude").value;
+    //var latitude = document.getElementById("latitude").value;
+    var lnglats = [longitude, latitude];
+    var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, 0)});
 
-            // create sidebar and attach to menu open
-            $('.ui.sidebar')
-                .sidebar('attach events', '.toc.item')
-            ;
+    var marker = new AMap.Marker({
+        position: lnglats,
+        map: map
+    });
+    marker.content += '<p>TeaTrack&nbsp;·&nbsp;茶查</p>';
 
-        })
-    ;
+    marker.on('click', markerClick);
+    marker.emit('click', {target: marker});
+
+    function markerClick(e) {
+        infoWindow.setContent(e.target.content);
+        infoWindow.open(map, e.target.getPosition());
+    }
+
+    map.setFitView();
+
+
 </script>
+<!-- jQuery Min JS -->
+<script src="../../assets/js/jquery.min.js"></script>
+<!-- Popper Min JS -->
+<script src="../../assets/js/popper.min.js"></script>
+<!-- Bootstrap Min JS -->
+<script src="../../assets/js/bootstrap.min.js"></script>
+<!-- Owl Carousel Min JS -->
+<script src="../../assets/js/owl.carousel.min.js"></script>
+<!-- MeanMenu JS -->
+<script src="../../assets/js/jquery.meanmenu.js"></script>
+<!-- Popup JS -->
+<script src="../../assets/js/jquery.magnific-popup.min.js"></script>
+<!-- Appear JS -->
+<script src="../../assets/js/jquery.appear.min.js"></script>
+<!-- Odometer JS -->
+<script src="../../assets/js/odometer.min.js"></script>
+<!-- Image LightBox Min JS -->
+<script src="../../assets/js/imagelightbox.min.js"></script>
+<!-- Nice Selects Min JS -->
+<script src="../../assets/js/jquery.nice-select.min.js"></script>
+<!-- AjaxChimp Min JS -->
+<script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
+<!-- Form Validator Min JS -->
+<script src="../../assets/js/form-validator.min.js"></script>
+<!-- Contact Form Min JS -->
+<script src="../../assets/js/contact-form-script.js"></script>
+<!-- Main JS -->
+<script src="../../assets/js/main.js"></script>
 </body>
-
 </html>

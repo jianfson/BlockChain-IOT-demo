@@ -1,6 +1,6 @@
 OrdererOrgs:
   - Name: Orderer
-    Domain: dragonwell.com
+    Domain: goldenBud.com
 
     Specs:
       - Hostname: orderer
@@ -9,7 +9,7 @@ OrdererOrgs:
 PeerOrgs:
 
   - Name: Org1
-    Domain: org1.dragonwell.com
+    Domain: org1.goldenBud.com
     EnableNodeOUs: true
 
     Template:

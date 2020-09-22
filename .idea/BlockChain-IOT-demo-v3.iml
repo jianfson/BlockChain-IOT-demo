@@ -7,5 +7,11 @@
     <orderEntry type="library" name="jquery.dataTables" level="application" />
     <orderEntry type="library" name="dataTables.semanticui" level="application" />
     <orderEntry type="library" name="semantic-ui" level="application" />
+    <orderEntry type="library" name="qrcode" level="application" />
+    <orderEntry type="library" name="demoutils" level="application" />
+    <orderEntry type="library" name="jquery-1.11.1" level="application" />
+    <orderEntry type="library" name="underscore" level="application" />
+    <orderEntry type="library" name="backbone" level="application" />
+    <orderEntry type="library" name="prety-json" level="application" />
   </component>
 </module>

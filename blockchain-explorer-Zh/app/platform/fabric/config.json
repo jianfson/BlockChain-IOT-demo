@@ -1,9 +1,0 @@
-{
-	"network-configs": {
-		"茶叶溯源区块链": {
-			"name": "茶叶溯源区块链",
-			"profile": "./connection-profile/dragonwell.json"
-		}
-	},
-	"license": "Apache-2.0"
-}

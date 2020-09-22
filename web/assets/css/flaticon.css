@@ -1,0 +1,56 @@
+/*
+Flaticon icon font: Flaticon
+*/
+@font-face {
+	font-family: "Flaticon";
+	src: url("../../assets/fonts/Flaticon.eot");
+	src: url("../../assets/fonts/Flaticon.eot?#iefix") format("embedded-opentype"),
+	url("../../assets/fonts/Flaticon.woff2") format("woff2"),
+	url("../../assets/fonts/Flaticon.woff") format("woff"),
+	url("../../assets/fonts/Flaticon.ttf") format("truetype"),
+	url("../../assets/fonts/Flaticon.svg#Flaticon") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	@font-face {
+		font-family: "Flaticon";
+		src: url("../../assets/fonts/Flaticon.svg#Flaticon") format("svg");
+	}
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+	font-style: normal;
+}
+
+.flaticon-menu:before { content: "\f100"; }
+.flaticon-cow:before { content: "\f101"; }
+.flaticon-fish:before { content: "\f102"; }
+.flaticon-onion:before { content: "\f103"; }
+.flaticon-check:before { content: "\f104"; }
+.flaticon-mission-accomplished:before { content: "\f105"; }
+.flaticon-sushi:before { content: "\f106"; }
+.flaticon-shipping-and-delivery:before { content: "\f107"; }
+.flaticon-vendor:before { content: "\f108"; }
+.flaticon-harvest:before { content: "\f109"; }
+.flaticon-quote:before { content: "\f10a"; }
+.flaticon-envelope:before { content: "\f10b"; }
+.flaticon-call:before { content: "\f10c"; }
+.flaticon-pin:before { content: "\f10d"; }
+.flaticon-heart:before { content: "\f10e"; }
+.flaticon-search:before { content: "\f10f"; }
+.flaticon-cancel:before { content: "\f110"; }
+.flaticon-shopping-cart:before { content: "\f111"; }
+.flaticon-cow-1:before { content: "\f112"; }
+.flaticon-fish-1:before { content: "\f113"; }
+.flaticon-telephone:before { content: "\f114"; }
+.flaticon-private:before { content: "\f115"; }
+.flaticon-view:before { content: "\f116"; }
+.flaticon-plus:before { content: "\f117"; }
+.flaticon-right:before { content: "\f118"; }
+.flaticon-left:before { content: "\f119"; }
+.flaticon-fish-2:before { content: "\f11a"; }
+.flaticon-cauliflower:before { content: "\f11b"; }
+.flaticon-right-1:before { content: "\f11c"; }
+.flaticon-left-1:before { content: "\f11d"; }

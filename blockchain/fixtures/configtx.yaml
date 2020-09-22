@@ -16,7 +16,7 @@ Organizations:
 
         # MSPDir is the filesystem path which contains the MSP configuration
         # crypto-config/ordererOrganizations/kevin.kongyixueyuan.com/msp
-        MSPDir: crypto-config/ordererOrganizations/dragonwell.com/msp
+        MSPDir: crypto-config/ordererOrganizations/goldenBud.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -37,7 +37,7 @@ Organizations:
 
         ID: Org1MSP
 
-        MSPDir: crypto-config/peerOrganizations/org1.dragonwell.com/msp
+        MSPDir: crypto-config/peerOrganizations/org1.goldenBud.com/msp
 
         Policies:
             Readers:
@@ -52,7 +52,7 @@ Organizations:
 
         AnchorPeers:
 
-            - Host: peer0.org1.dragonwell.com
+            - Host: peer0.org1.goldenBud.com
               Port: 7051
 ################################################################################
 #
@@ -147,7 +147,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - orderer.dragonwell.com:7050
+        - orderer.goldenBud.com:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
@@ -267,7 +267,7 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
-    #./bin/configtxgen -profile TeaTraceabilityOrdererGenesis -outputBlock ./artifacts/genesis1.block
+    #./bin/configtxgen -profile TeaTraceabilityOrdererGenesis -outputBlock ./artifacts/genesis.block
     TeaTraceabilityOrdererGenesis:
         <<: *ChannelDefaults
         Orderer:

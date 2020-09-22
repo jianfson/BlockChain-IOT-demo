@@ -24,9 +24,9 @@ client:
     path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config
 
   credentialStore:
-    path: /tmp/dragonwell-store
+    path: /tmp/goldenBud-store
     cryptoStore:
-      path: /tmp/dragonwell-msp
+      path: /tmp/goldenBud-msp
 
   BCCSP:
     security:
@@ -44,9 +44,9 @@ client:
 
     client:
       key:
-        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/users/User1@org1.dragonwell.com/tls/client.key
+        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/User1@org1.goldenBud.com/tls/client.key
       cert:
-        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/users/User1@org1.dragonwell.com/tls/client.crt
+        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/User1@org1.goldenBud.com/tls/client.crt
 
 
 #
@@ -60,7 +60,7 @@ channels:
 
     # Required. list of peers from participating orgs
     peers:
-      peer0.org1.dragonwell.com:
+      peer0.org1.goldenBud.com:
         # [Optional]. will this peer be sent transaction proposals for endorsement? The peer must
         # have the chaincode installed. The app can also use this property to decide which peers
         # to send the chaincode install request. Default: true
@@ -80,7 +80,7 @@ channels:
         # Default: true
         eventSource: true
 
-      peer1.org1.dragonwell.com:
+      peer1.org1.goldenBud.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -167,21 +167,24 @@ organizations:
 #    mspID: OrdererMSP
 #
 #    # Needed to load users crypto keys and certs for this org (absolute path or relative to global crypto path, DEV mode)
-#    cryptoPath: ordererOrganizations/dragonwell.com/users/{username}@dragonwell.com/msp
+#    cryptoPath: ordererOrganizations/goldenBud.com/users/{username}@goldenBud.com/msp
 
   Org1:
     # 加星 配置应用程序所在组织即可
     mspid: Org1MSP
     # 相对路径，前面最初配置的cryptoconfig
-    cryptoPath: peerOrganizations/org1.dragonwell.com/users/{userName}@org1.dragonwell.com/msp
+    cryptoPath: peerOrganizations/org1.goldenBud.com/users/{userName}@org1.goldenBud.com/msp
     peers:
-      - peer0.org1.dragonwell.com
+      - peer0.org1.goldenBud.com
+      - peer1.org1.goldenBud.com
 
     # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
     # network. Typically certificates provisioning is done in a separate process outside of the
     # runtime network. Fabric-CA is a special certificate authority that provides a REST APIs for
     # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
     # Fabric-CA servers.
+    certificateAuthorities:
+      - ca.org1.goldenBud.com
 
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
@@ -189,13 +192,13 @@ organizations:
 # SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
 #
 orderers:
-  orderer.dragonwell.com:
+  orderer.goldenBud.com:
     url: grpcs://localhost:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
     grpcOptions:
-      ssl-target-name-override: orderer.dragonwell.com
+      ssl-target-name-override: orderer.goldenBud.com
       # These parameters should be set in coordination with the keepalive policy on the server,
       # as incompatible settings can result in closing of connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
@@ -208,21 +211,21 @@ orderers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/ordererOrganizations/dragonwell.com/tlsca/tlsca.dragonwell.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/ordererOrganizations/goldenBud.com/tlsca/tlsca.goldenBud.com-cert.pem
 
 #
 # List of peers to send various requests to, including endorsement, query
 # and event listener registration.
 #
 peers:
-  peer0.org1.dragonwell.com:
+  peer0.org1.goldenBud.com:
     # this URL is used to send endorsement and query requests
     url: grpcs://localhost:7051
     # eventUrl is only needed when using eventhub (default is delivery service)
     eventUrl: grpcs://localhost:7053
 
     grpcOptions:
-      ssl-target-name-override: peer0.org1.dragonwell.com
+      ssl-target-name-override: peer0.org1.goldenBud.com
       # These parameters should be set in coordination with the keepalive policy on the server,
       # as incompatible settings can result in closing of connection.
       # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
@@ -235,25 +238,72 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.dragonwell.com/tlsca/tlsca.org1.dragonwell.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
+
+  peer1.org1.goldenBud.com:
+    # this URL is used to send endorsement and query requests
+    url: grpcs://localhost:8051
+    # eventUrl is only needed when using eventhub (default is delivery service)
+    eventUrl: grpcs://localhost:8053
+
+    grpcOptions:
+      ssl-target-name-override: peer1.org1.goldenBud.com
+      # These parameters should be set in coordination with the keepalive policy on the server,
+      # as incompatible settings can result in closing of connection.
+      # When duration of the 'keep-alive-time' is set to 0 or less the keep alive client parameters are disabled
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      # allow-insecure will be taken into consideration if address has no protocol defined, if true then grpc or else grpcs
+      allow-insecure: false
+
+    tlsCACerts:
+      # Certificate location absolute path
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
 
 #
 # Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
 # certificate management to be done via REST APIs. Application may choose to use a standard
-# Certificate Authority instead of Fabric-CA, in which case this section would not be spe
+# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
+#
+certificateAuthorities:
+  ca.org1.goldenBud.com:
+    url: http://localhost:7054
+    tlsCACerts:
+      # Certificate location absolute path
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/ca/ca.org1.goldenBud.com-cert.pem
+
+    # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
+    # needed to enroll and invoke new users.
+    registrar:
+      enrollId: admin
+      enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.org1.goldenBud.com
 
 entityMatchers:
   peer:
-    - pattern: (\w*)peer0.org1.dragonwell.com(\w*)
+    - pattern: (\w*)peer0.org1.goldenBud.com(\w*)
       urlSubstitutionExp: localhost:7051
       eventUrlSubstitutionExp: localhost:7053
-      sslTargetOverrideUrlSubstitutionExp: peer0.org1.dragonwell.com
-      mappedHost: peer0.org1.dragonwell.com
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.goldenBud.com
+      mappedHost: peer0.org1.goldenBud.com
 
+    - pattern: (\w*)peer1.org1.goldenBud.com(\w*)
+      urlSubstitutionExp: localhost:8051
+      eventUrlSubstitutionExp: localhost:8053
+      sslTargetOverrideUrlSubstitutionExp: peer1.org1.goldenBud.com
+      mappedHost: peer1.org1.goldenBud.com
 
   orderer:
-    - pattern: (\w*)orderer.dragonwell.com(\w*)
+    - pattern: (\w*)orderer.goldenBud.com(\w*)
       urlSubstitutionExp: localhost:7050
-      sslTargetOverrideUrlSubstitutionExp: orderer.dragonwell.com
-      mappedHost: orderer.dragonwell.com
+      sslTargetOverrideUrlSubstitutionExp: orderer.goldenBud.com
+      mappedHost: orderer.goldenBud.com
 
+  certificateAuthority:
+    - pattern: (\w*)ca.org1.goldenBud.com(\w*)
+      urlSubstitutionExp: https://localhost:7054
+      sslTargetOverrideUrlSubstitutionExp: ca.org1.goldenBud.com
+      mappedHost: ca.org1.goldenBud.com

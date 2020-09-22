@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{dataTables.semanticui, jquery.dataTables, semantic-ui}" />
+    <file url="PROJECT" libraries="{backbone, dataTables.semanticui, demoutils, jquery-1.11.1, jquery.dataTables, prety-json, qrcode, semantic-ui, underscore}" />
   </component>
 </project>

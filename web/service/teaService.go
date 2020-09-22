@@ -22,7 +22,15 @@ func (t *ServiceSetup) InitLedger() error {
 func (t *ServiceSetup) SaveTea(tea Tea) (string, error) {
 
 	b, err := json.Marshal(tea)
+	fmt.Println("-----------------------------------")
+	fmt.Println(tea)
+	fmt.Println("-----------------------------------")
+	fmt.Println(b)
+	fmt.Println("-----------------------------------")
+	fmt.Println(string(b))
+	fmt.Println("-----------------------------------")
 	if err != nil {
+		fmt.Println("err1---->")
 		return "", fmt.Errorf("序列化 tea 失败")
 	}
 
@@ -34,6 +42,7 @@ func (t *ServiceSetup) SaveTea(tea Tea) (string, error) {
 
 	response, err := t.ChannelClient.Execute(req)
 	if err != nil {
+		fmt.Println("err2---->")
 		return "", err
 	}
 
@@ -89,7 +98,6 @@ func (t *ServiceSetup) ModifyQueryCount(teaID string) ([]byte, error) {
 }
 // 通过 s 查询
 func (t *ServiceSetup) QueryTeaByMaker(s string) ([]byte, error) {
-
 
 	req := channel.Request{ChaincodeID: t.ChaincodeId, Fcn: "queryTeaByMaker", Args: [][]byte{[]byte(s)}}
 

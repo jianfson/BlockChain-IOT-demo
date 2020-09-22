@@ -12,8 +12,8 @@ import (
 func WebStart(app *controller.Application)  {
 
 
-	fs := http.FileServer(http.Dir("./web/static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fs := http.FileServer(http.Dir("./web/assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	// 指定第一次打开系统进入的页面
 	http.HandleFunc("/", app.Home)
@@ -29,16 +29,23 @@ func WebStart(app *controller.Application)  {
 	http.HandleFunc("/registerPage", app.RegisterPage)
 	http.HandleFunc("/register", app.Register)
 
+	http.HandleFunc("/about", app.About)
+
 	//用户操作页面路由
 	http.HandleFunc("/profilePage", app.ProfilePage)
+	http.HandleFunc("/searchHistory", app.SearchHistory)
+	http.HandleFunc("/changePsd", app.ChangePsd)
+	http.HandleFunc("/applyNewPsd", app.ApplyNewPsd)
+	http.HandleFunc("/forgetPsdPage", app.ForgetPsdPage)
+	http.HandleFunc("/applyNewPsdForget", app.ApplyNewPsdForget)
 
 	//超管后台
 	http.HandleFunc("/superBackStage", app.SuperBackStage)
-	http.HandleFunc("/sbsInstruction", app.SbsInstruction)
 	http.HandleFunc("/sbsDataMana", app.SbsDataMana)
 	http.HandleFunc("/sbsAdminMana", app.SbsAdminMana)
-	http.HandleFunc("/sbsUserMana", app.SbsUserMana)
 	http.HandleFunc("/sbsAddNewAdmin", app.SbsAddNewAdmin)
+	http.HandleFunc("/sbsStaffMana", app.SbsStaffMana)
+	http.HandleFunc("/sbsAddNewStaff", app.SbsAddNewStaff)
 
 	//后台
 	http.HandleFunc("/backStage", app.BackStage)
@@ -50,7 +57,9 @@ func WebStart(app *controller.Application)  {
 
 	// 添加
 	http.HandleFunc("/addTeaPage", app.AddTeaPage) // 显示添加信息页面
-	http.HandleFunc("/addTea", app.AddTea)         // 提交修改请求并跳转添加成功提示页面
+	//http.HandleFunc("/addTea", app.AddTea)         // 提交修改请求并跳转添加成功提示页面
+	http.HandleFunc("/bulkAddTea", app.BulkAddTea)
+	//http.HandleFunc("/addTea", app.AddTea)
 
 	// 修改
 	//http.HandleFunc("/modifyQueryPage", app.ModifyQueryPage) // 进入修改查询页面
@@ -61,8 +70,10 @@ func WebStart(app *controller.Application)  {
 	http.HandleFunc("/queryPage", app.QueryPage)		// 转至查询信息页面
 	http.HandleFunc("/findTeaByID", app.FindTeaByID)	// 根据id查询并转至查询结果页面
 
-	//http.HandleFunc("/backStagePage", app.BackStagePage)
-
+	// 公共访问
+	http.HandleFunc("/singProduct", app.SingProduct)
+	http.HandleFunc("/newsOverall", app.NewsOverall)
+	http.HandleFunc("/contact", app.Contact)
 
 	fmt.Println("---------------------------------------------")
 	fmt.Println("启动Web服务, 监听端口号: 9000")

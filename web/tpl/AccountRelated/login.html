@@ -1,151 +1,307 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="cn">
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-touch-fullsreen" content="YES">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta http-equiv="Expires" CONTENT="0">
-    <meta http-equiv="Cache-Control" CONTENT="no-cache">
-    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Tea Safe · 川茶</title>
-    <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/login.css">
+    <!-- Bootstrap Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <!-- Animate Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/animate.min.css">
+    <!-- FontAwesome Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/fontawesome.min.css">
+    <!-- FlatIcon CSS -->
+    <link rel="stylesheet" href="../../assets/css/flaticon.css">
+    <!-- Popup CSS -->
+    <link rel="stylesheet" href="../../assets/css/magnific-popup.min.css">
+    <!-- Owl Carousel Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/owl.carousel.min.css">
+    <!-- Image LightBox Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/imagelightbox.min.css">
+    <!-- Nice Select Min CSS -->
+    <link rel="stylesheet" href="../../assets/css/nice-select.min.css">
+    <!-- MeanMenu CSS -->
+    <link rel="stylesheet" href="../../assets/css/meanmenu.css">
+    <!-- Odometer CSS -->
+    <link rel="stylesheet" href="../../assets/css/odometer.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="../../assets/css/responsive.css">
+
+    <link rel="stylesheet" href="../../assets/css/index.css">
+    <title>TeaTrack&nbsp;·&nbsp;茶查&nbsp;——&nbsp;登录</title>
+
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
 </head>
 
 <body>
-{{if .Msg}}
-    <div class="ui basic modal">
-        <div class="ui icon header">
-            <i class="times icon"></i>
-            {{.Msg}}
-        </div>
 
-        <div class="actions">
-            <div class="ui green ok inverted button">
-                <i class="checkmark icon"></i>
-                好的
+<!-- Start Preloader Area -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!-- End Preloader Area -->
+
+<!-- Start Navbar Area -->
+<div class="navbar-area">
+    <div class="trifles-responsive-nav">
+        <div class="container">
+            <div class="trifles-responsive-menu">
+                <div class="logo">
+                    <a href="/backToHome">
+                        <img src="../../assets/image/logo-full-black.png" alt="logo">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-{{end}}
 
+    <div class="trifles-nav">
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="/backToHome">
+                    <img src="../../assets/image/logo-full-black.png" alt="logo">
+                </a>
 
-<div class="ui fixed inverted menu">
-    <div class="ui container">
-        <a href="/backToHome" class="header item">
-            <img class="logo" src="../../static/image/login-logo.png">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;川茶
-        </a>
-        <a href="/registerPage" class="header right item">
-            注册
-        </a>
+                <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/backToHome" class="nav-link">
+                                首页
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/about" class="nav-link">
+                                关于
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                产品
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">川红工夫</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">宜宾早茶</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/singProduct" class="nav-link">宜宾早白尖</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/newsOverall" class="nav-link">
+                                新闻
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </div>
 </div>
+<!-- End Navbar Area -->
 
 
-<div class="headholder"></div>
+<!-- Start Login Area -->
+<div class="main-banner-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="login-form">
+                <div class="login-title">
+                    <h3>TeaTrack&nbsp;·&nbsp;茶查</h3>
+                </div>
 
-<div class="homeHugeImage">
-    <div class="hugeImageCover">
-        <div class="formPlacer">
-            <div class="ui middle aligned center aligned grid">
-                <div class="column">
-                    <h2 class="ui teal image header">
-                        <img class="ui massive image" src="../../static/image/login-logo.png" alt="">
-                        <h1>Tea Safe · 川茶</h1>
-                    </h2>
-                    <form action="/login" class="ui large form" method="post">
-                        <div>
-                            <div class="field">
-                                <div class="ui left icon input">
-                                    <i class="user icon"></i>
-                                    <input name="loginName" type="text" placeholder="请输入用户名" required autofocus>
-                                </div>
+                <form action="/login" class="ui large form" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input name="loginName" class="form-control" placeholder="用户名" style="color: black">
                             </div>
-                            <div class="field">
-                                <div class="ui left icon input">
-                                    <i class="lock icon"></i>
-                                    <input name="password" type="password" placeholder="请输入密码" autocomplete="off" required>
-                                </div>
-                            </div>
-                            <button class="ui black inverted big button" type="submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
                         </div>
 
-                        <div class="ui error message"></div>
-                    </form>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input name="password" type="password" class="form-control" placeholder="密码" style="color: black">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 text-right">
+                            <div class="form-check">
+                                <p class="forgot-password"><a href="/forgetPsdPage">忘记密码？</a></p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="send-btn">
+                                <button class="default-btn">
+                                    登录
+                                    <span></span>
+                                </button>
+                            </div>
+                            <br>
+                            <span>新用户？<a href="/registerPage">注册</a></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="shape-img3">
+        <img src="../../assets/img/home-one/3.png" alt="image">
+    </div>
+
+    <div class="shape-img4">
+        <img src="../../assets/img/home-one/4.png" alt="image">
+    </div>
+
+    <div class="shape-img5">
+        <img src="../../assets/img/home-one/5.svg" alt="image">
+    </div>
+</div>
+<!-- End Login Area -->
+
+
+
+<!-- Start Footer Section -->
+<section class="footer-section footer-bg text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>茶园服务</h3>
+                    </div>
+
+                    <ul class="footer-quick-links">
+                        <li>
+                            溯源查询
+                        </li>
+                        <li>
+                            批量订购
+                        </li>
+                        <li>
+                            茶园参观
+                        </li>
+                        <li>
+                            生产线参观
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>网站服务</h3>
+                    </div>
+                    <ul class="footer-quick-links">
+                        <li>
+                            <a href="http://47.108.134.136:8080/#/" class="item">
+                                区块链浏览器
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:08889802047">
+                                客服热线
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="signup.html">
+                                账户详情
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="footer-heading">
+                        <h3>联系方式</h3>
+                    </div>
+                    <div class="footer-info-contact">
+                        <span>中国，宜宾，高县</span>
+                    </div>
+                    <div class="footer-info-contact">
+                        <span><a href="tel:+882-569-756">987-0986-0987</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="copyright-area">
+        <div class="container">
+            <div class="copyright-area-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 col-md-4">
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <p>
+
+                            All Rights Reserved
+                            <i class="far fa-copyright"></i>
+                            2020 TeaTrack&nbsp;·&nbsp;茶查
+
+                        </p>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<!-- End Footer Section -->
+
+<!-- Start Go Top Section -->
+<div class="go-top">
+    <i class="fas fa-chevron-up"></i>
+    <i class="fas fa-chevron-up"></i>
 </div>
+<!-- End Go Top Section -->
 
-
-<div class="pusher">
-    <div class="ui inverted vertical footer segment">
-        <div class="ui container">
-            <div class="ui stackable inverted divided equal height stackable grid">
-                <div class="three wide column">
-                    <h4 class="ui inverted header">关于</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">网站地图</a>
-                        <a href="#" class="item">联系我们</a>
-                        <a href="#" class="item">隐私条款</a>
-                    </div>
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header">服务</h4>
-                    <div class="ui inverted link list">
-                        <a href="http://127.0.0.1:8080/#/" class="item">
-                            区块链浏览器
-                        </a>
-                    </div>
-                </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header">Tea Safe · 川茶</h4>
-                    <p>
-                        All Copyright &copy; Tea Safe
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="../../static/js/jquery.min.js"></script>
-<script src="../../static/js/semantic.min.js"></script>
-<script>
-    $(document)
-        .ready(function() {
-
-            // fix menu when passed
-            $('.masthead')
-                .visibility({
-                    once: false,
-                    onBottomPassed: function() {
-                        $('.fixed.menu').transition('fade in');
-                    },
-                    onBottomPassedReverse: function() {
-                        $('.fixed.menu').transition('fade out');
-                    }
-                })
-            ;
-
-            // create sidebar and attach to menu open
-            $('.ui.sidebar')
-                .sidebar('attach events', '.toc.item')
-            ;
-            $('.ui.basic.modal')
-                .modal('show')
-            ;
-
-        })
-    ;
-</script>
+<!-- jQuery Min JS -->
+<script src="../../assets/js/jquery.min.js"></script>
+<!-- Popper Min JS -->
+<script src="../../assets/js/popper.min.js"></script>
+<!-- Bootstrap Min JS -->
+<script src="../../assets/js/bootstrap.min.js"></script>
+<!-- Owl Carousel Min JS -->
+<script src="../../assets/js/owl.carousel.min.js"></script>
+<!-- MeanMenu JS -->
+<script src="../../assets/js/jquery.meanmenu.js"></script>
+<!-- Popup JS -->
+<script src="../../assets/js/jquery.magnific-popup.min.js"></script>
+<!-- Appear JS -->
+<script src="../../assets/js/jquery.appear.min.js"></script>
+<!-- Odometer JS -->
+<script src="../../assets/js/odometer.min.js"></script>
+<!-- Image LightBox Min JS -->
+<script src="../../assets/js/imagelightbox.min.js"></script>
+<!-- Nice Selects Min JS -->
+<script src="../../assets/js/jquery.nice-select.min.js"></script>
+<!-- AjaxChimp Min JS -->
+<script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
+<!-- Form Validator Min JS -->
+<script src="../../assets/js/form-validator.min.js"></script>
+<!-- Contact Form Min JS -->
+<script src="../../assets/js/contact-form-script.js"></script>
+<!-- Main JS -->
+<script src="../../assets/js/main.js"></script>
 </body>
-
 </html>

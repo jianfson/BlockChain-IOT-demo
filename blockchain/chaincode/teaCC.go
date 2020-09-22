@@ -69,6 +69,13 @@ func getTeaByQueryString(stub shim.ChaincodeStubInterface, queryString string) (
 		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
 		}
+		//buffer.WriteString("{\"Key\":")
+		//buffer.WriteString("\"")
+		//buffer.WriteString(queryResponse.Key)
+		//buffer.WriteString("\"")
+
+		//buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
 		buffer.WriteString(string(queryResponse.Value))
 		bArrayMemberAlreadyWritten = true
 	}
@@ -83,136 +90,211 @@ func SwitchTimeStampToData(timeStamp int64) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 
-func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response {
 	shelf_life := "18个月"
 	createtime := SwitchTimeStampToData(time.Now().Unix())
 	teas := []Tea{
 		{
 			Id:     "01",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Name: "高县红茶1",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "big",
+			Boxed: Box{true,4},
 		},
 		{
-			Id:     "02",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶2",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "big",
+			Boxed: Box{true,4},
 		},
 		{
-			Id:     "03",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶3",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "big",
+			Boxed: Box{true,4},
 		},
 		{
-			Id:     "04",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶4",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "big",
+			Boxed: Box{true,4},
 		},
 		{
-			Id:     "05",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:    strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶5",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "big",
+			Boxed: Box{true,4},
 		},
 		{
-			Id:     "06",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:    strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶6",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "big",
+			Boxed: Box{},
 		},
 		{
-			Id:     "07",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶7",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "small",
+			Boxed: Box{},
 		},
 		{
-			Id:     "08",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶8",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "small",
+			Boxed: Box{},
 		},
 		{
-			Id:     "09",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶11",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "small",
+			Boxed: Box{},
 		},
 		{
-			Id:     "10",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶12",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "small",
+			Boxed: Box{},
 		},
 		{
-			Id:     "11",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶11",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "small",
+			Boxed: Box{},
 		},
 		{
-			Id:     "12",
-			Name: "明前龙井",
-			Maker:  "杭州龙井茶业集团有限公司",
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "高县红茶12",
+			Maker:  "高县红茶茶业集团有限公司",
 			Owner:  "王坤",
 			Weight: "100g",
-			Origin: "狮峰",
+			Origin: "高县",
+			Origin_IP: IP{
+				"104",
+				"23",
+			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
+			Size: "small",
+			Boxed: Box{},
 		},
 	}
 	for k, tea := range teas {
-		good := PutTea(stub, tea)
-		if good != true {
+		tea.ObjectType = DOC_TYPE
+		tea.TxID = stub.GetTxID()
+		flag := PutTea(stub, tea)
+		if flag != true {
 			fmt.Println("写入第 %d 条信息，失败", k)
 		}
+		//time.After(time.Second)
 	}
 
 	return shim.Success(nil)
@@ -238,7 +320,6 @@ func (s *TeaChaincode) saveTea(stub shim.ChaincodeStubInterface, args []string) 
 
 	tea.ObjectType = DOC_TYPE
 	tea.TxID = stub.GetTxID()
-	tea.QueryCounter = 0
 	flag := PutTea(stub, tea)
 	if !flag {
 		return shim.Error("Add data failed")
@@ -258,7 +339,7 @@ func (s *TeaChaincode) teaExchange(stub shim.ChaincodeStubInterface, args []stri
 	nextOwner := args[1]
 	tea,_ := GetTeaInfo(stub, teaID)
 	tea.Owner = nextOwner
-
+	tea.TxID = stub.GetTxID()
 	flag := PutTea(stub, tea)
 	if !flag {
 		return shim.Error("Save data failed")
@@ -267,6 +348,20 @@ func (s *TeaChaincode) teaExchange(stub shim.ChaincodeStubInterface, args []stri
 	return shim.Success([]byte("exchange succeed"))
 }
 
+func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	if len(args) != 1 {
+		return shim.Error("incorrect nums of  args, expecting 1")
+	}
+
+	result, err := stub.GetState(args[0])
+	if err != nil {
+		return shim.Error("query failed according to id")
+	}
+	if result == nil {
+		return shim.Error("get nothing according to id")
+	}
+	return shim.Success(result)
+}
 
 func (s *TeaChaincode) modifyQueryCount(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
@@ -286,27 +381,12 @@ func (s *TeaChaincode) modifyQueryCount(stub shim.ChaincodeStubInterface, args [
 
 	return shim.Success([]byte("modify succeed"))
 }
-func (s *TeaChaincode) queryTeaById(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	if len(args) != 1 {
-		return shim.Error("incorrect nums of  args, expecting 1")
-	}
-
-	result, err := stub.GetState(args[0])
-	if err != nil {
-		return shim.Error("query failed according to id")
-	}
-
-	if result == nil {
-		return shim.Error("get nothing according to id")
-	}
-	return shim.Success(result)
-}
-
 func (s *TeaChaincode) queryTeaByMaker(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of args, expecting 1")
 	}
+
 	// 拼接富查询用到的 string
 	queryString := fmt.Sprintf("{\"selector\":{\"maker\":\"%s\"}}", args[0])
 	results, err := getTeaByQueryString(stub, queryString)

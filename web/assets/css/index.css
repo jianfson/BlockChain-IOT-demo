@@ -1,0 +1,29 @@
+.teaIDInput{
+    border-radius: 30px;
+    outline-style: none;
+    border: 1px solid #bed7be;
+    padding: 10px 20px;
+    width: 300px;
+    font-size: 18px;
+}
+
+.teaIDInput:focus{
+    border-color: #c5ffc1;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+}
+
+.img-cover:after{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    box-shadow:0 0 20px 10px #ffffff inset;
+}
+
+.footer-placeholder{
+    width: 12%;
+}

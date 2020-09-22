@@ -218,7 +218,7 @@ func InstantiateCC(sdk *fabsdk.FabricSDK, info *InitInfo) error {
 		return errors.Errorf("实例化链码失败: %v\n", err)
 	}
 
-	fmt.Printf("实例化 %v 成功", info.ChaincodeID)
+	fmt.Printf("实例化 %v 成功\n", info.ChaincodeID)
 	return nil
 }
 
@@ -299,7 +299,7 @@ func Enroll(sdk *fabsdk.FabricSDK, info *InitInfo, enrollmentSecret string) erro
 	mspClient, err := mspclient.New(
 		sdk.Context(fabsdk.WithUser(info.OrgAdmin), fabsdk.WithOrg(info.OrgName)),
 		mspclient.WithOrg(info.OrgName),
-		mspclient.WithCAInstance("ca.org1.dragonwell.com"),
+		//mspclient.WithCAInstance("ca.org1.dragonwell.com"),
 		)
 	if err != nil {
 		fmt.Printf("创建 mspClient 失败: %v\n", err)

@@ -1,0 +1,34 @@
+.round_icon{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+#tdAdd input{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+    filter: alpha(opacity = 0);
+    -moz-opacity: 0;
+    opacity: 0;
+    outline: none;
+    blr: expression(this.hideFocus = true);
+    cursor: pointer;
+    border: none;
+}
+
+
+ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    width:100%;
+    max-width:100%;
+    height:auto;
+}
+
