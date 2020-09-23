@@ -17,7 +17,7 @@ func main() {
 
 	initInfo := &sdkInit.InitInfo{
 		ChannelID:     "teatraceability",
-		ChannelConfig: os.Getenv("GOPATH") + "/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/artifacts/channel.tx",
+		ChannelConfig: os.Getenv("GOPATH") + "/src/github.com/iceriverdog/chacha/blockchain/fixtures/artifacts/channel.tx",
 
 		OrgAdmin: "Admin",
 		UserName: "User1",
@@ -28,7 +28,7 @@ func main() {
 
 		ChaincodeID:     TeaCC,
 		ChaincodeGoPath: os.Getenv("GOPATH"),
-		ChaincodePath:   "github.com/jianfson/BlockChain-IOT-demo/blockchain/chaincode/",
+		ChaincodePath:   "github.com/iceriverdog/chacha/blockchain/chaincode/",
 	}
 	//-----------------------------------------
 	//----------------实例化 sdk---------------
