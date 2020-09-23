@@ -95,6 +95,7 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 	createtime := SwitchTimeStampToData(time.Now().Unix())
 	teas := []Tea{
 		{
+<<<<<<< HEAD
 			Id:     "01",
 			Name: "高县红茶1",
 			Maker:  "高县红茶茶业集团有限公司",
@@ -104,10 +105,22 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井1",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "big",
+<<<<<<< HEAD
 			Boxed: Box{true,4},
 		},
 		{
@@ -120,10 +133,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井2",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "big",
+<<<<<<< HEAD
 			Boxed: Box{true,4},
 		},
 		{
@@ -136,10 +163,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井3",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "big",
+<<<<<<< HEAD
 			Boxed: Box{true,4},
 		},
 		{
@@ -152,10 +193,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井4",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "big",
+<<<<<<< HEAD
 			Boxed: Box{true,4},
 		},
 		{
@@ -168,10 +223,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:    strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井5",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "big",
+<<<<<<< HEAD
 			Boxed: Box{true,4},
 		},
 		{
@@ -184,10 +253,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:    strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井6",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "big",
+<<<<<<< HEAD
 			Boxed: Box{},
 		},
 		{
@@ -200,10 +283,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井7",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "small",
+<<<<<<< HEAD
 			Boxed: Box{},
 		},
 		{
@@ -216,10 +313,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井8",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "small",
+<<<<<<< HEAD
 			Boxed: Box{},
 		},
 		{
@@ -232,10 +343,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井11",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "small",
+<<<<<<< HEAD
 			Boxed: Box{},
 		},
 		{
@@ -248,10 +373,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井12",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "small",
+<<<<<<< HEAD
 			Boxed: Box{},
 		},
 		{
@@ -264,10 +403,24 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井11",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "small",
+<<<<<<< HEAD
 			Boxed: Box{},
 		},
 		{
@@ -280,11 +433,27 @@ func (s *TeaChaincode) initLedger(stub shim.ChaincodeStubInterface) pb.Response 
 			Origin_IP: IP{
 				"104",
 				"23",
+=======
+		},
+		{
+			Id:     strconv.FormatInt(time.Now().UnixNano(),10),
+			Name: "明前龙井12",
+			Maker:  "杭州龙井茶业集团有限公司",
+			Owner:  "王坤",
+			Weight: "100g",
+			Origin: "狮峰",
+			Origin_IP: IP{
+				"104.07",
+				"30.67",
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 			},
 			Production_Date: createtime,
 			Shelf_life: shelf_life,
 			Size: "small",
+<<<<<<< HEAD
 			Boxed: Box{},
+=======
+>>>>>>> 92729cb2df8df410654ee33e2f2af5c4041514c0
 		},
 	}
 	for k, tea := range teas {

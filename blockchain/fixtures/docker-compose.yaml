@@ -10,6 +10,7 @@ volumes:
   peer0.org1.goldenBud.com:
   peer1.org1.goldenBud.com:
 
+
 networks:
   goldenBud:
 
@@ -95,6 +96,7 @@ services:
     networks:
       - goldenBud
 
+
   peer0.org1.goldenBud.com:
     image: hyperledger/fabric-peer:1.4.4
     container_name: peer0.org1.goldenBud.com
@@ -158,6 +160,7 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
 
+
       - CORE_PEER_ID=peer1.org1.goldenBud.com
       - CORE_PEER_ADDRESS=peer1.org1.goldenBud.com:8051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
@@ -173,6 +176,7 @@ services:
       # bridge network as the peers
       # https://docs.docker.com/compose/networking/
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fixtures_goldenBud
+
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_TLS_ENABLED=true
@@ -190,6 +194,7 @@ services:
       - ./crypto-config/peerOrganizations/org1.goldenBud.com/peers/peer1.org1.goldenBud.com/tls:/etc/hyperledger/fabric/tls
       - peer1.org1.goldenBud.com:/var/hyperledger/production
 
+
     ports:
       - 8051:8051
     depends_on:
@@ -197,3 +202,4 @@ services:
       - couchdb1
     networks:
       - goldenBud
+

@@ -79,6 +79,7 @@ func main() {
 	err = sdkInit.InstantiateCC(sdk, initInfo)
 	if err != nil {
 		fmt.Println(err)
+
 		return
 	}
 }

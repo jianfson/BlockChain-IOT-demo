@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-touch-fullsreen" content="YES">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>Tea Safe · 茶查</title>
+    <link rel="Shortcut Icon" href="../../static/image/TeaSafeLogo.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/mana.css">
+</head>
+
+
+<body>
+{{if .IsLogin}}
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+            <a href="/backToHome" class="header item">
+                <img class="logo" src="../../static/image/login-logo.png">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Tea Safe&nbsp;&nbsp;•&nbsp;&nbsp;茶查
+            </a>
+            <div class="ui simple dropdown item">
+                后台管理 <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/superBackStage">
+                        后台首页
+                    </a>
+                    <div class="divider"></div>
+                    <div class="header">管理</div>
+                    <a class="item" href="/sbsDataMana">
+                        数据管理
+                    </a>
+                    <a class="item" href="/sbsAdminMana">
+                        管理员任命
+                    </a>
+                    <a class="active item" href="/sbsUserMana">
+                        用户管理
+                    </a>
+                </div>
+            </div>
+            <div class="ui simple dropdown right item">
+                Welcome, {{.Sess.UserName}}
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/profilePage">
+                        我的信息
+                    </a>
+                    <a class="item" href="/logout">
+                        注销登陆
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pusher">
+        <div class="headgap"></div>
+        <div class="teabody">
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h5 class="ui teal image header">
+                    <h1>用户管理</h1>
+                </h5>
+            </div>
+        </div>
+        <div class="ui grid">
+            <div class="one wide column"></div>
+            <div class="fourteen wide column">
+                <table id="example" class="ui table" style="width:100%">
+                    <thead>
+                    <tr class="center aligned">
+                        <th class="two wide">编号</th>
+                        <th class="two wide">登录名</th>
+                        <th class="two wide">密码</th>
+                        <th class="two wide">邮箱</th>
+                        <th class="two wide">手机号码</th>
+                        <th class="two wide">账户状态</th>
+                        <th class="two wide">注册时间</th>
+                        <th class="two wide">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range .User}}
+                        <tr class="center aligned">
+                            <td>{{.Id}}</td>
+                            <td>{{.Username}}</td>
+                            <td>{{.Password}}</td>
+                            <td>{{.Email}}</td>
+                            <td>{{.Phone}}</td>
+                            <td>{{.Status}}</td>
+                            <td>{{.Createtime}}</td>
+                            <td>
+                                <form action="/modifyUserStatus">
+                                    <input name="userID" type="hidden" value={{.Id}}>
+                                    <input name="userStatus" type="hidden" value={{.Status}}>
+                                    <button class="ui black button">禁用/解禁</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {{end}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="one wide column"></div>
+        </div>
+        </div>
+        <br/><br/>
+
+
+
+        <div class="ui inverted vertical footer segment">
+            <div class="ui container">
+                <div class="ui stackable inverted divided equal height stackable grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">关于</h4>
+                        <div class="ui inverted link list">
+                            <a href="#" class="item">网站地图</a>
+                            <a href="#" class="item">联系我们</a>
+                            <a href="#" class="item">隐私条款</a>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">服务</h4>
+                        <div class="ui inverted link list">
+                            <a href="http://127.0.0.1:8080/#/" class="item">
+                                区块链浏览器
+                            </a>
+                        </div>
+                    </div>
+                    <div class="seven wide column">
+                        <h4 class="ui inverted header">Tea Safe · 茶查</h4>
+                        <p>
+                            All Copyright &copy; Tea Safe
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}
+<script src="../../static/js/jquery.min.js"></script>
+<script src="../../static/js/iframe-content.js"></script>
+<script src="../../static/js/semantic.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.semanticui.min.js"></script>
+
+<script>
+    $(document)
+        .ready(function() {
+
+            // fix menu when passed
+            $('.masthead')
+                .visibility({
+                    once: false,
+                    onBottomPassed: function() {
+                        $('.fixed.menu').transition('fade in');
+                    },
+                    onBottomPassedReverse: function() {
+                        $('.fixed.menu').transition('fade out');
+                    }
+                })
+            ;
+
+            // create sidebar and attach to menu open
+            $('.ui.sidebar')
+                .sidebar('attach events', '.toc.item')
+            ;
+
+        })
+    ;
+
+    $(document)
+        .ready(function() {
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+            $('.ui.menu a.item')
+                .on('click', function() {
+                    $(this)
+                        .addClass('active')
+                        .siblings()
+                        .removeClass('active')
+                    ;
+                })
+            ;
+        })
+    ;
+
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+</body>
+
+</html>
