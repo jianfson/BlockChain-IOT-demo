@@ -21,7 +21,7 @@ client:
     level: info
 
   cryptoconfig:
-    path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config
+    path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config
 
   credentialStore:
     path: /tmp/goldenBud-store
@@ -44,9 +44,9 @@ client:
 
     client:
       key:
-        path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/User1@org1.goldenBud.com/tls/client.key
+        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/User1@org1.goldenBud.com/tls/client.key
       cert:
-        path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/User1@org1.goldenBud.com/tls/client.crt
+        path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/users/User1@org1.goldenBud.com/tls/client.crt
 
 
 #
@@ -213,7 +213,7 @@ orderers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config/ordererOrganizations/goldenBud.com/tlsca/tlsca.goldenBud.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/ordererOrganizations/goldenBud.com/tlsca/tlsca.goldenBud.com-cert.pem
 
 #
 # List of peers to send various requests to, including endorsement, query
@@ -240,7 +240,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
 
   peer1.org1.goldenBud.com:
     # this URL is used to send endorsement and query requests
@@ -262,7 +262,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
 
   peer1.org1.dragonwell.com:
     # this URL is used to send endorsement and query requests
@@ -284,7 +284,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/tlsca/tlsca.org1.goldenBud.com-cert.pem
 
 #
 # Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
@@ -297,7 +297,7 @@ certificateAuthorities:
     url: http://localhost:7054
     tlsCACerts:
       # Certificate location absolute path
-      path: ${GOPATH}/src/github.com/iceriverdog/chacha/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/ca/ca.org1.goldenBud.com-cert.pem
+      path: ${GOPATH}/src/github.com/jianfson/BlockChain-IOT-demo/blockchain/fixtures/crypto-config/peerOrganizations/org1.goldenBud.com/ca/ca.org1.goldenBud.com-cert.pem
 
 
     # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
